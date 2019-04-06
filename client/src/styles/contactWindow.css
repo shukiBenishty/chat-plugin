@@ -1,0 +1,138 @@
+@import url(https://fonts.googleapis.com/css?family=Droid+Sans);
+
+.contact-window{
+    max-height: 100%;
+    box-shadow: 0px 7px 40px 2px rgba(148, 149, 150, 0.3);
+    box-sizing: border-box;
+    border-radius: 10px;
+    margin: 10px;
+    position: relative;
+    
+}
+
+.contact-window-img {
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+    align-self: center;
+  }
+
+.contact-window-contact-list{
+    max-height: 450px;
+    overflow-y: auto;
+    background-color: white;
+    background-size: 100%;
+    padding: 10px 0px;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+}
+
+.contact-window-title{
+    max-height: 100%;
+    background: #4e8cff;
+    min-height: 175px;
+    border-top-left-radius: 9px;
+    border-top-right-radius: 9px;
+    color: white;
+    padding: 10px;
+    box-shadow: 0 1px 4px rgba(0,0,0,.2);
+    position: relative;
+    box-sizing: border-box;
+    display: flex;
+}
+
+.contact-window-contact{
+
+    display: flex;
+    flex-direction: row;
+    box-sizing: border-box;
+    border-bottom: solid 1px rgba(#FFF, 0.5);
+    cursor: pointer;
+    padding: 5px;
+    transition: 0.4s ease-in-out;
+    max-width: 250px;
+    align-items: center; 
+    overflow-x: hidden;
+}
+
+.contact-window-contact:hover{
+    color: #fafafa;
+    background: #4e8cffd3  ;
+}
+
+.contact-window-contact-picture{
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+    align-self: center;
+    padding: 10px;
+}
+
+.contact-new-messages-count {
+    position: absolute;
+    bottom: 12px;
+    left: 37px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    border-radius: 50%;
+    width: 27%;
+    height: 27%;
+    text-align: center;
+    margin: auto;
+    font-size: 10px;
+    font-weight: 500;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.contact-new-messages-count.offline {
+    background: rgba(148, 148, 148, 0.88);
+    color: #e6e6e6;
+}
+.contact-new-messages-count.online {
+    background: rgba(163, 220, 158, 0.88);
+    color: #a07676;
+}
+
+.contact-window-contact-info{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin-left: 15px;
+}
+
+.contact-window-contact-info > .contact-window-contact-name {
+    font-size: 16px;  
+}
+
+.contact-window-contact-typing {
+    font-size: 12px;
+}
+.contact-window-contact-typing.to-me {
+    font-size: 12px;
+    color: rgb(44, 206, 44);
+}
+.contact-window-contact-msg {
+    font-size: 12px;
+    color: rgb(148, 146, 146);
+    white-space: nowrap;
+    overflow: hidden;
+    display: flex;
+}
+
+.contact-window-contact-msg > img{
+    max-height: 32% !important;
+    max-width: 10% !important;
+}
+
+.contact-window-contact-info > span{
+    display: flex;
+}
+
+.contact-window-check {
+    margin: 1% 2% 0% 2%;
+}
+
+.contact-window-check.readed{
+    color: rgb(73, 206, 113);
+}

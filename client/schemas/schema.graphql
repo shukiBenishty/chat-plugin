@@ -1,0 +1,131 @@
+directive @cacheControl(maxAge: Int, scope: CacheControlScope) on FIELD_DEFINITION | OBJECT | INTERFACE
+
+enum CacheControlScope {
+  PUBLIC
+  PRIVATE
+}
+
+type ChatRoom implements INode {
+  id: ID!
+  subscribers: [Contact]
+  messages: [Message]
+}
+
+type Contact {
+  id: ID!
+  name: String!
+  username: String!
+  online: Boolean!
+  picture: String!
+  messages(last: Int, before: ID, contactId: ID): MessageConnection
+  newMessages: Int
+}
+
+scalar Date
+
+type Emoji {
+  emoji: String!
+}
+
+input EmojiInput {
+  emoji: String!
+}
+
+type File {
+  url: String!
+  fileName: String!
+}
+
+input FileInput {
+  url: String!
+  fileName: String!
+}
+
+type generalInfo {
+  online: Contact
+  typing: Contact
+  typingForMe: Contact
+  readed: Message
+  newMessage: Message
+}
+
+interface INode {
+  id: ID!
+}
+
+type Message implements INode {
+  id: ID!
+  author: Contact!
+  data: MessageData!
+  dateSended: Date!
+  destination: MessageDest!
+  createdAt: Date!
+  readed: Boolean!
+  received: Boolean!
+}
+
+type MessageConnection {
+  edges: [MessageEdge]!
+  pageInfo: PageInfo
+  totalCount: Int!
+}
+
+union MessageData = Text | Emoji | File
+
+union MessageDest = Contact | ChatRoom
+
+type MessageEdge {
+  cursor: String!
+  node: Message
+}
+
+type Mutation {
+  sendMessageText(message: TextInput!, destination: ID!): Message
+  sendMessageEmoji(message: EmojiInput!, destination: ID!): Message
+  sendMessageFile(message: FileInput!, destination: ID!): Message
+  addContact(contactId: ID!): Contact
+  readMassage(messageId: ID!): Message
+  typing(destination: ID!): Boolean
+  online: Boolean
+}
+
+type PageInfo {
+  endCursor: String
+  startCursor: String
+  hasNextPage: Boolean
+  hasPreviousPage: Boolean
+}
+
+type Query {
+  me: User
+  contact(contactId: ID!): Contact
+  message(messageId: ID!): Message
+}
+
+type Subscription {
+  generalInfo(contactId: ID): generalInfo
+  personalMessageSent(contactId: ID): Message
+  publicMessageSent(chatRoom: ID!): Message
+}
+
+type Text {
+  text: String!
+}
+
+input TextInput {
+  text: String!
+}
+
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload
+
+type User implements INode {
+  id: ID!
+  name: String!
+  username: String!
+  picture: String!
+  admin: Boolean!
+  contacts: [Contact]
+  chatRooms: [ChatRoom]
+}
+

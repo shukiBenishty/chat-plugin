@@ -1,0 +1,63 @@
+{
+  "name": "react-chat-window",
+  "version": "1.1.0",
+  "description": "react-chat-window React component",
+  "babel": {
+    "presets": [
+      "@babel/preset-env",
+      "@babel/preset-react"
+    ],
+    "plugins": [
+      "@babel/plugin-proposal-class-properties",
+      "babel-plugin-relay"
+    ]
+  },
+  "scripts": {
+    "dev": "webpack -d",
+    "build": "webpack -p",
+    "get-schema": "babel-node ./scripts/getSchema.js http://localhost:4000/chat/graphql > ./schemas/schema.graphql",
+    "compile": "relay-compiler --src ./src --schema ./schemas/schema.graphql  --extensions=jsx"
+  },
+  "dependencies": {
+    "apollo-link": "^1.2.11",
+    "apollo-link-ws": "^1.0.17",
+    "emoji-js": "^3.4.1",
+    "graphql": "^14.2.1",
+    "prop-types": "15.5.10",
+    "react": "^16.8.3",
+    "react-dom": "^16.8.3",
+    "react-linkify": "^0.2.1",
+    "react-relay": "^3.0.0",
+    "relay-runtime": "^3.0.0",
+    "subscriptions-transport-ws": "^0.9.16"
+  },
+  "peerDependencies": {
+    "react": "16.x"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.3.4",
+    "@babel/node": "^7.2.2",
+    "@babel/plugin-proposal-class-properties": "^7.3.4",
+    "@babel/preset-env": "^7.3.4",
+    "@babel/preset-react": "^7.0.0",
+    "babel-core": "7.0.0-bridge.0",
+    "babel-loader": "^8.0.5",
+    "babel-plugin-relay": "^3.0.0",
+    "babel-polyfill": "^6.26.0",
+    "css-loader": "^2.1.0",
+    "file-loader": "^3.0.1",
+    "node-fetch": "^2.3.0",
+    "relay-compiler": "^3.0.0",
+    "style-loader": "^0.23.1",
+    "webpack": "^4.29.5",
+    "webpack-cli": "^3.2.3",
+    "webpack-dev-server": "^3.2.1"
+  },
+  "author": "",
+  "license": "MIT",
+  "repository": {},
+  "keywords": [
+    "react-component"
+  ]
+}
