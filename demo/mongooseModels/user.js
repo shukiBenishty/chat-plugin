@@ -2,7 +2,6 @@ import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 
-// create a schema
 let userSchema = new Schema({
     name: String,
     username: { type: String, required: true, unique: true, index: true },
