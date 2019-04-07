@@ -4,7 +4,7 @@ import express from "express";
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 
-import graphql, {server} from '/chat-plugin';
+import graphql, {server} from 'chat-plugin';
 
 import session from './sessions.js';
 import index from './routes/index';
@@ -13,7 +13,7 @@ import login from './routes/login';
 
 const app = express();
 
-// view engine setup
+// view engine
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
