@@ -10,7 +10,8 @@ import closeIcon from '../../assets/close-icon.png';
 class ContactList extends Component {
   
     render() {
-      var items = this.props.contacts.map(
+      var items = this.props.contacts &&
+       this.props.contacts.map(
         (contact) => {
           return <ContactItem key={ contact.id }
                     contact={ contact }
@@ -43,7 +44,7 @@ class ContactsWindow extends Component {
       return ( 
             <div className='contact-window'>
                 < ContactHeader onClose={this.props.onClose}> Contact List </ContactHeader> 
-                < ContactList onClick={this.props.onContactClick} contacts={ this.props.user.contacts} />  
+                < ContactList onClick={this.props.onContactClick} contacts={ this.props.user && this.props.user.contacts} />  
             </div >
         )
     }

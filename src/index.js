@@ -11,7 +11,9 @@ import resolvers from './graphql/resolvers.js';
 import subscribers from "./graphql/subscribers";
 import { pubsub } from './graphql/Subscription';
 import { userLoader } from "./graphql/dataLoader";
-import session from './sessions';
+import initClient from './initClent';
+import {dbInit} from './mongooseModels';
+import session, {sessionInit} from './sessions';
 
 const debug = Debug("chat-plugin");
 
@@ -102,12 +104,7 @@ export const server = new ApolloServer({
   playground: {
       settings: {
         "request.credentials": "include"
-      },
-      // tabs: [
-      //   {
-      //     endpoint: "http://localhost:4000/graphql"
-      //   },
-      // ],
+      }
     }
 });
 
@@ -115,5 +112,10 @@ server.applyMiddleware({ app: router });
 
 
 
-export default router;
+export default ( graphqlUrl, websocketURL, dbConnStr, sessionConnStr ) => {
+  initClient(graphqlUrl, websocketURL);
+  dbInit(dbConnStr);
+  sessionInit(sessionConnStr);
+  return router;
+};
   

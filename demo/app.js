@@ -4,7 +4,7 @@ import express from "express";
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 
-import graphql, {server} from 'chat-plugin';
+import graphql, {server} from '/chat-plugin';
 
 import session from './sessions.js';
 import index from './routes/index';
@@ -31,7 +31,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/users', users);
 app.use('/login', login);
 
-app.use('/chat', graphql);
+app.use('/chat', graphql(
+  `https://chat-plugin.herokuapp.com/chat/graphql`,
+  `wss://chat-plugin.herokuapp.com/graphql`,
+  `mongodb://shuki:shuki1@ds231956.mlab.com:31956/chat-plugin`,
+  `mongodb://shuki:shuki1@ds231956.mlab.com:31956/chat-plugin`
+));
 
 
 const httpServer = http.createServer(app);

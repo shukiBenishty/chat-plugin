@@ -16,7 +16,7 @@
     "@babel/node": "^7.2.2",
     "@babel/plugin-proposal-object-rest-spread": "^7.4.0",
     "@babel/preset-env": "^7.4.2",
-    "chat-plugin": "^0.0.8",
+    "chat-plugin": "latest",
     "connect-mongo": "^2.0.1",
     "cookie-parser": "^1.4.4",
     "debug": "^3.1.0",

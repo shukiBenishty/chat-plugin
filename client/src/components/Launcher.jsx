@@ -92,7 +92,7 @@ class App extends Component {
     }
 
     componentDidMount() {
-      this.subscriptionConfig.variables = { contactId: this.props.me.id };
+      this.subscriptionConfig.variables = { contactId: this.props.me && this.props.me.id };
       this.subscription = requestSubscription(
         environment,
         this.subscriptionConfig

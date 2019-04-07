@@ -69,13 +69,15 @@ class Launcher extends Component {
     return (
       <div id="sc-launcher">
         <div className={launcherClassList.join(' ')} onClick={this.handleClick.bind(this)}>
-          <MessageCount contacts={this.props.me.contacts} isOpen={isOpen} />
+          <MessageCount contacts={this.props.me && this.props.me.contacts || []} isOpen={isOpen} />
           <img className={"sc-open-icon"} src={launcherIconActive} />
           <img className={"sc-closed-icon"} src={launcherIcon} />
         </div>
         <div className={areaClassList.join(' ')}>
           <ContactsWindow onClose={this.handleClick.bind(this)} onContactClick={this.onContactClick.bind(this)} user={this.props.me }/>
-          { this.props.me.contacts.map( (contact ) => {
+          { this.props.me &&
+           this.props.me.contacts &&
+           this.props.me.contacts.map( (contact ) => {
               return (
                 this.state.visableContacts[contact.id] &&
                 <ChatWindow 

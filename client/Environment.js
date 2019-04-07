@@ -2,9 +2,6 @@ import { execute } from 'apollo-link';
 import { WebSocketLink } from 'apollo-link-ws';
 import { Environment, Network, RecordSource, Store, QueryResponseCache } from 'relay-runtime'
 import { SubscriptionClient } from 'subscriptions-transport-ws'
-import {graphqlUrl, websocketURL} from '../config'
-
-
 
 const cache = new QueryResponseCache({size: 100, ttl: 100000});
 
@@ -21,7 +18,7 @@ const fetchQuery = async (operation, variables = {}, cacheConfig) => {
     return cachedData;
   }
 
-  return fetch(graphqlUrl , {
+  return fetch('__GRAPHQL_URL__' , {
     method: 'POST',
     headers: {
         'Accept':'application/json',
@@ -50,25 +47,8 @@ const fetchQuery = async (operation, variables = {}, cacheConfig) => {
   })
 
 };
-
   
-// const setupSubscription = (config, variables, cacheConfig, observer ) => {
-//   const query = config.text;
-
-//   const subscriptionClient = new SubscriptionClient(websocketURL, {
-//     reconnect: true
-//   });
-//   subscriptionClient.subscribe({query, variables},
-//     (error, result) => {
-//       observer.onNext({data: result})
-//     })
-
-//   return {
-//     dispose: subscriptionClient.unsubscribe
-//   };
-// }
-  
-const subscriptionClient = new SubscriptionClient(websocketURL, {
+const subscriptionClient = new SubscriptionClient("__WS_URL__", {
   reconnect: true
 });
 

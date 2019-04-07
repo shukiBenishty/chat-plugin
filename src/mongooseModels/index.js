@@ -4,7 +4,6 @@ import Debug from 'debug'
 import User from "./user"
 import Message from "./message"
 import ChatRoom from "./chatRoom"
-import { dbConnStr } from '../../config';
 
 const debug = Debug("chat-plugin:model");
 
@@ -16,13 +15,13 @@ Message(db);
 ChatRoom(db);
 User(db);
 
-(async () => {
+export let dbInit = async (dbConnStr) => {
     try {
         await db.openUri(dbConnStr, { useNewUrlParser: true });
     } catch (err) {
         debug("Error connecting to DB: " + err);
     }
-})();
+};
 
 debug('Pending DB connection');
 
