@@ -9,9 +9,27 @@ class MessageList extends Component {
     this.scrollList.scrollTop = this.scrollList.scrollHeight;
   }
 
+  onScroll(a , b, c, d) {
+    if (this.scrollList.scrollTop < 100) {
+      this._loadMore()
+    }
+  }
+
+  _loadMore() {
+    if (!this.props.relay.hasMore() || this.props.relay.isLoading()) {
+      return;
+    }
+
+    this.props.relay.loadMore(
+      20,  // Fetch the next 10 feed items
+      error => {
+        console.log(error);
+      },
+    );
+  }
   render () {
     return (
-      <div className="sc-message-list" ref={el => this.scrollList = el}>
+      <div className="sc-message-list" onScroll={this.onScroll.bind(this)} ref={el => this.scrollList = el}>
         {this.props.list.messages.edges.map(({node}) => {
           return <Message  key={node.id} message={node} />
         })}

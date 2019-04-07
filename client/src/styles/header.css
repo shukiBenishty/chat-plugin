@@ -12,6 +12,10 @@
   display: flex;
 }
 
+.sc-header.contacts{
+  flex-direction: column;
+  max-width: 250px;
+}
 .sc-header--img {
   border-radius: 50%;
   height: 40px;

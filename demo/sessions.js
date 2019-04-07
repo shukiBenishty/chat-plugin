@@ -13,7 +13,7 @@ let sessionConnect = mongoose.createConnection();
     try {
       await sessionConnect.openUri(sessConnStr, { useNewUrlParser: true });
     } catch (err) {
-      debug(`Error connecting to session backend DB: ${err}`);
+      console.error(`Error connecting to session backend DB: ${err}`);
       process.exit(0);
     }
   })();

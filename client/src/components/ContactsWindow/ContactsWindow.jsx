@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { graphql, createFragmentContainer } from 'react-relay';
 
 import ContactItem from './ContactItem'
+import Search from './Search'
 import closeIcon from '../../assets/close-icon.png';
 
 
@@ -27,12 +28,15 @@ class ContactList extends Component {
 
 const ContactHeader = props => {
     return (
-      <div className="sc-header">
-        <img className="contact-window-img" src="https://a.slack-edge.com/66f9/img/avatars-teams/ava_0001-34.png" alt="" />
-        <div className="sc-header--team-name"> Contact List </div>
-        <div className="sc-header--close-button" onClick={props.onClose}>
-          <img src={closeIcon} alt="" />
+      <div className="sc-header contacts">
+        <div style={{display: "flex"}}>
+          <img className="contact-window-img" src="https://a.slack-edge.com/66f9/img/avatars-teams/ava_0001-34.png" alt="" />
+          <div className="sc-header--team-name"> Contact List </div>
+          <div className="sc-header--close-button" onClick={props.onClose}>
+            <img src={closeIcon} alt="" />
+          </div>
         </div>
+        <Search/>
       </div>
     );
 }
