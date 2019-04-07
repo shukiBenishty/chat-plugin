@@ -4,9 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "init": "git init & heroku git:remote -a chat-plugin",
     "debug": "set DEBUG=chat-plugin* & nodemon --inspect ./app --exec babel-node",
     "start": "babel-node ./app.js",
-    "deploy": "git push -f heroku master"
+    "deploy": "git commit -am 'deploy' & git push -f heroku master"
   },
   "author": "",
   "license": "ISC",
