@@ -129,7 +129,6 @@ class ContactItem extends Component {
       fragment ContactItem_contact on Contact @argumentDefinitions(
                                                   count: { type: "Int" , defaultValue: 20 }
                                                   cursor: { type: "ID" } 
-                                                  contactId: { type: "ID" }
                                                 )
       {
       id

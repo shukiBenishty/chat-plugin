@@ -46,7 +46,7 @@ export default {
           edges.reverse();
           debug("edges: ", edges);
           let restOfMessages = await Message.countDocuments({$and:[ {_id: {$lt: startCursor}}, {$or: or} ] });
-          hasPreviousPage = restOfMessages < 0 ? true : false
+          hasPreviousPage = restOfMessages > 0 ? true : false
           
           debug("hasPreviousPage: ", hasPreviousPage);
           debug("restOfMessages: ", restOfMessages);

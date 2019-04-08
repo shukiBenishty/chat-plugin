@@ -18,7 +18,7 @@ const fetchQuery = async (operation, variables = {}, cacheConfig) => {
     return cachedData;
   }
 
-  return fetch('__GRAPHQL_URL__'/*'http://localhost:4000/chat/graphql'*/, {
+  return fetch('http://localhost:4000/chat/graphql', {
     method: 'POST',
     headers: {
         'Accept':'application/json',
@@ -48,7 +48,7 @@ const fetchQuery = async (operation, variables = {}, cacheConfig) => {
 
 };
   
-const subscriptionClient = new SubscriptionClient("__WS_URL__" /* "ws://localhost:4000/graphql"*/, {
+const subscriptionClient = new SubscriptionClient("ws://localhost:4000/graphql", {
   reconnect: true
 });
 

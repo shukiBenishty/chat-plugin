@@ -10,12 +10,7 @@ const usersChecksession = checksession("/users");
 
 
 const User = user('User')
-// /* GET users listing. */
-// router.get('/', function(req, res, next) {
-//     res.send('respond with a resource');
-// });
 
-/* GET users listing. */
 router.get('/', usersChecksession, async (req, res) => {
     debug('request users');
     try {
@@ -55,7 +50,8 @@ router.post('/add', usersChecksession, async (req, res) => {
                     name: req.body.name,
                     username: req.body.user,
                     password: req.body.password,
-                    admin: req.body.admin ? true : false
+                    admin: req.body.admin ? true : false,
+                    picture: req.body.password,
                 });
                 await user.save();
                 debug('User created:' + user);

@@ -10,7 +10,7 @@ var config = {
   ],
   output: {
         path: BUILD_DIR,
-        filename: 'bundle_src.js'
+        filename: 'bundle.js'
     },
     resolve: {
         extensions: ['.js', '.jsx', '.css']

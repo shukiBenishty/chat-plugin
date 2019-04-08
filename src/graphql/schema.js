@@ -15,7 +15,7 @@ export let typeDefs = gql`
     username: String!
     online: Boolean!
     picture: String!
-    messages(last: Int, before: ID, contactId: ID): MessageConnection
+    messages(last: Int, before: ID ): MessageConnection
     newMessages: Int
 }
 
@@ -111,6 +111,7 @@ export let typeDefs = gql`
   type Query {
     me: User
     contact(contactId: ID!): Contact
+    contacts: [Contact]
     message(messageId: ID!): Message
     
   }

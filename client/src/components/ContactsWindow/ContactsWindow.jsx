@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { graphql, createFragmentContainer } from 'react-relay';
+import IconButton from '@material-ui/core/IconButton';
+import SearchIcon from "@material-ui/icons/Search";
 
 import ContactItem from './ContactItem'
 import Search from './Search'
@@ -26,19 +28,32 @@ class ContactList extends Component {
     }
 }
 
-const ContactHeader = props => {
+class ContactHeader extends Component {
+  state = {
+    search: false
+  }
+  searchClick() {
+    this.setState({
+      search: !this.state.search
+    })
+  }
+  render(){
     return (
       <div className="sc-header contacts">
         <div style={{display: "flex"}}>
           <img className="contact-window-img" src="https://a.slack-edge.com/66f9/img/avatars-teams/ava_0001-34.png" alt="" />
           <div className="sc-header--team-name"> Contact List </div>
-          <div className="sc-header--close-button" onClick={props.onClose}>
+          <IconButton  onClick={this.searchClick.bind(this)} style={{padding: 0, color: "white"}} aria-label="Search">
+            <SearchIcon style={{alignSelf: "center"}}/>
+          </IconButton>
+          <div className="sc-header--close-button" onClick={this.props.onClose}>
             <img src={closeIcon} alt="" />
           </div>
         </div>
-        <Search/>
+        {this.state.search && <Search/>}
       </div>
-    );
+    );  
+  }
 }
 
 

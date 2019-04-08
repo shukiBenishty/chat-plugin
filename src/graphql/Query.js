@@ -1,11 +1,12 @@
 import { userLoader, messageLoader } from "./dataLoader";
 import MongooseModels from "../mongooseModels";
+import { forEach } from "iterall";
 
 const User = MongooseModels('User');
 const Message = MongooseModels('Message');
 
 export default {
-    me: async (_,args, {session}) => {
+    me: (_,args, {session}) => {
       return userLoader.load(session.userId);
     },
     message: (_,args) => {
@@ -14,22 +15,15 @@ export default {
     contact: (_,{contactId}, {session}) => {
       return userLoader.load(contactId);
     },
-    // messages: async (_,args) => {
-    //   try {
-    //     let messages = await Message.find({}).populate("author").populate("destination");
-    //     messages.forEach(messages => {
-    //       messageLoader.prime(`${messages.id}`, messages)
-    //     })
-    //     return messages;
-    //   } catch (error) {
-    //     return new Error(error)
-    //   }
-    // },
-    
-  }
-
-
-  const getEdges = (messages, startCursor, endCursor) => {
-    return 
-    // return [];
+    contacts: async (_,args, {session}) => {
+      let user = await userLoader.load(session.userId.toString());
+      let myContacts = await userLoader.loadMany( user.contacts.map( c => c._id.toString() ))
+      let userIds = myContacts.map(u => `${u.id}`)
+      userIds.push(`${session.userId}`)
+      let users = await User.find({ _id: { $nin: userIds } })
+      users.forEach(u => {
+        userLoader.prime(`${u.id}`, u);
+      });
+      return users;
+    } 
   }

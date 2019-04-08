@@ -56,6 +56,7 @@ class ChatWindow extends Component {
           />
           <MessageList
             list={this.props.contact}
+            contactId={this.props.contact.id}
             imageUrl={this.props.contact.picture}
           />
           <UserInput

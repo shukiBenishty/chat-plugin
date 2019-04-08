@@ -6,10 +6,23 @@ import Message from './Message'
 class MessageList extends Component {
 
   componentDidUpdate(prevProps, prevState) {
-    this.scrollList.scrollTop = this.scrollList.scrollHeight;
+    try {
+      var currentLastMessage = this.props.list.messages.edges[this.props.list.messages.edges.length - 1].node;
+      var prevLastMessage = prevProps.list.messages.edges[prevProps.list.messages.edges.length - 1].node;
+      if(currentLastMessage.id !== prevLastMessage.id){
+        //new message arived
+        this.scrollList.scrollTop = this.scrollList.scrollHeight;
+      }    
+    } catch (error) {
+      
+    }
   }
 
-  onScroll(a , b, c, d) {
+  componentDidMount() {
+    this.scrollList.scrollTop = this.scrollList.scrollHeight; 
+  }
+
+  onScroll(a ) {
     if (this.scrollList.scrollTop < 100) {
       this._loadMore()
     }
@@ -23,7 +36,7 @@ class MessageList extends Component {
     this.props.relay.loadMore(
       20,  // Fetch the next 10 feed items
       error => {
-        console.log(error);
+        error && console.error(error);
       },
     );
   }
@@ -47,7 +60,6 @@ class MessageList extends Component {
       @argumentDefinitions(
         count: { type: "Int" , defaultValue: 20 }
         cursor: { type: "ID" } 
-        contactId: { type: "ID" }
       ) {
         messages(last: $count, before: $cursor)
           @connection(key: "MessageList_messages") {

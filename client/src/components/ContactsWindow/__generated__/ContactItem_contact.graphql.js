@@ -83,12 +83,6 @@ return {
       "name": "cursor",
       "type": "ID",
       "defaultValue": null
-    },
-    {
-      "kind": "LocalArgument",
-      "name": "contactId",
-      "type": "ID",
-      "defaultValue": null
     }
   ],
   "selections": [
@@ -278,5 +272,5 @@ return {
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '6330ca9afcc4b4c1cc5e2499695cca7f';
+(node/*: any*/).hash = '4e811677d0cb1773901c5fc72acf986b';
 module.exports = node;

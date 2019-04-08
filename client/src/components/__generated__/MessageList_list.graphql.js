@@ -60,12 +60,6 @@ const node/*: ReaderFragment*/ = {
       "name": "cursor",
       "type": "ID",
       "defaultValue": null
-    },
-    {
-      "kind": "LocalArgument",
-      "name": "contactId",
-      "type": "ID",
-      "defaultValue": null
     }
   ],
   "selections": [
@@ -170,5 +164,5 @@ const node/*: ReaderFragment*/ = {
   ]
 };
 // prettier-ignore
-(node/*: any*/).hash = 'ca89d358481d2bb16120b605a17d13fb';
+(node/*: any*/).hash = 'd20dcd2ba5cbdecd21b35e37ed0dc33a';
 module.exports = node;
