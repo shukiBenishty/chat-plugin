@@ -7,10 +7,11 @@ let userSchema = new Schema({
     name: String,
     username: { type: String, required: true, unique: true, index: true },
     password: { type: String, required: true },
-    contacts: {type: [ {type: Schema.Types.ObjectId, ref: 'User', default: [], unique: true}] },
-    chatRooms: [ {type: Schema.Types.ObjectId, ref: 'ChatRoom',  default: [],  unique: true}],
+    contacts: {type: [ {type: Schema.Types.ObjectId, ref: 'User', default: [] }] },
+    chatRooms: [ {type: Schema.Types.ObjectId, ref: 'ChatRoom',  default: [] }],
     picture: { type: String, default: "" },
     admin: { type: Boolean, default: false, required: true },
+    online: { type: Boolean, default: false },
     createdAt: Date,
     updatedAt: Date
 });
