@@ -17,8 +17,19 @@ type Contact {
   username: String!
   online: Boolean!
   picture: String!
-  messages(last: Int, before: ID): MessageConnection
+  messages(last: Int, before: ID): MessagesConnection
   newMessages: Int
+}
+
+type ContactEdge {
+  cursor: String!
+  node: Contact
+}
+
+type ContactsConnection {
+  edges: [ContactEdge]!
+  pageInfo: PageInfo
+  totalCount: Int!
 }
 
 scalar Date
@@ -64,12 +75,6 @@ type Message implements INode {
   received: Boolean!
 }
 
-type MessageConnection {
-  edges: [MessageEdge]!
-  pageInfo: PageInfo
-  totalCount: Int!
-}
-
 union MessageData = Text | Emoji | File
 
 union MessageDest = Contact | ChatRoom
@@ -77,6 +82,12 @@ union MessageDest = Contact | ChatRoom
 type MessageEdge {
   cursor: String!
   node: Message
+}
+
+type MessagesConnection {
+  edges: [MessageEdge]!
+  pageInfo: PageInfo
+  totalCount: Int!
 }
 
 type Mutation {
@@ -126,7 +137,7 @@ type User implements INode {
   username: String!
   picture: String!
   admin: Boolean!
-  contacts: [Contact]
+  contacts(first: Int, after: ID): ContactsConnection
   chatRooms: [ChatRoom]
 }
 

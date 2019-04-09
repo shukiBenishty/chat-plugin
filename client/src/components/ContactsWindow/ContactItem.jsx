@@ -75,7 +75,8 @@ class ContactItem extends Component {
   
     render() {
       var contact = this.props.contact;
-      let edge = contact.messages.edges[contact.messages.edges.length - 1];
+      let edges = contact && contact.messages && contact.messages.edges;
+      let edge = edges && edges[edges.length - 1];
       let message = edge && edge.node;
       let sendToMe = message && contact.id === message.author.id;
       let checkClassList = message && [

@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 0c804f28bf6b1f2e8f490f372fb4b055
+ * @relayHash 4cc2765003d2f9c04520b8264eb56298
  */
 
 /* eslint-disable */
@@ -236,7 +236,7 @@ return {
             "name": "__MessageList_messages_connection",
             "storageKey": null,
             "args": null,
-            "concreteType": "MessageConnection",
+            "concreteType": "MessagesConnection",
             "plural": false,
             "selections": [
               {
@@ -297,7 +297,7 @@ return {
             "name": "messages",
             "storageKey": null,
             "args": (v7/*: any*/),
-            "concreteType": "MessageConnection",
+            "concreteType": "MessagesConnection",
             "plural": false,
             "selections": [
               {

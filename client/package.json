@@ -16,13 +16,14 @@
     "dev": "webpack -d -w",
     "build": "webpack -p",
     "get-schema": "babel-node ./scripts/getSchema.js http://localhost:4000/chat/graphql > ./schemas/schema.graphql",
-    "compile": "relay-compiler --src ./src --schema ./schemas/schema.graphql  --extensions=jsx"
+    "compile": "relay-compiler --src ./src --schema ./schemas/schema.graphql  --extensions=jsx --watch"
   },
   "dependencies": {
     "@material-ui/core": "^3.9.3",
     "@material-ui/icons": "^3.0.2",
     "apollo-link": "^1.2.11",
     "apollo-link-ws": "^1.0.17",
+    "downshift": "^3.2.7",
     "emoji-js": "^3.4.1",
     "graphql": "^14.2.1",
     "prop-types": "15.5.10",
@@ -30,7 +31,6 @@
     "react-dom": "^16.8.3",
     "react-linkify": "^0.2.1",
     "react-relay": "^3.0.0",
-    "react-select": "^2.4.2",
     "relay-runtime": "^3.0.0",
     "subscriptions-transport-ws": "^0.9.16"
   },

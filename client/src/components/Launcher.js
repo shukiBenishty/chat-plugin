@@ -66,25 +66,24 @@ class Launcher extends Component {
       'sc-chat-wnidows-area',
       (isOpen ? 'opened' : ''),
     ];
+    let edges = this.props.me && this.props.me.contacts && this.props.me.contacts.edges;
     return (
       <div id="sc-launcher">
         <div className={launcherClassList.join(' ')} onClick={this.handleClick.bind(this)}>
-          <MessageCount contacts={this.props.me && this.props.me.contacts || []} isOpen={isOpen} />
+          <MessageCount contacts={ edges || []} isOpen={isOpen} />
           <img className={"sc-open-icon"} src={launcherIconActive} />
           <img className={"sc-closed-icon"} src={launcherIcon} />
         </div>
         <div className={areaClassList.join(' ')}>
           <ContactsWindow onClose={this.handleClick.bind(this)} onContactClick={this.onContactClick.bind(this)} user={this.props.me }/>
-          { this.props.me &&
-           this.props.me.contacts &&
-           this.props.me.contacts.map( (contact ) => {
+          { edges.map( ({node} ) => {
               return (
-                this.state.visableContacts[contact.id] &&
+                this.state.visableContacts[node.id] &&
                 <ChatWindow 
-                  key={contact.id}
-                  contact={contact}
+                  key={node.id}
+                  contact={node}
                   isOpen={true}
-                  onClose={() => {this.onContactClose(contact)} } 
+                  onClose={() => {this.onContactClose(node)} } 
                   showEmoji={this.props.showEmoji}
                 />
               )
@@ -100,8 +99,8 @@ const MessageCount = (props) => {
 
   if (props.isOpen === true) return null;
   let count = 0;
-  props.contacts.forEach(contact => {
-    count += contact.newMessages;
+  props.contacts.forEach(({node}) => {
+    count += node.newMessages;
   });
   if (count === 0) return null;
   return (

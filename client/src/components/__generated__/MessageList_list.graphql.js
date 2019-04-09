@@ -69,7 +69,7 @@ const node/*: ReaderFragment*/ = {
       "name": "__MessageList_messages_connection",
       "storageKey": null,
       "args": null,
-      "concreteType": "MessageConnection",
+      "concreteType": "MessagesConnection",
       "plural": false,
       "selections": [
         {

@@ -15,7 +15,7 @@ export let typeDefs = gql`
     username: String!
     online: Boolean!
     picture: String!
-    messages(last: Int, before: ID ): MessageConnection
+    messages(last: Int, before: ID ): MessagesConnection
     newMessages: Int
 }
 
@@ -26,7 +26,7 @@ export let typeDefs = gql`
     username: String!
     picture: String!
     admin: Boolean!
-    contacts: [Contact]
+    contacts(first: Int, after: ID ): ContactsConnection
     chatRooms: [ChatRoom]
   }
 
@@ -93,8 +93,19 @@ export let typeDefs = gql`
     node: Message
   }
 
-  type MessageConnection {
+  type MessagesConnection {
       edges: [MessageEdge]!
+      pageInfo: PageInfo
+      totalCount: Int!
+  }
+
+  type ContactEdge {
+    cursor: String!
+    node: Contact
+  }
+
+  type ContactsConnection {
+      edges: [ContactEdge]!
       pageInfo: PageInfo
       totalCount: Int!
   }

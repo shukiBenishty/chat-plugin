@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash ed66a21cf28dda8189a8e246fb5aced7
+ * @relayHash ca2bb2e744c03c9dbb20ff0470f66558
  */
 
 /* eslint-disable */
@@ -18,11 +18,15 @@ export type Launcher_QueryResponse = {|
     +name: string,
     +username: string,
     +admin: boolean,
-    +contacts: ?$ReadOnlyArray<?{|
-      +id: string,
-      +newMessages: ?number,
-      +$fragmentRefs: ChatWindow_contact$ref,
-    |}>,
+    +contacts: ?{|
+      +edges: $ReadOnlyArray<?{|
+        +node: ?{|
+          +id: string,
+          +newMessages: ?number,
+          +$fragmentRefs: ChatWindow_contact$ref,
+        |}
+      |}>
+    |},
     +$fragmentRefs: ContactsWindow_user$ref,
   |}
 |};
@@ -40,10 +44,20 @@ query Launcher_Query {
     name
     username
     admin
-    contacts {
-      id
-      ...ChatWindow_contact
-      newMessages
+    contacts(first: 2147483647) {
+      edges {
+        node {
+          id
+          ...ChatWindow_contact
+          newMessages
+          __typename
+        }
+        cursor
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
+      }
     }
     ...ContactsWindow_user
   }
@@ -60,13 +74,23 @@ fragment ChatWindow_contact on Contact {
 }
 
 fragment ContactsWindow_user on User {
-  contacts {
-    id
-    name
-    username
-    online
-    newMessages
-    ...ContactItem_contact
+  contacts(first: 2147483647) {
+    edges {
+      node {
+        id
+        name
+        username
+        online
+        newMessages
+        ...ContactItem_contact
+        __typename
+      }
+      cursor
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
   }
 }
 
@@ -208,11 +232,59 @@ v4 = {
 v5 = {
   "kind": "ScalarField",
   "alias": null,
+  "name": "__typename",
+  "args": null,
+  "storageKey": null
+},
+v6 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "cursor",
+  "args": null,
+  "storageKey": null
+},
+v7 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "endCursor",
+  "args": null,
+  "storageKey": null
+},
+v8 = {
+  "kind": "LinkedField",
+  "alias": null,
+  "name": "pageInfo",
+  "storageKey": null,
+  "args": null,
+  "concreteType": "PageInfo",
+  "plural": false,
+  "selections": [
+    (v7/*: any*/),
+    {
+      "kind": "ScalarField",
+      "alias": null,
+      "name": "hasNextPage",
+      "args": null,
+      "storageKey": null
+    }
+  ]
+},
+v9 = [
+  {
+    "kind": "Literal",
+    "name": "first",
+    "value": 2147483647,
+    "type": "Int"
+  }
+],
+v10 = {
+  "kind": "ScalarField",
+  "alias": null,
   "name": "picture",
   "args": null,
   "storageKey": null
 },
-v6 = [
+v11 = [
   {
     "kind": "Literal",
     "name": "last",
@@ -220,14 +292,7 @@ v6 = [
     "type": "Int"
   }
 ],
-v7 = {
-  "kind": "ScalarField",
-  "alias": null,
-  "name": "__typename",
-  "args": null,
-  "storageKey": null
-},
-v8 = [
+v12 = [
   (v0/*: any*/)
 ];
 return {
@@ -254,20 +319,45 @@ return {
           (v3/*: any*/),
           {
             "kind": "LinkedField",
-            "alias": null,
-            "name": "contacts",
+            "alias": "contacts",
+            "name": "__Launcher_contacts_connection",
             "storageKey": null,
             "args": null,
-            "concreteType": "Contact",
-            "plural": true,
+            "concreteType": "ContactsConnection",
+            "plural": false,
             "selections": [
-              (v0/*: any*/),
               {
-                "kind": "FragmentSpread",
-                "name": "ChatWindow_contact",
-                "args": null
+                "kind": "LinkedField",
+                "alias": null,
+                "name": "edges",
+                "storageKey": null,
+                "args": null,
+                "concreteType": "ContactEdge",
+                "plural": true,
+                "selections": [
+                  {
+                    "kind": "LinkedField",
+                    "alias": null,
+                    "name": "node",
+                    "storageKey": null,
+                    "args": null,
+                    "concreteType": "Contact",
+                    "plural": false,
+                    "selections": [
+                      (v0/*: any*/),
+                      {
+                        "kind": "FragmentSpread",
+                        "name": "ChatWindow_contact",
+                        "args": null
+                      },
+                      (v4/*: any*/),
+                      (v5/*: any*/)
+                    ]
+                  },
+                  (v6/*: any*/)
+                ]
               },
-              (v4/*: any*/)
+              (v8/*: any*/)
             ]
           },
           {
@@ -301,238 +391,260 @@ return {
             "kind": "LinkedField",
             "alias": null,
             "name": "contacts",
-            "storageKey": null,
-            "args": null,
-            "concreteType": "Contact",
-            "plural": true,
+            "storageKey": "contacts(first:2147483647)",
+            "args": (v9/*: any*/),
+            "concreteType": "ContactsConnection",
+            "plural": false,
             "selections": [
-              (v0/*: any*/),
-              (v1/*: any*/),
-              (v2/*: any*/),
-              {
-                "kind": "ScalarField",
-                "alias": null,
-                "name": "online",
-                "args": null,
-                "storageKey": null
-              },
-              (v5/*: any*/),
-              (v4/*: any*/),
               {
                 "kind": "LinkedField",
                 "alias": null,
-                "name": "messages",
-                "storageKey": "messages(last:20)",
-                "args": (v6/*: any*/),
-                "concreteType": "MessageConnection",
-                "plural": false,
+                "name": "edges",
+                "storageKey": null,
+                "args": null,
+                "concreteType": "ContactEdge",
+                "plural": true,
                 "selections": [
                   {
                     "kind": "LinkedField",
                     "alias": null,
-                    "name": "edges",
+                    "name": "node",
                     "storageKey": null,
                     "args": null,
-                    "concreteType": "MessageEdge",
-                    "plural": true,
+                    "concreteType": "Contact",
+                    "plural": false,
                     "selections": [
+                      (v0/*: any*/),
+                      (v1/*: any*/),
+                      (v2/*: any*/),
                       {
                         "kind": "ScalarField",
                         "alias": null,
-                        "name": "cursor",
+                        "name": "online",
                         "args": null,
                         "storageKey": null
                       },
+                      (v10/*: any*/),
+                      (v4/*: any*/),
                       {
                         "kind": "LinkedField",
                         "alias": null,
-                        "name": "node",
-                        "storageKey": null,
-                        "args": null,
-                        "concreteType": "Message",
+                        "name": "messages",
+                        "storageKey": "messages(last:20)",
+                        "args": (v11/*: any*/),
+                        "concreteType": "MessagesConnection",
                         "plural": false,
                         "selections": [
-                          (v0/*: any*/),
                           {
                             "kind": "LinkedField",
                             "alias": null,
-                            "name": "author",
+                            "name": "edges",
                             "storageKey": null,
                             "args": null,
-                            "concreteType": "Contact",
-                            "plural": false,
+                            "concreteType": "MessageEdge",
+                            "plural": true,
                             "selections": [
-                              (v0/*: any*/),
-                              (v5/*: any*/)
-                            ]
-                          },
-                          {
-                            "kind": "LinkedField",
-                            "alias": null,
-                            "name": "data",
-                            "storageKey": null,
-                            "args": null,
-                            "concreteType": null,
-                            "plural": false,
-                            "selections": [
-                              (v7/*: any*/),
+                              (v6/*: any*/),
                               {
-                                "kind": "InlineFragment",
-                                "type": "File",
+                                "kind": "LinkedField",
+                                "alias": null,
+                                "name": "node",
+                                "storageKey": null,
+                                "args": null,
+                                "concreteType": "Message",
+                                "plural": false,
                                 "selections": [
-                                  (v7/*: any*/),
+                                  (v0/*: any*/),
+                                  {
+                                    "kind": "LinkedField",
+                                    "alias": null,
+                                    "name": "author",
+                                    "storageKey": null,
+                                    "args": null,
+                                    "concreteType": "Contact",
+                                    "plural": false,
+                                    "selections": [
+                                      (v0/*: any*/),
+                                      (v10/*: any*/)
+                                    ]
+                                  },
+                                  {
+                                    "kind": "LinkedField",
+                                    "alias": null,
+                                    "name": "data",
+                                    "storageKey": null,
+                                    "args": null,
+                                    "concreteType": null,
+                                    "plural": false,
+                                    "selections": [
+                                      (v5/*: any*/),
+                                      {
+                                        "kind": "InlineFragment",
+                                        "type": "File",
+                                        "selections": [
+                                          (v5/*: any*/),
+                                          {
+                                            "kind": "ScalarField",
+                                            "alias": null,
+                                            "name": "url",
+                                            "args": null,
+                                            "storageKey": null
+                                          },
+                                          {
+                                            "kind": "ScalarField",
+                                            "alias": null,
+                                            "name": "fileName",
+                                            "args": null,
+                                            "storageKey": null
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "kind": "InlineFragment",
+                                        "type": "Emoji",
+                                        "selections": [
+                                          (v5/*: any*/),
+                                          {
+                                            "kind": "ScalarField",
+                                            "alias": null,
+                                            "name": "emoji",
+                                            "args": null,
+                                            "storageKey": null
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "kind": "InlineFragment",
+                                        "type": "Text",
+                                        "selections": [
+                                          (v5/*: any*/),
+                                          {
+                                            "kind": "ScalarField",
+                                            "alias": null,
+                                            "name": "text",
+                                            "args": null,
+                                            "storageKey": null
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  },
                                   {
                                     "kind": "ScalarField",
                                     "alias": null,
-                                    "name": "url",
+                                    "name": "dateSended",
+                                    "args": null,
+                                    "storageKey": null
+                                  },
+                                  {
+                                    "kind": "LinkedField",
+                                    "alias": null,
+                                    "name": "destination",
+                                    "storageKey": null,
+                                    "args": null,
+                                    "concreteType": null,
+                                    "plural": false,
+                                    "selections": [
+                                      (v5/*: any*/),
+                                      {
+                                        "kind": "InlineFragment",
+                                        "type": "ChatRoom",
+                                        "selections": (v12/*: any*/)
+                                      },
+                                      {
+                                        "kind": "InlineFragment",
+                                        "type": "Contact",
+                                        "selections": (v12/*: any*/)
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "ScalarField",
+                                    "alias": null,
+                                    "name": "createdAt",
                                     "args": null,
                                     "storageKey": null
                                   },
                                   {
                                     "kind": "ScalarField",
                                     "alias": null,
-                                    "name": "fileName",
+                                    "name": "readed",
                                     "args": null,
                                     "storageKey": null
-                                  }
-                                ]
-                              },
-                              {
-                                "kind": "InlineFragment",
-                                "type": "Emoji",
-                                "selections": [
-                                  (v7/*: any*/),
+                                  },
                                   {
                                     "kind": "ScalarField",
                                     "alias": null,
-                                    "name": "emoji",
+                                    "name": "received",
                                     "args": null,
                                     "storageKey": null
-                                  }
-                                ]
-                              },
-                              {
-                                "kind": "InlineFragment",
-                                "type": "Text",
-                                "selections": [
-                                  (v7/*: any*/),
-                                  {
-                                    "kind": "ScalarField",
-                                    "alias": null,
-                                    "name": "text",
-                                    "args": null,
-                                    "storageKey": null
-                                  }
+                                  },
+                                  (v5/*: any*/)
                                 ]
                               }
                             ]
-                          },
-                          {
-                            "kind": "ScalarField",
-                            "alias": null,
-                            "name": "dateSended",
-                            "args": null,
-                            "storageKey": null
                           },
                           {
                             "kind": "LinkedField",
                             "alias": null,
-                            "name": "destination",
+                            "name": "pageInfo",
                             "storageKey": null,
                             "args": null,
-                            "concreteType": null,
+                            "concreteType": "PageInfo",
                             "plural": false,
                             "selections": [
                               (v7/*: any*/),
                               {
-                                "kind": "InlineFragment",
-                                "type": "ChatRoom",
-                                "selections": (v8/*: any*/)
+                                "kind": "ScalarField",
+                                "alias": null,
+                                "name": "startCursor",
+                                "args": null,
+                                "storageKey": null
                               },
                               {
-                                "kind": "InlineFragment",
-                                "type": "Contact",
-                                "selections": (v8/*: any*/)
+                                "kind": "ScalarField",
+                                "alias": null,
+                                "name": "hasPreviousPage",
+                                "args": null,
+                                "storageKey": null
                               }
                             ]
                           },
                           {
                             "kind": "ScalarField",
                             "alias": null,
-                            "name": "createdAt",
+                            "name": "totalCount",
                             "args": null,
                             "storageKey": null
-                          },
-                          {
-                            "kind": "ScalarField",
-                            "alias": null,
-                            "name": "readed",
-                            "args": null,
-                            "storageKey": null
-                          },
-                          {
-                            "kind": "ScalarField",
-                            "alias": null,
-                            "name": "received",
-                            "args": null,
-                            "storageKey": null
-                          },
-                          (v7/*: any*/)
+                          }
                         ]
-                      }
-                    ]
-                  },
-                  {
-                    "kind": "LinkedField",
-                    "alias": null,
-                    "name": "pageInfo",
-                    "storageKey": null,
-                    "args": null,
-                    "concreteType": "PageInfo",
-                    "plural": false,
-                    "selections": [
-                      {
-                        "kind": "ScalarField",
-                        "alias": null,
-                        "name": "endCursor",
-                        "args": null,
-                        "storageKey": null
                       },
                       {
-                        "kind": "ScalarField",
+                        "kind": "LinkedHandle",
                         "alias": null,
-                        "name": "startCursor",
-                        "args": null,
-                        "storageKey": null
+                        "name": "messages",
+                        "args": (v11/*: any*/),
+                        "handle": "connection",
+                        "key": "MessageList_messages",
+                        "filters": null
                       },
-                      {
-                        "kind": "ScalarField",
-                        "alias": null,
-                        "name": "hasPreviousPage",
-                        "args": null,
-                        "storageKey": null
-                      }
+                      (v5/*: any*/)
                     ]
                   },
-                  {
-                    "kind": "ScalarField",
-                    "alias": null,
-                    "name": "totalCount",
-                    "args": null,
-                    "storageKey": null
-                  }
+                  (v6/*: any*/)
                 ]
               },
-              {
-                "kind": "LinkedHandle",
-                "alias": null,
-                "name": "messages",
-                "args": (v6/*: any*/),
-                "handle": "connection",
-                "key": "MessageList_messages",
-                "filters": null
-              }
+              (v8/*: any*/)
             ]
+          },
+          {
+            "kind": "LinkedHandle",
+            "alias": null,
+            "name": "contacts",
+            "args": (v9/*: any*/),
+            "handle": "connection",
+            "key": "Launcher_contacts",
+            "filters": null
           }
         ]
       }
@@ -542,11 +654,23 @@ return {
     "operationKind": "query",
     "name": "Launcher_Query",
     "id": null,
-    "text": "query Launcher_Query {\n  me {\n    id\n    name\n    username\n    admin\n    contacts {\n      id\n      ...ChatWindow_contact\n      newMessages\n    }\n    ...ContactsWindow_user\n  }\n}\n\nfragment ChatWindow_contact on Contact {\n  id\n  name\n  username\n  online\n  picture\n  newMessages\n  ...MessageList_list\n}\n\nfragment ContactsWindow_user on User {\n  contacts {\n    id\n    name\n    username\n    online\n    newMessages\n    ...ContactItem_contact\n  }\n}\n\nfragment ContactItem_contact on Contact {\n  id\n  name\n  newMessages\n  online\n  picture\n  messages(last: 20) {\n    edges {\n      node {\n        id\n        author {\n          id\n        }\n        data {\n          __typename\n          ... on Text {\n            __typename\n            text\n          }\n          ... on Emoji {\n            __typename\n            emoji\n          }\n          ... on File {\n            __typename\n            url\n            fileName\n          }\n        }\n        readed\n        received\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment MessageList_list on Contact {\n  messages(last: 20) {\n    edges {\n      cursor\n      node {\n        id\n        ...Message_message\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      startCursor\n      hasPreviousPage\n    }\n    totalCount\n  }\n}\n\nfragment Message_message on Message {\n  id\n  author {\n    id\n    picture\n  }\n  data {\n    __typename\n    ... on Text {\n      __typename\n      text\n    }\n    ... on Emoji {\n      __typename\n      emoji\n    }\n    ... on File {\n      __typename\n      url\n      fileName\n    }\n  }\n  dateSended\n  destination {\n    __typename\n    ... on Contact {\n      id\n    }\n    ... on ChatRoom {\n      id\n    }\n  }\n  createdAt\n  readed\n  received\n}\n",
-    "metadata": {}
+    "text": "query Launcher_Query {\n  me {\n    id\n    name\n    username\n    admin\n    contacts(first: 2147483647) {\n      edges {\n        node {\n          id\n          ...ChatWindow_contact\n          newMessages\n          __typename\n        }\n        cursor\n      }\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n    ...ContactsWindow_user\n  }\n}\n\nfragment ChatWindow_contact on Contact {\n  id\n  name\n  username\n  online\n  picture\n  newMessages\n  ...MessageList_list\n}\n\nfragment ContactsWindow_user on User {\n  contacts(first: 2147483647) {\n    edges {\n      node {\n        id\n        name\n        username\n        online\n        newMessages\n        ...ContactItem_contact\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment ContactItem_contact on Contact {\n  id\n  name\n  newMessages\n  online\n  picture\n  messages(last: 20) {\n    edges {\n      node {\n        id\n        author {\n          id\n        }\n        data {\n          __typename\n          ... on Text {\n            __typename\n            text\n          }\n          ... on Emoji {\n            __typename\n            emoji\n          }\n          ... on File {\n            __typename\n            url\n            fileName\n          }\n        }\n        readed\n        received\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment MessageList_list on Contact {\n  messages(last: 20) {\n    edges {\n      cursor\n      node {\n        id\n        ...Message_message\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      startCursor\n      hasPreviousPage\n    }\n    totalCount\n  }\n}\n\nfragment Message_message on Message {\n  id\n  author {\n    id\n    picture\n  }\n  data {\n    __typename\n    ... on Text {\n      __typename\n      text\n    }\n    ... on Emoji {\n      __typename\n      emoji\n    }\n    ... on File {\n      __typename\n      url\n      fileName\n    }\n  }\n  dateSended\n  destination {\n    __typename\n    ... on Contact {\n      id\n    }\n    ... on ChatRoom {\n      id\n    }\n  }\n  createdAt\n  readed\n  received\n}\n",
+    "metadata": {
+      "connection": [
+        {
+          "count": null,
+          "cursor": null,
+          "direction": "forward",
+          "path": [
+            "me",
+            "contacts"
+          ]
+        }
+      ]
+    }
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '75f34bfda06769b6cedae2395fba8e1c';
+(node/*: any*/).hash = '7a31e847af71cd7426ebd6407ecc374c';
 module.exports = node;

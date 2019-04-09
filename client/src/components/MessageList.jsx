@@ -41,9 +41,10 @@ class MessageList extends Component {
     );
   }
   render () {
+    let edges = (this.props.list.messages && this.props.list.messages.edges) || []
     return (
       <div className="sc-message-list" onScroll={this.onScroll.bind(this)} ref={el => this.scrollList = el}>
-        {this.props.list.messages.edges.map(({node}) => {
+        {edges.map(({node}) => {
           return <Message  key={node.id} message={node} />
         })}
       </div>)

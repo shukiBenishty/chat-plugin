@@ -51,7 +51,7 @@ router.post('/add', usersChecksession, async (req, res) => {
                     username: req.body.user,
                     password: req.body.password,
                     admin: req.body.admin ? true : false,
-                    picture: req.body.password,
+                    picture: req.body.picture,
                 });
                 await user.save();
                 debug('User created:' + user);

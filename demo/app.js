@@ -31,13 +31,20 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/users', users);
 app.use('/login', login);
 
-app.use('/chat', graphql(
-  `http://localhost:4000/chat/graphql`,
-  `ws://localhost:4000/graphql`,
-  `mongodb://localhost/chat-plugin`,
-  `mongodb://localhost/chat-plugin`
-));
+// app.use('/chat', graphql(
+//   `http://localhost:4000/chat/graphql`,
+//   `ws://localhost:4000/graphql`,
+//   `mongodb://localhost/chat-plugin`,
+//   `mongodb://localhost/chat-plugin`
+// ));
 
+
+app.use('/chat', graphql(
+  `https://chat-plugin.herokuapp.com/chat/graphql`,
+  `wss://chat-plugin.herokuapp.com/graphql`,
+  `mongodb://shuki:shuki1@ds231956.mlab.com:31956/chat-plugin`,
+  `mongodb://shuki:shuki1@ds231956.mlab.com:31956/chat-plugin`
+));
 
 const httpServer = http.createServer(app);
 server.installSubscriptionHandlers(httpServer);

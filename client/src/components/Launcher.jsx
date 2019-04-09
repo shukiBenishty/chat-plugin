@@ -63,11 +63,16 @@ const query = graphql`
       name
       username
       admin
-      contacts {
-        id
-        ...ChatWindow_contact
-        newMessages
-      }
+      contacts(first: 2147483647 # max GraphQLInt
+        ) @connection(key: "Launcher_contacts") {
+          edges {
+            node {
+              id
+              ...ChatWindow_contact
+              newMessages
+              }
+            }
+        }
       ...ContactsWindow_user
     }
   }`
