@@ -4,7 +4,7 @@ import express from "express";
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 
-import graphql, {server} from '../lib';
+import graphql, {server} from 'chat-plugin';
 
 import session from './sessions.js';
 import index from './routes/index';
