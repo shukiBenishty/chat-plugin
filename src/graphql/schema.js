@@ -27,7 +27,7 @@ export let typeDefs = gql`
     picture: String!
     admin: Boolean!
     contacts(first: Int, after: ID ): ContactsConnection
-    chatRooms: [ChatRoom]
+    groups: [Group]
   }
 
 
@@ -46,7 +46,7 @@ export let typeDefs = gql`
 
   union MessageData = Text | Emoji | File
   
-  union MessageDest = Contact | ChatRoom
+  union MessageDest = Contact | Group
 
   type Message implements INode {
     id: ID!
@@ -60,7 +60,7 @@ export let typeDefs = gql`
     received: Boolean!
   }
 
-  type ChatRoom implements INode {
+  type Group implements INode {
     id: ID!
 
     subscribers: [Contact]
@@ -140,7 +140,7 @@ export let typeDefs = gql`
   type Subscription {
     generalInfo(contactId: ID): generalInfo
     personalMessageSent(contactId: ID): Message
-    publicMessageSent(chatRoom: ID!): Message
+    publicMessageSent(group: ID!): Message
 
   }
 `;

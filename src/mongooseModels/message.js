@@ -10,7 +10,7 @@ const messageSchema = new Schema({
     destination: {type: Schema.Types.ObjectId, required: true,  refPath: 'destinationModel', index: true},
     destinationModel: {
         type: String,
-        enum: ['User', 'ChatRoom']
+        enum: ['User', 'Group']
     },
     createdAt: Date,
     updatedAt: Date,

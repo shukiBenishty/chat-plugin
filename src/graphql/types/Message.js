@@ -2,7 +2,7 @@ import MongooseModels from "../../mongooseModels";
 
 
 const Message = MongooseModels('Message');
-const ChatRoom = MongooseModels('ChatRoom')
+const Group = MongooseModels('Group')
 
 
 export default { 

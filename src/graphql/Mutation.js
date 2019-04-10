@@ -1,11 +1,11 @@
 import MongooseModels from "../mongooseModels";
 import { pubsub } from "./Subscription";
 import subscribers from "./subscribers";
-import { userLoader, chatRoomLoader, messageLoader } from "./dataLoader";
+import { userLoader, groupLoader, messageLoader } from "./dataLoader";
 
 const User = MongooseModels('User');
 const Message = MongooseModels('Message');
-const ChatRoom = MongooseModels('ChatRoom')
+const Group = MongooseModels('Group')
 
 
 
@@ -13,8 +13,8 @@ const sendMessage =  async (parent, args, {session}) => {
 
   let publish = {};
 
-  let chatRoom = await chatRoomLoader.load(args.destination);
-  let destModel = chatRoom ? "ChatRoom" : "User";
+  let group = await groupLoader.load(args.destination);
+  let destModel = group ? "Group" : "User";
   let message = new Message({
     author: session.userId,
     data: args.message,

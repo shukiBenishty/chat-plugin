@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 2e0b5db1213a6438acfe82443901fd8e
+ * @relayHash 79c61ebaef68b7bbbf1bde5bd4405b43
  */
 
 /* eslint-disable */
@@ -96,7 +96,7 @@ fragment Message_message on Message {
     ... on Contact {
       id
     }
-    ... on ChatRoom {
+    ... on Group {
       id
     }
   }
@@ -419,7 +419,7 @@ return {
                           (v4/*: any*/),
                           {
                             "kind": "InlineFragment",
-                            "type": "ChatRoom",
+                            "type": "Group",
                             "selections": (v8/*: any*/)
                           },
                           {
@@ -477,7 +477,7 @@ return {
     "operationKind": "query",
     "name": "ContactMessageList_Query",
     "id": null,
-    "text": "query ContactMessageList_Query(\n  $last: Int\n  $before: ID\n  $contactId: ID!\n) {\n  list: contact(contactId: $contactId) {\n    messages(last: $last, before: $before) {\n      edges {\n        cursor\n        node {\n          id\n          ...Message_message\n          __typename\n        }\n      }\n      pageInfo {\n        endCursor\n        startCursor\n        hasPreviousPage\n      }\n      totalCount\n    }\n    id\n  }\n}\n\nfragment Message_message on Message {\n  id\n  author {\n    id\n    picture\n  }\n  data {\n    __typename\n    ... on Text {\n      __typename\n      text\n    }\n    ... on Emoji {\n      __typename\n      emoji\n    }\n    ... on File {\n      __typename\n      url\n      fileName\n    }\n  }\n  dateSended\n  destination {\n    __typename\n    ... on Contact {\n      id\n    }\n    ... on ChatRoom {\n      id\n    }\n  }\n  createdAt\n  readed\n  received\n}\n",
+    "text": "query ContactMessageList_Query(\n  $last: Int\n  $before: ID\n  $contactId: ID!\n) {\n  list: contact(contactId: $contactId) {\n    messages(last: $last, before: $before) {\n      edges {\n        cursor\n        node {\n          id\n          ...Message_message\n          __typename\n        }\n      }\n      pageInfo {\n        endCursor\n        startCursor\n        hasPreviousPage\n      }\n      totalCount\n    }\n    id\n  }\n}\n\nfragment Message_message on Message {\n  id\n  author {\n    id\n    picture\n  }\n  data {\n    __typename\n    ... on Text {\n      __typename\n      text\n    }\n    ... on Emoji {\n      __typename\n      emoji\n    }\n    ... on File {\n      __typename\n      url\n      fileName\n    }\n  }\n  dateSended\n  destination {\n    __typename\n    ... on Contact {\n      id\n    }\n    ... on Group {\n      id\n    }\n  }\n  createdAt\n  readed\n  received\n}\n",
     "metadata": {
       "connection": [
         {

@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash bd7af165a9b686d397d5dd0b53aaa3b7
+ * @relayHash d0161dd3b9af92124e70f5b8398a6297
  */
 
 /* eslint-disable */
@@ -68,7 +68,7 @@ subscription Launcher_Subscription {
         ... on Contact {
           id
         }
-        ... on ChatRoom {
+        ... on Group {
           id
         }
       }
@@ -98,7 +98,7 @@ subscription Launcher_Subscription {
         ... on Contact {
           id
         }
-        ... on ChatRoom {
+        ... on Group {
           id
         }
       }
@@ -270,7 +270,7 @@ v14 = {
     (v13/*: any*/),
     {
       "kind": "InlineFragment",
-      "type": "ChatRoom",
+      "type": "Group",
       "selections": (v3/*: any*/)
     },
     (v4/*: any*/)
@@ -417,7 +417,7 @@ return {
     "operationKind": "subscription",
     "name": "Launcher_Subscription",
     "id": null,
-    "text": "subscription Launcher_Subscription {\n  generalInfo {\n    online {\n      id\n      online\n    }\n    readed {\n      id\n      readed\n      destination {\n        __typename\n        ... on Contact {\n          id\n        }\n        ... on ChatRoom {\n          id\n        }\n      }\n      received\n    }\n    newMessage {\n      id\n      author {\n        id\n        newMessages\n      }\n      data {\n        __typename\n        ... on Text {\n          text\n        }\n        ... on Emoji {\n          emoji\n        }\n        ... on File {\n          url\n          fileName\n        }\n      }\n      destination {\n        __typename\n        ... on Contact {\n          id\n        }\n        ... on ChatRoom {\n          id\n        }\n      }\n      dateSended\n      createdAt\n      readed\n      received\n    }\n  }\n}\n",
+    "text": "subscription Launcher_Subscription {\n  generalInfo {\n    online {\n      id\n      online\n    }\n    readed {\n      id\n      readed\n      destination {\n        __typename\n        ... on Contact {\n          id\n        }\n        ... on Group {\n          id\n        }\n      }\n      received\n    }\n    newMessage {\n      id\n      author {\n        id\n        newMessages\n      }\n      data {\n        __typename\n        ... on Text {\n          text\n        }\n        ... on Emoji {\n          emoji\n        }\n        ... on File {\n          url\n          fileName\n        }\n      }\n      destination {\n        __typename\n        ... on Contact {\n          id\n        }\n        ... on Group {\n          id\n        }\n      }\n      dateSended\n      createdAt\n      readed\n      received\n    }\n  }\n}\n",
     "metadata": {}
   }
 };

@@ -3,7 +3,7 @@ import Debug from 'debug'
 
 import User from "./user"
 import Message from "./message"
-import ChatRoom from "./chatRoom"
+import Group from "./group"
 
 const debug = Debug("chat-plugin:model");
 
@@ -12,7 +12,7 @@ mongoose.set('useCreateIndex', true);
 let db = mongoose.createConnection();
 
 Message(db);
-ChatRoom(db);
+Group(db);
 User(db);
 
 export let dbInit = async (dbConnStr) => {

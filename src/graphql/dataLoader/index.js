@@ -4,7 +4,7 @@ import MongooseModels from "../../mongooseModels";
 
 const User = MongooseModels('User');
 const Message = MongooseModels('Message');
-const ChatRoom = MongooseModels('ChatRoom');
+const Group = MongooseModels('Group');
 
 
 export const userLoader = new DataLoader( async userIds => {
@@ -23,19 +23,19 @@ export const userLoader = new DataLoader( async userIds => {
     return Promise.resolve(resolte)
 });
 
-export const chatRoomLoader = new DataLoader(async chatRoomIds => {
-    let chatRooms = await ChatRoom.find({ _id: { $in: chatRoomIds } });
-    if (chatRooms.length === chatRoomIds.length) {
-        return Promise.resolve(chatRooms)
+export const groupLoader = new DataLoader(async groupIds => {
+    let groups = await Group.find({ _id: { $in: groupIds } });
+    if (groups.length === groupIds.length) {
+        return Promise.resolve(groups)
     }
     let resolte = [];
 
-    chatRoomIds.forEach( (chatRoomId, index ) => {
-        let i = chatRooms.findIndex( c => c.id === chatRoomId )
+    groupIds.forEach( (groupId, index ) => {
+        let i = groups.findIndex( c => c.id === groupId )
         if ( i === -1 ) {
             resolte[index] = {};       
         }
-        resolte[index] = chatRooms[i];
+        resolte[index] = groups[i];
     })
     return Promise.resolve(resolte )
 });

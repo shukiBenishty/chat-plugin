@@ -5,7 +5,7 @@ enum CacheControlScope {
   PRIVATE
 }
 
-type ChatRoom implements INode {
+type Group implements INode {
   id: ID!
   subscribers: [Contact]
   messages: [Message]
@@ -77,7 +77,7 @@ type Message implements INode {
 
 union MessageData = Text | Emoji | File
 
-union MessageDest = Contact | ChatRoom
+union MessageDest = Contact | Group
 
 type MessageEdge {
   cursor: String!
@@ -117,7 +117,7 @@ type Query {
 type Subscription {
   generalInfo(contactId: ID): generalInfo
   personalMessageSent(contactId: ID): Message
-  publicMessageSent(chatRoom: ID!): Message
+  publicMessageSent(group: ID!): Message
 }
 
 type Text {
@@ -138,6 +138,6 @@ type User implements INode {
   picture: String!
   admin: Boolean!
   contacts(first: Int, after: ID): ContactsConnection
-  chatRooms: [ChatRoom]
+  groups: [Group]
 }
 

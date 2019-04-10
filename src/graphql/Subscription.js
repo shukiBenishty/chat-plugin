@@ -34,7 +34,7 @@ export default {
     publicMessageSent:  {
       subscribe: 
         (obj, args, {session}, info) => {
-          return pubsub.asyncIterator(args.chatRoom)
+          return pubsub.asyncIterator(args.group)
         }
     },
     generalInfo: {

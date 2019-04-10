@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 3b9bac1dcad19de3794f4c44ad0a2a0a
+ * @relayHash d770b3551b9ad11973d24555aef5fa24
  */
 
 /* eslint-disable */
@@ -97,7 +97,7 @@ fragment Message_message on Message {
     ... on Contact {
       id
     }
-    ... on ChatRoom {
+    ... on Group {
       id
     }
   }
@@ -347,7 +347,7 @@ return {
                           (v6/*: any*/),
                           {
                             "kind": "InlineFragment",
-                            "type": "ChatRoom",
+                            "type": "Group",
                             "selections": (v7/*: any*/)
                           },
                           {
@@ -441,7 +441,7 @@ return {
     "operationKind": "query",
     "name": "Search_Query",
     "id": null,
-    "text": "query Search_Query {\n  contacts {\n    id\n    name\n    username\n    picture\n    ...ContactChatWindow_contact\n    newMessages\n  }\n}\n\nfragment ContactChatWindow_contact on Contact {\n  id\n  name\n  username\n  online\n  picture\n  newMessages\n  ...ContactMessageList_list\n}\n\nfragment ContactMessageList_list on Contact {\n  messages(last: 20) {\n    edges {\n      cursor\n      node {\n        id\n        ...Message_message\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      startCursor\n      hasPreviousPage\n    }\n    totalCount\n  }\n}\n\nfragment Message_message on Message {\n  id\n  author {\n    id\n    picture\n  }\n  data {\n    __typename\n    ... on Text {\n      __typename\n      text\n    }\n    ... on Emoji {\n      __typename\n      emoji\n    }\n    ... on File {\n      __typename\n      url\n      fileName\n    }\n  }\n  dateSended\n  destination {\n    __typename\n    ... on Contact {\n      id\n    }\n    ... on ChatRoom {\n      id\n    }\n  }\n  createdAt\n  readed\n  received\n}\n",
+    "text": "query Search_Query {\n  contacts {\n    id\n    name\n    username\n    picture\n    ...ContactChatWindow_contact\n    newMessages\n  }\n}\n\nfragment ContactChatWindow_contact on Contact {\n  id\n  name\n  username\n  online\n  picture\n  newMessages\n  ...ContactMessageList_list\n}\n\nfragment ContactMessageList_list on Contact {\n  messages(last: 20) {\n    edges {\n      cursor\n      node {\n        id\n        ...Message_message\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      startCursor\n      hasPreviousPage\n    }\n    totalCount\n  }\n}\n\nfragment Message_message on Message {\n  id\n  author {\n    id\n    picture\n  }\n  data {\n    __typename\n    ... on Text {\n      __typename\n      text\n    }\n    ... on Emoji {\n      __typename\n      emoji\n    }\n    ... on File {\n      __typename\n      url\n      fileName\n    }\n  }\n  dateSended\n  destination {\n    __typename\n    ... on Contact {\n      id\n    }\n    ... on Group {\n      id\n    }\n  }\n  createdAt\n  readed\n  received\n}\n",
     "metadata": {}
   }
 };

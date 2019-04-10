@@ -8,7 +8,7 @@ let userSchema = new Schema({
     username: { type: String, required: true, unique: true, index: true },
     password: { type: String, required: true },
     contacts: {type: [ {type: Schema.Types.ObjectId, ref: 'User', default: [] }] },
-    chatRooms: [ {type: Schema.Types.ObjectId, ref: 'ChatRoom',  default: [] }],
+    groups: [ {type: Schema.Types.ObjectId, ref: 'Group',  default: [] }],
     picture: { type: String, default: "" },
     admin: { type: Boolean, default: false, required: true },
     online: { type: Boolean, default: false },

@@ -4,7 +4,7 @@ import subscription from "./Subscription";
 
 import User from "./types/User";
 import Message from "./types/Message";
-import ChatRoom from "./types/ChatRoom";
+import Group from "./types/Group";
 import Contact from "./types/Contact";
 
 
@@ -15,7 +15,7 @@ export default {
   Subscription: subscription,
   User: User,
   Contact: Contact,
-  ChatRoom: ChatRoom,
+  Group: Group,
   Message: Message,
   Text: {
     __isTypeOf: (obj) => {

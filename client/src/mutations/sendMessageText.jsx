@@ -26,7 +26,7 @@ const mutation = graphql`
             id 
             name
         }
-        ... on ChatRoom {
+        ... on Group {
             id
         }
         }

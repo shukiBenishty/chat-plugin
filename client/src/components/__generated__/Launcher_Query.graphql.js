@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash dacafdcb82c7149060c91adaf43e04de
+ * @relayHash 87d7bd142aa3a4e2247f8b6f46c18f30
  */
 
 /* eslint-disable */
@@ -183,7 +183,7 @@ fragment Message_message on Message {
     ... on Contact {
       id
     }
-    ... on ChatRoom {
+    ... on Group {
       id
     }
   }
@@ -548,7 +548,7 @@ return {
                                       (v5/*: any*/),
                                       {
                                         "kind": "InlineFragment",
-                                        "type": "ChatRoom",
+                                        "type": "Group",
                                         "selections": (v12/*: any*/)
                                       },
                                       {
@@ -654,7 +654,7 @@ return {
     "operationKind": "query",
     "name": "Launcher_Query",
     "id": null,
-    "text": "query Launcher_Query {\n  me {\n    id\n    name\n    username\n    admin\n    contacts(first: 2147483647) {\n      edges {\n        node {\n          id\n          ...ContactChatWindow_contact\n          newMessages\n          __typename\n        }\n        cursor\n      }\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n    ...ContactsWindow_user\n  }\n}\n\nfragment ContactChatWindow_contact on Contact {\n  id\n  name\n  username\n  online\n  picture\n  newMessages\n  ...ContactMessageList_list\n}\n\nfragment ContactsWindow_user on User {\n  contacts(first: 2147483647) {\n    edges {\n      node {\n        id\n        name\n        username\n        online\n        newMessages\n        ...ContactItem_contact\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment ContactItem_contact on Contact {\n  id\n  name\n  newMessages\n  online\n  picture\n  messages(last: 20) {\n    edges {\n      node {\n        id\n        author {\n          id\n        }\n        data {\n          __typename\n          ... on Text {\n            __typename\n            text\n          }\n          ... on Emoji {\n            __typename\n            emoji\n          }\n          ... on File {\n            __typename\n            url\n            fileName\n          }\n        }\n        readed\n        received\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment ContactMessageList_list on Contact {\n  messages(last: 20) {\n    edges {\n      cursor\n      node {\n        id\n        ...Message_message\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      startCursor\n      hasPreviousPage\n    }\n    totalCount\n  }\n}\n\nfragment Message_message on Message {\n  id\n  author {\n    id\n    picture\n  }\n  data {\n    __typename\n    ... on Text {\n      __typename\n      text\n    }\n    ... on Emoji {\n      __typename\n      emoji\n    }\n    ... on File {\n      __typename\n      url\n      fileName\n    }\n  }\n  dateSended\n  destination {\n    __typename\n    ... on Contact {\n      id\n    }\n    ... on ChatRoom {\n      id\n    }\n  }\n  createdAt\n  readed\n  received\n}\n",
+    "text": "query Launcher_Query {\n  me {\n    id\n    name\n    username\n    admin\n    contacts(first: 2147483647) {\n      edges {\n        node {\n          id\n          ...ContactChatWindow_contact\n          newMessages\n          __typename\n        }\n        cursor\n      }\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n    ...ContactsWindow_user\n  }\n}\n\nfragment ContactChatWindow_contact on Contact {\n  id\n  name\n  username\n  online\n  picture\n  newMessages\n  ...ContactMessageList_list\n}\n\nfragment ContactsWindow_user on User {\n  contacts(first: 2147483647) {\n    edges {\n      node {\n        id\n        name\n        username\n        online\n        newMessages\n        ...ContactItem_contact\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment ContactItem_contact on Contact {\n  id\n  name\n  newMessages\n  online\n  picture\n  messages(last: 20) {\n    edges {\n      node {\n        id\n        author {\n          id\n        }\n        data {\n          __typename\n          ... on Text {\n            __typename\n            text\n          }\n          ... on Emoji {\n            __typename\n            emoji\n          }\n          ... on File {\n            __typename\n            url\n            fileName\n          }\n        }\n        readed\n        received\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment ContactMessageList_list on Contact {\n  messages(last: 20) {\n    edges {\n      cursor\n      node {\n        id\n        ...Message_message\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      startCursor\n      hasPreviousPage\n    }\n    totalCount\n  }\n}\n\nfragment Message_message on Message {\n  id\n  author {\n    id\n    picture\n  }\n  data {\n    __typename\n    ... on Text {\n      __typename\n      text\n    }\n    ... on Emoji {\n      __typename\n      emoji\n    }\n    ... on File {\n      __typename\n      url\n      fileName\n    }\n  }\n  dateSended\n  destination {\n    __typename\n    ... on Contact {\n      id\n    }\n    ... on Group {\n      id\n    }\n  }\n  createdAt\n  readed\n  received\n}\n",
     "metadata": {
       "connection": [
         {

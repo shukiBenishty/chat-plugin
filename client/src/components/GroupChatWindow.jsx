@@ -72,7 +72,7 @@ class GroupChatWindow extends Component {
 
 export default createFragmentContainer(GroupChatWindow,  
   graphql`
-      fragment GroupChatWindow_contact on ChatRoom {
+      fragment GroupChatWindow_contact on Group {
           id
           subscribers
           messages

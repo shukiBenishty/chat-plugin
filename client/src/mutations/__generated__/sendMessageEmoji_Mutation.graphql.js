@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 9c67c0addd68f703302d28ff46ab2b78
+ * @relayHash 59b46f9cb6b039bf72028cd21a5cf1f2
  */
 
 /* eslint-disable */
@@ -75,7 +75,7 @@ mutation sendMessageEmoji_Mutation(
         id
         name
       }
-      ... on ChatRoom {
+      ... on Group {
         id
       }
     }
@@ -190,7 +190,7 @@ v8 = {
 },
 v9 = {
   "kind": "InlineFragment",
-  "type": "ChatRoom",
+  "type": "Group",
   "selections": (v3/*: any*/)
 },
 v10 = {
@@ -347,11 +347,11 @@ return {
     "operationKind": "mutation",
     "name": "sendMessageEmoji_Mutation",
     "id": null,
-    "text": "mutation sendMessageEmoji_Mutation(\n  $message: EmojiInput!\n  $destination: ID!\n) {\n  sendMessageEmoji(message: $message, destination: $destination) {\n    id\n    author {\n      id\n    }\n    data {\n      __typename\n      ... on Text {\n        text\n      }\n      ... on Emoji {\n        emoji\n      }\n      ... on File {\n        url\n        fileName\n      }\n    }\n    dateSended\n    destination {\n      __typename\n      ... on Contact {\n        id\n        name\n      }\n      ... on ChatRoom {\n        id\n      }\n    }\n    createdAt\n    readed\n    received\n  }\n}\n",
+    "text": "mutation sendMessageEmoji_Mutation(\n  $message: EmojiInput!\n  $destination: ID!\n) {\n  sendMessageEmoji(message: $message, destination: $destination) {\n    id\n    author {\n      id\n    }\n    data {\n      __typename\n      ... on Text {\n        text\n      }\n      ... on Emoji {\n        emoji\n      }\n      ... on File {\n        url\n        fileName\n      }\n    }\n    dateSended\n    destination {\n      __typename\n      ... on Contact {\n        id\n        name\n      }\n      ... on Group {\n        id\n      }\n    }\n    createdAt\n    readed\n    received\n  }\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = 'c0da9d8dae0424e231e50137d7377b6e';
+(node/*: any*/).hash = 'bb6f4c736fc4f56422357de364d9a81e';
 module.exports = node;

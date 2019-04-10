@@ -1,4 +1,4 @@
-import { userLoader, chatRoomLoader } from "../dataLoader";
+import { userLoader, groupLoader } from "../dataLoader";
 import MongooseModels from "../../mongooseModels";
 
 
@@ -33,10 +33,10 @@ export default {
         return new Error(error)
       }
     },
-    chatRooms: async(paerent ,args, {session}) => {
+    groups: async(paerent ,args, {session}) => {
       try {
         let user = await userLoader.load(paerent.id.toString());
-        return chatRoomLoader.loadMany( user.chatRooms.map( c => c._id.toString() ))        
+        return groupLoader.loadMany( user.groups.map( c => c._id.toString() ))        
       } catch (error) {
         return new Error(error)
       }
