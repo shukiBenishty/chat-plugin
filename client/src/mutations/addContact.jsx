@@ -6,7 +6,7 @@ const mutation = graphql`
   mutation addContact_Mutation($contactId: ID!) {
     addContact(contactId: $contactId) {
       id
-      ...ChatWindow_contact
+      ...ContactChatWindow_contact
       newMessages
     }
   }`;

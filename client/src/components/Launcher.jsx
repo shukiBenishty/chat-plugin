@@ -68,7 +68,7 @@ const query = graphql`
           edges {
             node {
               id
-              ...ChatWindow_contact
+              ...ContactChatWindow_contact
               newMessages
               }
             }
@@ -88,7 +88,7 @@ class App extends Component {
           const message = store.get( data.generalInfo.newMessage.id);
           const contact = store.get( data.generalInfo.newMessage.author.id);
   
-          const messages = ConnectionHandler.getConnection(contact, 'MessageList_messages');
+          const messages = ConnectionHandler.getConnection(contact, 'ContactMessageList_messages');
           const edge = ConnectionHandler.createEdge(store, messages, message, 'Message', message.id);
 
           ConnectionHandler.insertEdgeAfter(messages, edge);

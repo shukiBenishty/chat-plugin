@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
 import ContactsWindow from "./ContactsWindow";
-import ChatWindow from './ChatWindow';
+import ContactChatWindow from './ContactChatWindow';
 import launcherIcon from './../assets/logo-no-bg.svg';
 import incomingMessageSound from './../assets/sounds/notification.mp3';
 import launcherIconActive from './../assets/close-icon.png';
@@ -13,7 +13,7 @@ class Launcher extends Component {
   constructor() {
     super();
     this.state = {
-      visableContacts: {},
+      visableChats: {},
       launcherIcon,
       isOpen: false
     };
@@ -21,7 +21,7 @@ class Launcher extends Component {
 
   // componentWillReceiveProps(nextProps) {
   //   const isIncoming = (nextMessage || {}).author.id !== this.props.me.id;
-  //   if (isIncoming && nextProps.messageList.length > this.props.messageList.length) {
+  //   if (isIncoming && nextProps.ContactMessageList.length > this.props.ContactMessageList.length) {
   //     this.playIncomingMessageSound()
   //   }
   // }
@@ -42,16 +42,16 @@ class Launcher extends Component {
   }
 
   onContactClose(contact) {
-    this.state.visableContacts[contact.id] = false;
+    this.state.visableChats[contact.id] = false;
     this.setState({
-      visableContacts: this.state.visableContacts
+      visableChats: this.state.visableChats
     })
   }
 
   onContactClick(contact) {
-    this.state.visableContacts[contact.id] = true;
+    this.state.visableChats[contact.id] = true;
     this.setState({
-      visableContacts: this.state.visableContacts
+      visableChats: this.state.visableChats
     })
   }
 
@@ -75,11 +75,14 @@ class Launcher extends Component {
           <img className={"sc-closed-icon"} src={launcherIcon} />
         </div>
         <div className={areaClassList.join(' ')}>
-          <ContactsWindow onClose={this.handleClick.bind(this)} onContactClick={this.onContactClick.bind(this)} user={this.props.me }/>
+          <ContactsWindow onClose={this.handleClick.bind(this)}
+                          onContactClick={this.onContactClick.bind(this)} 
+                          user={this.props.me }
+          />
           { edges.map( ({node} ) => {
               return (
-                this.state.visableContacts[node.id] &&
-                <ChatWindow 
+                this.state.visableChats[node.id] &&
+                <ContactChatWindow 
                   key={node.id}
                   contact={node}
                   isOpen={true}

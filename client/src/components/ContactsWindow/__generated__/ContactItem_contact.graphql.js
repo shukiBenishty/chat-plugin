@@ -118,7 +118,7 @@ return {
     {
       "kind": "LinkedField",
       "alias": "messages",
-      "name": "__MessageList_messages_connection",
+      "name": "__ContactMessageList_messages_connection",
       "storageKey": null,
       "args": null,
       "concreteType": "MessagesConnection",
@@ -272,5 +272,5 @@ return {
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '4e811677d0cb1773901c5fc72acf986b';
+(node/*: any*/).hash = 'b24cd4e690046ec26ae8507b76684433';
 module.exports = node;

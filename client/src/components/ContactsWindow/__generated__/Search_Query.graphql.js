@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 4d0921d61db6856e0a92afe28b1777bc
+ * @relayHash 3b9bac1dcad19de3794f4c44ad0a2a0a
  */
 
 /* eslint-disable */
@@ -9,7 +9,7 @@
 
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
-type ChatWindow_contact$ref = any;
+type ContactChatWindow_contact$ref = any;
 export type Search_QueryVariables = {||};
 export type Search_QueryResponse = {|
   +contacts: ?$ReadOnlyArray<?{|
@@ -18,7 +18,7 @@ export type Search_QueryResponse = {|
     +username: string,
     +picture: string,
     +newMessages: ?number,
-    +$fragmentRefs: ChatWindow_contact$ref,
+    +$fragmentRefs: ContactChatWindow_contact$ref,
   |}>
 |};
 export type Search_Query = {|
@@ -35,22 +35,22 @@ query Search_Query {
     name
     username
     picture
-    ...ChatWindow_contact
+    ...ContactChatWindow_contact
     newMessages
   }
 }
 
-fragment ChatWindow_contact on Contact {
+fragment ContactChatWindow_contact on Contact {
   id
   name
   username
   online
   picture
   newMessages
-  ...MessageList_list
+  ...ContactMessageList_list
 }
 
-fragment MessageList_list on Contact {
+fragment ContactMessageList_list on Contact {
   messages(last: 20) {
     edges {
       cursor
@@ -185,7 +185,7 @@ return {
           (v3/*: any*/),
           {
             "kind": "FragmentSpread",
-            "name": "ChatWindow_contact",
+            "name": "ContactChatWindow_contact",
             "args": null
           },
           (v4/*: any*/)
@@ -430,7 +430,7 @@ return {
             "name": "messages",
             "args": (v5/*: any*/),
             "handle": "connection",
-            "key": "MessageList_messages",
+            "key": "ContactMessageList_messages",
             "filters": null
           }
         ]
@@ -441,11 +441,11 @@ return {
     "operationKind": "query",
     "name": "Search_Query",
     "id": null,
-    "text": "query Search_Query {\n  contacts {\n    id\n    name\n    username\n    picture\n    ...ChatWindow_contact\n    newMessages\n  }\n}\n\nfragment ChatWindow_contact on Contact {\n  id\n  name\n  username\n  online\n  picture\n  newMessages\n  ...MessageList_list\n}\n\nfragment MessageList_list on Contact {\n  messages(last: 20) {\n    edges {\n      cursor\n      node {\n        id\n        ...Message_message\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      startCursor\n      hasPreviousPage\n    }\n    totalCount\n  }\n}\n\nfragment Message_message on Message {\n  id\n  author {\n    id\n    picture\n  }\n  data {\n    __typename\n    ... on Text {\n      __typename\n      text\n    }\n    ... on Emoji {\n      __typename\n      emoji\n    }\n    ... on File {\n      __typename\n      url\n      fileName\n    }\n  }\n  dateSended\n  destination {\n    __typename\n    ... on Contact {\n      id\n    }\n    ... on ChatRoom {\n      id\n    }\n  }\n  createdAt\n  readed\n  received\n}\n",
+    "text": "query Search_Query {\n  contacts {\n    id\n    name\n    username\n    picture\n    ...ContactChatWindow_contact\n    newMessages\n  }\n}\n\nfragment ContactChatWindow_contact on Contact {\n  id\n  name\n  username\n  online\n  picture\n  newMessages\n  ...ContactMessageList_list\n}\n\nfragment ContactMessageList_list on Contact {\n  messages(last: 20) {\n    edges {\n      cursor\n      node {\n        id\n        ...Message_message\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      startCursor\n      hasPreviousPage\n    }\n    totalCount\n  }\n}\n\nfragment Message_message on Message {\n  id\n  author {\n    id\n    picture\n  }\n  data {\n    __typename\n    ... on Text {\n      __typename\n      text\n    }\n    ... on Emoji {\n      __typename\n      emoji\n    }\n    ... on File {\n      __typename\n      url\n      fileName\n    }\n  }\n  dateSended\n  destination {\n    __typename\n    ... on Contact {\n      id\n    }\n    ... on ChatRoom {\n      id\n    }\n  }\n  createdAt\n  readed\n  received\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '4c36f65d5905ea58134d09b08b1df314';
+(node/*: any*/).hash = '89a2fbf06e6b44b0122b76b3ec64ce2c';
 module.exports = node;

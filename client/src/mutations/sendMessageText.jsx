@@ -45,7 +45,7 @@ function commit(environment, message, destination) {
         const contact = store.get( destination);
         const _message = store.get( data.sendMessageText.id);
 
-        const messages = ConnectionHandler.getConnection(contact, 'MessageList_messages');
+        const messages = ConnectionHandler.getConnection(contact, 'ContactMessageList_messages');
         const edge = ConnectionHandler.createEdge(store, messages, _message, 'Message', _message.id);
 
         // No cursor provided, append the edge at the end.

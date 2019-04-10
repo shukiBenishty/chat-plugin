@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash bb4038663d712efc35f1e800d7ca1a12
+ * @relayHash 5c105dae0aa7a0b694996494a50c3e70
  */
 
 /* eslint-disable */
@@ -9,7 +9,7 @@
 
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
-type ChatWindow_contact$ref = any;
+type ContactChatWindow_contact$ref = any;
 export type addContact_MutationVariables = {|
   contactId: string
 |};
@@ -17,7 +17,7 @@ export type addContact_MutationResponse = {|
   +addContact: ?{|
     +id: string,
     +newMessages: ?number,
-    +$fragmentRefs: ChatWindow_contact$ref,
+    +$fragmentRefs: ContactChatWindow_contact$ref,
   |}
 |};
 export type addContact_Mutation = {|
@@ -33,22 +33,22 @@ mutation addContact_Mutation(
 ) {
   addContact(contactId: $contactId) {
     id
-    ...ChatWindow_contact
+    ...ContactChatWindow_contact
     newMessages
   }
 }
 
-fragment ChatWindow_contact on Contact {
+fragment ContactChatWindow_contact on Contact {
   id
   name
   username
   online
   picture
   newMessages
-  ...MessageList_list
+  ...ContactMessageList_list
 }
 
-fragment MessageList_list on Contact {
+fragment ContactMessageList_list on Contact {
   messages(last: 20) {
     edges {
       cursor
@@ -182,7 +182,7 @@ return {
           (v2/*: any*/),
           {
             "kind": "FragmentSpread",
-            "name": "ChatWindow_contact",
+            "name": "ContactChatWindow_contact",
             "args": null
           },
           (v3/*: any*/)
@@ -439,7 +439,7 @@ return {
             "name": "messages",
             "args": (v5/*: any*/),
             "handle": "connection",
-            "key": "MessageList_messages",
+            "key": "ContactMessageList_messages",
             "filters": null
           }
         ]
@@ -450,11 +450,11 @@ return {
     "operationKind": "mutation",
     "name": "addContact_Mutation",
     "id": null,
-    "text": "mutation addContact_Mutation(\n  $contactId: ID!\n) {\n  addContact(contactId: $contactId) {\n    id\n    ...ChatWindow_contact\n    newMessages\n  }\n}\n\nfragment ChatWindow_contact on Contact {\n  id\n  name\n  username\n  online\n  picture\n  newMessages\n  ...MessageList_list\n}\n\nfragment MessageList_list on Contact {\n  messages(last: 20) {\n    edges {\n      cursor\n      node {\n        id\n        ...Message_message\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      startCursor\n      hasPreviousPage\n    }\n    totalCount\n  }\n}\n\nfragment Message_message on Message {\n  id\n  author {\n    id\n    picture\n  }\n  data {\n    __typename\n    ... on Text {\n      __typename\n      text\n    }\n    ... on Emoji {\n      __typename\n      emoji\n    }\n    ... on File {\n      __typename\n      url\n      fileName\n    }\n  }\n  dateSended\n  destination {\n    __typename\n    ... on Contact {\n      id\n    }\n    ... on ChatRoom {\n      id\n    }\n  }\n  createdAt\n  readed\n  received\n}\n",
+    "text": "mutation addContact_Mutation(\n  $contactId: ID!\n) {\n  addContact(contactId: $contactId) {\n    id\n    ...ContactChatWindow_contact\n    newMessages\n  }\n}\n\nfragment ContactChatWindow_contact on Contact {\n  id\n  name\n  username\n  online\n  picture\n  newMessages\n  ...ContactMessageList_list\n}\n\nfragment ContactMessageList_list on Contact {\n  messages(last: 20) {\n    edges {\n      cursor\n      node {\n        id\n        ...Message_message\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      startCursor\n      hasPreviousPage\n    }\n    totalCount\n  }\n}\n\nfragment Message_message on Message {\n  id\n  author {\n    id\n    picture\n  }\n  data {\n    __typename\n    ... on Text {\n      __typename\n      text\n    }\n    ... on Emoji {\n      __typename\n      emoji\n    }\n    ... on File {\n      __typename\n      url\n      fileName\n    }\n  }\n  dateSended\n  destination {\n    __typename\n    ... on Contact {\n      id\n    }\n    ... on ChatRoom {\n      id\n    }\n  }\n  createdAt\n  readed\n  received\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '85d979b04d41133ec6fdafcd516d19a4';
+(node/*: any*/).hash = '529c5aa84485a782916b20b98f74fb86';
 module.exports = node;

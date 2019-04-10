@@ -138,7 +138,7 @@ class ContactItem extends Component {
       online
       picture
       messages(last: $count, before: $cursor)
-        @connection(key: "MessageList_messages") {
+        @connection(key: "ContactMessageList_messages") {
         edges {
           node {
             id

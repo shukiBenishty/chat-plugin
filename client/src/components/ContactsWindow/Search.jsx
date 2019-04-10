@@ -185,7 +185,7 @@ query Search_Query {
     name
     username
     picture
-    ...ChatWindow_contact
+    ...ContactChatWindow_contact
     newMessages
   }
 }`
