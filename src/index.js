@@ -58,6 +58,7 @@ export const server = new ApolloServer({
         });
       });
       if (wsSession.userId) {
+        
         subscribers.setItem(wsSession.userId);
         let user = await userLoader.load(wsSession.userId);
         user.online = true;

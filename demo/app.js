@@ -4,7 +4,9 @@ import express from "express";
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 
-import graphql, {server} from 'chat-plugin';
+const graphql = require(process.env.PORT ? 'chat-plugin': '../lib' ).default ;
+const server = require(process.env.PORT ? 'chat-plugin': '../lib' ).server ;
+
 
 import session from './sessions.js';
 import index from './routes/index';
@@ -31,20 +33,24 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/users', users);
 app.use('/login', login);
 
-// app.use('/chat', graphql(
-//   `http://localhost:4000/chat/graphql`,
-//   `ws://localhost:4000/graphql`,
-//   `mongodb://localhost/chat-plugin`,
-//   `mongodb://localhost/chat-plugin`
-// ));
+if (process.env.PORT) {
+  app.use('/chat', graphql(
+    `https://chat-plugin.herokuapp.com/chat/graphql`,
+    `wss://chat-plugin.herokuapp.com/graphql`,
+    `mongodb://shuki:shuki1@ds231956.mlab.com:31956/chat-plugin`,
+    `mongodb://shuki:shuki1@ds231956.mlab.com:31956/chat-plugin`
+  ));
+} else {
+  app.use('/chat', graphql(
+    `http://localhost:4000/chat/graphql`,
+    `ws://localhost:4000/graphql`,
+    `mongodb://localhost/chat-plugin`,
+    `mongodb://localhost/chat-plugin`
+  ));
+}
+ 
 
 
-app.use('/chat', graphql(
-  `https://chat-plugin.herokuapp.com/chat/graphql`,
-  `wss://chat-plugin.herokuapp.com/graphql`,
-  `mongodb://shuki:shuki1@ds231956.mlab.com:31956/chat-plugin`,
-  `mongodb://shuki:shuki1@ds231956.mlab.com:31956/chat-plugin`
-));
 
 const httpServer = http.createServer(app);
 server.installSubscriptionHandlers(httpServer);
