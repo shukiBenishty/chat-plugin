@@ -63,8 +63,10 @@ export let typeDefs = gql`
   type Group implements INode {
     id: ID!
 
+    name: String!
+    picture: String!
     subscribers: [Contact]
-    messages: [Message]
+    messages(last: Int, before: ID ): MessagesConnection
     # createdAt: Date!
   }
 
@@ -122,6 +124,7 @@ export let typeDefs = gql`
   type Query {
     me: User
     contact(contactId: ID!): Contact
+    group(groupId: ID!): Group
     contacts: [Contact]
     message(messageId: ID!): Message
     

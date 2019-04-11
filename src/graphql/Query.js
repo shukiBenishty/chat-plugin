@@ -15,6 +15,9 @@ export default {
     contact: (_,{contactId}, {session}) => {
       return userLoader.load(contactId);
     },
+    group: (_,{groupId}, {session}) => {
+      return groupLoader.load(groupId);
+    },
     contacts: async (_,args, {session}) => {
       let user = await userLoader.load(session.userId.toString());
       let myContacts = await userLoader.loadMany( user.contacts.map( c => c._id.toString() ))

@@ -5,12 +5,6 @@ enum CacheControlScope {
   PRIVATE
 }
 
-type Group implements INode {
-  id: ID!
-  subscribers: [Contact]
-  messages: [Message]
-}
-
 type Contact {
   id: ID!
   name: String!
@@ -58,6 +52,14 @@ type generalInfo {
   typingForMe: Contact
   readed: Message
   newMessage: Message
+}
+
+type Group implements INode {
+  id: ID!
+  name: String!
+  picture: String!
+  subscribers: [Contact]
+  messages(last: Int, before: ID): MessagesConnection
 }
 
 interface INode {
@@ -110,6 +112,7 @@ type PageInfo {
 type Query {
   me: User
   contact(contactId: ID!): Contact
+  group(groupId: ID!): Group
   contacts: [Contact]
   message(messageId: ID!): Message
 }
