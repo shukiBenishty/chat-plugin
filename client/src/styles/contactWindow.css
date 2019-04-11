@@ -87,8 +87,14 @@
 
 .contact-new-messages-count.offline {
     background: rgba(148, 148, 148, 0.88);
+    color: #ffffff;
+}
+
+.contact-new-messages-count.group {
+    background: rgba(192, 179, 179, 0.671);
     color: #e6e6e6;
 }
+
 .contact-new-messages-count.online {
     background: rgba(163, 220, 158, 0.88);
     color: #a07676;

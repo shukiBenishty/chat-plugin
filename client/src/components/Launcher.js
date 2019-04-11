@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 
 import ContactsWindow from "./ContactsWindow";
 import ContactChatWindow from './ContactChatWindow';
+import GroupChatWindow from './GroupChatWindow';
 import launcherIcon from './../assets/logo-no-bg.svg';
 import incomingMessageSound from './../assets/sounds/notification.mp3';
 import launcherIconActive from './../assets/close-icon.png';
@@ -66,7 +67,10 @@ class Launcher extends Component {
       'sc-chat-wnidows-area',
       (isOpen ? 'opened' : ''),
     ];
-    let edges = this.props.me && this.props.me.contacts && this.props.me.contacts.edges;
+    let groups = (this.props.me && this.props.me.groups && this.props.me.groups.edges) || [];
+    let contacts = (this.props.me && this.props.me.contacts && this.props.me.contacts.edges) || [];
+
+    let edges = groups.concat(contacts);
     return (
       <div id="sc-launcher">
         <div className={launcherClassList.join(' ')} onClick={this.handleClick.bind(this)}>
@@ -80,16 +84,29 @@ class Launcher extends Component {
                           user={this.props.me }
           />
           { edges.map( ({node} ) => {
-              return (
-                this.state.visableChats[node.id] &&
-                <ContactChatWindow 
-                  key={node.id}
-                  contact={node}
-                  isOpen={true}
-                  onClose={() => {this.onContactClose(node)} } 
-                  showEmoji={this.props.showEmoji}
-                />
-              )
+              if(this.state.visableChats[node.id]){
+                if (node.username) {
+                  return (
+                    <ContactChatWindow 
+                      key={node.id}
+                      contact={node}
+                      isOpen={true}
+                      onClose={() => {this.onContactClose(node)} } 
+                      showEmoji={this.props.showEmoji}
+                    />
+                  )
+                } else {
+                  return (
+                    <GroupChatWindow 
+                      key={node.id}
+                      group={node}
+                      isOpen={true}
+                      onClose={() => {this.onContactClose(node)} } 
+                      showEmoji={this.props.showEmoji}
+                    />
+                  )
+                }
+              }
             })
           }
         </div>

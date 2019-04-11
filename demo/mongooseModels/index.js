@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import Debug from 'debug'
 
 import User from "./user"
+import Group from "./group"
 
 import { dbConnStr } from '../config';
 
@@ -12,6 +13,7 @@ mongoose.set('useCreateIndex', true);
 let db = mongoose.createConnection();
 
 User(db);
+Group(db);
 
 (async () => {
     try {

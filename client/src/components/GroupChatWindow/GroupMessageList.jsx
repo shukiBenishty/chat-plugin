@@ -58,12 +58,8 @@ class GroupMessageList extends Component {
   graphql`
     fragment GroupMessageList_list on Group
 
-      @argumentDefinitions(
-        count: { type: "Int" , defaultValue: 20 }
-        cursor: { type: "ID" } 
-      ) {
-        messages(last: $count, before: $cursor)
-          @connection(key: "GroupMessageList_messages") {
+      @argumentDefinitions(  count: { type: "Int" , defaultValue: 20 } cursor: { type: "ID" } ) {
+        messages(last: $count, before: $cursor) @connection(key: "GroupMessageList_messages") {
           edges {
             cursor
             node {
@@ -92,9 +88,9 @@ class GroupMessageList extends Component {
               cursor
               node {
                 id
-                  ...Message_message
-                }
+                ...Message_message
               }
+            }
             pageInfo{
               endCursor
               startCursor

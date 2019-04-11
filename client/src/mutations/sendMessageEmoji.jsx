@@ -8,27 +8,27 @@ const mutation = graphql`
         author{
         id
         }
-        data{
-        ...on Text{
-            text
-        }
-        ...on Emoji {
-            emoji
-        }
-        ...on File {
-            url
-            fileName
-        }
+        data {
+            ...on Text{
+                text
+            }
+            ...on Emoji {
+                emoji
+            }
+             ...on File {
+                url
+                fileName
+            }   
         }
         dateSended
-            destination {
-        ...on Contact{
-            id 
-            name
-        }
-        ... on Group {
-            id
-        }
+        destination {
+            ...on Contact{
+                id 
+                username
+            }
+            ... on Group {
+                id
+            }
         }
         createdAt
         readed
@@ -44,10 +44,16 @@ function commit(environment, message, destination) {
     mutation,
     variables: { message, destination },
     updater: ( store , data) => {
-        const contact = store.get( destination);
+        let dest = store.get( destination);
         const _message = store.get( data.sendMessageEmoji.id);
-
-        const messages = ConnectionHandler.getConnection(contact, 'ContactMessageList_messages');
+        
+        let messages = {}
+        if ( data.sendMessageEmoji.destination.username) {
+            messages = ConnectionHandler.getConnection(dest, 'ContactMessageList_messages');
+        } else {
+            messages = ConnectionHandler.getConnection(dest, 'GroupMessageList_messages');
+        }
+        
         const edge = ConnectionHandler.createEdge(store, messages, _message, 'Message', _message.id);
 
         // No cursor provided, append the edge at the end.

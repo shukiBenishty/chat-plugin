@@ -11,8 +11,6 @@ const Group = MongooseModels('Group')
 
 const sendMessage =  async (parent, args, {session}) => {
 
-  let publish = {};
-
   let group = await groupLoader.load(args.destination);
   let destModel = group ? "Group" : "User";
   let message = new Message({
@@ -29,21 +27,23 @@ const sendMessage =  async (parent, args, {session}) => {
   message = await message.save();
   message = await messageLoader.load( message.id.toString() );
   
+  let dest = [];
   if (destModel === "User") {
-    let user = await userLoader.load(session.userId);
-    publish.generalInfo = { newMessage: message, destination: args.destination}
+    dest.push(args.destination);
+  } else {
+    dest = group.subscribers.map(s => {
+      return `${s.id}`;
+    });
   }
-  publish.personalMessageSent = message;
-
-  pubsub.publish(args.destination, publish);
-  
+  let publish = { generalInfo: { newMessage: message, destination: dest }};
+  pubsub.publish(args.destination, publish);  
 
   return message;
 }
 
 
 const addContact = async (parent, args, {session}) => {
-  let user = await User.findById(session.userId).findOne({contact: args.contactId});
+  let user = await User.findOne({ _id: session.userId, contacts: args.contactId });
 
   if (!user) {
     user =  await userLoader.load(session.userId);
@@ -51,7 +51,19 @@ const addContact = async (parent, args, {session}) => {
     user = await user.save();
   }
 
-  return user;
+  return userLoader.load(args.contactId);;
+} 
+
+const addGroup = async (parent, args, {session}) => {
+  let user = await User.findOne({ _id: session.userId , groups: args.groupId });
+
+  if (!user) {
+    user =  await userLoader.load(session.userId);
+    user.groups.push(args.groupId);
+    user = await user.save();
+  }
+
+  return groupLoader.load(args.groupId);
 } 
 
 const readMassage = async (parent, args, {session}) => {
@@ -87,6 +99,7 @@ export default {
     sendMessageEmoji: sendMessage,
     sendMessageFile: sendMessage,
     addContact: addContact,
+    addGroup: addGroup,
     readMassage: readMassage,
     typing:  typing,
     online: online

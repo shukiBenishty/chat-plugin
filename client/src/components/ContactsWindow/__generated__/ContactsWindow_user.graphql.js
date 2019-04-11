@@ -9,6 +9,7 @@
 /*::
 import type { ReaderFragment } from 'relay-runtime';
 type ContactItem_contact$ref = any;
+type GroupItem_group$ref = any;
 import type { FragmentReference } from "relay-runtime";
 declare export opaque type ContactsWindow_user$ref: FragmentReference;
 export type ContactsWindow_user = {|
@@ -16,11 +17,15 @@ export type ContactsWindow_user = {|
     +edges: $ReadOnlyArray<?{|
       +node: ?{|
         +id: string,
-        +name: string,
-        +username: string,
-        +online: boolean,
-        +newMessages: ?number,
         +$fragmentRefs: ContactItem_contact$ref,
+      |}
+    |}>
+  |},
+  +groups: ?{|
+    +edges: $ReadOnlyArray<?{|
+      +node: ?{|
+        +id: string,
+        +$fragmentRefs: GroupItem_group$ref,
       |}
     |}>
   |},
@@ -29,7 +34,54 @@ export type ContactsWindow_user = {|
 */
 
 
-const node/*: ReaderFragment*/ = {
+const node/*: ReaderFragment*/ = (function(){
+var v0 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "id",
+  "args": null,
+  "storageKey": null
+},
+v1 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "__typename",
+  "args": null,
+  "storageKey": null
+},
+v2 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "cursor",
+  "args": null,
+  "storageKey": null
+},
+v3 = {
+  "kind": "LinkedField",
+  "alias": null,
+  "name": "pageInfo",
+  "storageKey": null,
+  "args": null,
+  "concreteType": "PageInfo",
+  "plural": false,
+  "selections": [
+    {
+      "kind": "ScalarField",
+      "alias": null,
+      "name": "endCursor",
+      "args": null,
+      "storageKey": null
+    },
+    {
+      "kind": "ScalarField",
+      "alias": null,
+      "name": "hasNextPage",
+      "args": null,
+      "storageKey": null
+    }
+  ]
+};
+return {
   "kind": "Fragment",
   "name": "ContactsWindow_user",
   "type": "User",
@@ -41,6 +93,14 @@ const node/*: ReaderFragment*/ = {
         "direction": "forward",
         "path": [
           "contacts"
+        ]
+      },
+      {
+        "count": null,
+        "cursor": null,
+        "direction": "forward",
+        "path": [
+          "groups"
         ]
       }
     ]
@@ -74,93 +134,66 @@ const node/*: ReaderFragment*/ = {
               "concreteType": "Contact",
               "plural": false,
               "selections": [
-                {
-                  "kind": "ScalarField",
-                  "alias": null,
-                  "name": "id",
-                  "args": null,
-                  "storageKey": null
-                },
-                {
-                  "kind": "ScalarField",
-                  "alias": null,
-                  "name": "name",
-                  "args": null,
-                  "storageKey": null
-                },
-                {
-                  "kind": "ScalarField",
-                  "alias": null,
-                  "name": "username",
-                  "args": null,
-                  "storageKey": null
-                },
-                {
-                  "kind": "ScalarField",
-                  "alias": null,
-                  "name": "online",
-                  "args": null,
-                  "storageKey": null
-                },
-                {
-                  "kind": "ScalarField",
-                  "alias": null,
-                  "name": "newMessages",
-                  "args": null,
-                  "storageKey": null
-                },
+                (v0/*: any*/),
                 {
                   "kind": "FragmentSpread",
                   "name": "ContactItem_contact",
                   "args": null
                 },
-                {
-                  "kind": "ScalarField",
-                  "alias": null,
-                  "name": "__typename",
-                  "args": null,
-                  "storageKey": null
-                }
+                (v1/*: any*/)
               ]
             },
-            {
-              "kind": "ScalarField",
-              "alias": null,
-              "name": "cursor",
-              "args": null,
-              "storageKey": null
-            }
+            (v2/*: any*/)
           ]
         },
+        (v3/*: any*/)
+      ]
+    },
+    {
+      "kind": "LinkedField",
+      "alias": "groups",
+      "name": "__Launcher_groups_connection",
+      "storageKey": null,
+      "args": null,
+      "concreteType": "GroupsConnection",
+      "plural": false,
+      "selections": [
         {
           "kind": "LinkedField",
           "alias": null,
-          "name": "pageInfo",
+          "name": "edges",
           "storageKey": null,
           "args": null,
-          "concreteType": "PageInfo",
-          "plural": false,
+          "concreteType": "GroupEdge",
+          "plural": true,
           "selections": [
             {
-              "kind": "ScalarField",
+              "kind": "LinkedField",
               "alias": null,
-              "name": "endCursor",
+              "name": "node",
+              "storageKey": null,
               "args": null,
-              "storageKey": null
+              "concreteType": "Group",
+              "plural": false,
+              "selections": [
+                (v0/*: any*/),
+                {
+                  "kind": "FragmentSpread",
+                  "name": "GroupItem_group",
+                  "args": null
+                },
+                (v1/*: any*/)
+              ]
             },
-            {
-              "kind": "ScalarField",
-              "alias": null,
-              "name": "hasNextPage",
-              "args": null,
-              "storageKey": null
-            }
+            (v2/*: any*/)
           ]
-        }
+        },
+        (v3/*: any*/)
       ]
     }
   ]
 };
+})();
 // prettier-ignore
-(node/*: any*/).hash = 'adbc280737b8706c7fafb7be9a1008bf';
+(node/*: any*/).hash = '1f4641341d0a589bb36b372dd198c248';
 module.exports = node;

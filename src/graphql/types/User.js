@@ -6,39 +6,59 @@ const User = MongooseModels('User');
 
 export default {
   contacts: async(paerent ,args, {session}) => {
-      try {
-        let user = await userLoader.load(paerent.id.toString());
-        let users = await userLoader.loadMany( user.contacts.map( c => c._id.toString() ))
+    try {
+      let user = await userLoader.load(paerent.id.toString());
+      let users = await userLoader.loadMany( user.contacts.map( c => c._id.toString() ))
 
-        let startCursor = '';
-        let endCursor = '';
-        let edges = users.map(contact => {
-          startCursor = startCursor || `${contact.id}`;
-          endCursor = `${endCursor.id}`;
-          return {
-            cursor: `${contact.id}`,
-            node: contact
-          }
-        });
+      let startCursor = '';
+      let endCursor = '';
+      let edges = users.map(contact => {
+        startCursor = startCursor || `${contact.id}`;
+        endCursor = `${endCursor.id}`;
         return {
-          edges: edges,
-          totalCount: edges.length,
-          pageInfo: {
-            startCursor: startCursor,
-            endCursor: endCursor,
-            hasNextPage: false
-          }
+          cursor: `${contact.id}`,
+          node: contact
         }
-      } catch (error) {
-        return new Error(error)
+      });
+      return {
+        edges: edges,
+        totalCount: edges.length,
+        pageInfo: {
+          startCursor: startCursor,
+          endCursor: endCursor,
+          hasNextPage: false
+        }
       }
-    },
-    groups: async(paerent ,args, {session}) => {
-      try {
-        let user = await userLoader.load(paerent.id.toString());
-        return groupLoader.loadMany( user.groups.map( c => c._id.toString() ))        
-      } catch (error) {
-        return new Error(error)
+    } catch (error) {
+      return new Error(error)
+    }
+  },
+  groups: async(paerent ,args, {session}) => {
+    try {
+      let user = await userLoader.load(paerent.id.toString());
+      let groups = await groupLoader.loadMany( user.groups.map( g => g._id.toString() ))
+
+      let startCursor = '';
+      let endCursor = '';
+      let edges = groups.map(group => {
+        startCursor = startCursor || `${group.id}`;
+        endCursor = `${endCursor.id}`;
+        return {
+          cursor: `${group.id}`,
+          node: group
+        }
+      });
+      return {
+        edges: edges,
+        totalCount: edges.length,
+        pageInfo: {
+          startCursor: startCursor,
+          endCursor: endCursor,
+          hasNextPage: false
+        }
       }
+    } catch (error) {
+      return new Error(error)
     }
   }
+}

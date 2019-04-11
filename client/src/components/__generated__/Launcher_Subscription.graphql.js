@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash d0161dd3b9af92124e70f5b8398a6297
+ * @relayHash 015d24169ae089eb8b07af060a2feae4
  */
 
 /* eslint-disable */
@@ -20,7 +20,8 @@ export type Launcher_SubscriptionResponse = {|
       +id: string,
       +readed: boolean,
       +destination: {|
-        +id?: string
+        +id?: string,
+        +username?: string,
       |},
       +received: boolean,
     |},
@@ -37,7 +38,8 @@ export type Launcher_SubscriptionResponse = {|
         +fileName?: string,
       |},
       +destination: {|
-        +id?: string
+        +id?: string,
+        +username?: string,
       |},
       +dateSended: any,
       +createdAt: any,
@@ -67,6 +69,7 @@ subscription Launcher_Subscription {
         __typename
         ... on Contact {
           id
+          username
         }
         ... on Group {
           id
@@ -97,6 +100,7 @@ subscription Launcher_Subscription {
         __typename
         ... on Contact {
           id
+          username
         }
         ... on Group {
           id
@@ -145,13 +149,26 @@ v2 = {
   "args": null,
   "storageKey": null
 },
-v3 = [
-  (v0/*: any*/)
-],
+v3 = {
+  "kind": "InlineFragment",
+  "type": "Group",
+  "selections": [
+    (v0/*: any*/)
+  ]
+},
 v4 = {
   "kind": "InlineFragment",
   "type": "Contact",
-  "selections": (v3/*: any*/)
+  "selections": [
+    (v0/*: any*/),
+    {
+      "kind": "ScalarField",
+      "alias": null,
+      "name": "username",
+      "args": null,
+      "storageKey": null
+    }
+  ]
 },
 v5 = {
   "kind": "LinkedField",
@@ -162,6 +179,7 @@ v5 = {
   "concreteType": null,
   "plural": false,
   "selections": [
+    (v3/*: any*/),
     (v4/*: any*/)
   ]
 },
@@ -268,11 +286,7 @@ v14 = {
   "plural": false,
   "selections": [
     (v13/*: any*/),
-    {
-      "kind": "InlineFragment",
-      "type": "Group",
-      "selections": (v3/*: any*/)
-    },
+    (v3/*: any*/),
     (v4/*: any*/)
   ]
 };
@@ -417,11 +431,11 @@ return {
     "operationKind": "subscription",
     "name": "Launcher_Subscription",
     "id": null,
-    "text": "subscription Launcher_Subscription {\n  generalInfo {\n    online {\n      id\n      online\n    }\n    readed {\n      id\n      readed\n      destination {\n        __typename\n        ... on Contact {\n          id\n        }\n        ... on Group {\n          id\n        }\n      }\n      received\n    }\n    newMessage {\n      id\n      author {\n        id\n        newMessages\n      }\n      data {\n        __typename\n        ... on Text {\n          text\n        }\n        ... on Emoji {\n          emoji\n        }\n        ... on File {\n          url\n          fileName\n        }\n      }\n      destination {\n        __typename\n        ... on Contact {\n          id\n        }\n        ... on Group {\n          id\n        }\n      }\n      dateSended\n      createdAt\n      readed\n      received\n    }\n  }\n}\n",
+    "text": "subscription Launcher_Subscription {\n  generalInfo {\n    online {\n      id\n      online\n    }\n    readed {\n      id\n      readed\n      destination {\n        __typename\n        ... on Contact {\n          id\n          username\n        }\n        ... on Group {\n          id\n        }\n      }\n      received\n    }\n    newMessage {\n      id\n      author {\n        id\n        newMessages\n      }\n      data {\n        __typename\n        ... on Text {\n          text\n        }\n        ... on Emoji {\n          emoji\n        }\n        ... on File {\n          url\n          fileName\n        }\n      }\n      destination {\n        __typename\n        ... on Contact {\n          id\n          username\n        }\n        ... on Group {\n          id\n        }\n      }\n      dateSended\n      createdAt\n      readed\n      received\n    }\n  }\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '042dc6a9ff2b07ea3b6e579b2353837c';
+(node/*: any*/).hash = 'eb2055a5d23824f391b7bf8ff9928b87';
 module.exports = node;

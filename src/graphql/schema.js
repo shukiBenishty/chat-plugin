@@ -27,7 +27,7 @@ export let typeDefs = gql`
     picture: String!
     admin: Boolean!
     contacts(first: Int, after: ID ): ContactsConnection
-    groups: [Group]
+    groups(first: Int, after: ID ): GroupsConnection
   }
 
 
@@ -67,6 +67,7 @@ export let typeDefs = gql`
     picture: String!
     subscribers: [Contact]
     messages(last: Int, before: ID ): MessagesConnection
+    newMessages: Int
     # createdAt: Date!
   }
 
@@ -112,6 +113,16 @@ export let typeDefs = gql`
       totalCount: Int!
   }
 
+  type GroupEdge {
+    cursor: String!
+    node: Group
+  }
+
+  type GroupsConnection {
+      edges: [GroupEdge]!
+      pageInfo: PageInfo
+      totalCount: Int!
+  }
 
   type generalInfo {
     online: Contact
@@ -135,6 +146,7 @@ export let typeDefs = gql`
     sendMessageEmoji(message: EmojiInput!, destination: ID!): Message
     sendMessageFile(message: FileInput!, destination: ID!): Message
     addContact(contactId: ID!): Contact
+    addGroup(groupId: ID!): Group
     readMassage(messageId: ID!): Message
     typing(destination: ID!): Boolean
     online: Boolean

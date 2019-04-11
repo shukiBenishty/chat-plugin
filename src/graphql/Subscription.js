@@ -3,7 +3,7 @@ import Debug from "debug";
 import { withFilter, PubSub } from 'apollo-server-express';
 
 import MongooseModels from "../mongooseModels";
-import { userLoader } from './dataLoader';
+import { userLoader, groupLoader } from './dataLoader';
 
 const debug = Debug("chat-plugin:Subscription");
 
@@ -40,25 +40,31 @@ export default {
     generalInfo: {
       subscribe: async (obj, {contactId}, {session}, info) => { 
 
-          let user = await User.findById(session.userId).populate("contacts")
-          let users = [];
+          let user = await User.findById(session.userId).populate("contacts").populate('groups')
+          let queues = [];
           if (contactId) {
-            users.push(contactId);
+            queues.push(contactId);
           } else {
-            users = user.contacts.map((c) => {
+            queues = user.contacts.map((c) => {
               userLoader.prime(`${c.id}`, c);
               return `${c.id}`
             });
-            users.push(session.userId);
+            
+            user.groups.map((g) => {
+              groupLoader.prime(`${g.id}`, g);
+              queues.push(`${g.id}`);
+            });
+            
+            queues.push(session.userId);
           }
 
-          return withFilter( () =>  pubsub.asyncIterator(users),
+          return withFilter( () =>  pubsub.asyncIterator(queues),
             (payload) => {
               //filter if typing for me
               if (payload.generalInfo.typing && (payload.generalInfo.destination === session.userId)) return false;
               if (payload.generalInfo.typingForMe && (payload.generalInfo.destination !== session.userId)) return false;
               if (payload.generalInfo.readed && (payload.generalInfo.destination !== session.userId)) return false;
-              if (payload.generalInfo.newMessage && (payload.generalInfo.destination !== session.userId)) return false;
+              if (payload.generalInfo.newMessage && !(payload.generalInfo.destination.find( u => u === session.userId))) return false;
               return true;
             } )(obj, {contactId}, {session}, info);
       }

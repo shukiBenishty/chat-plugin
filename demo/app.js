@@ -11,6 +11,7 @@ const server = require(process.env.PORT ? 'chat-plugin': '../lib' ).server ;
 import session from './sessions.js';
 import index from './routes/index';
 import users from './routes/users';
+import groups from './routes/groups';
 import login from './routes/login';
 
 const app = express();
@@ -32,6 +33,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/users', users);
 app.use('/login', login);
+app.use('/groups', groups);
 
 if (process.env.PORT) {
   app.use('/chat', graphql(

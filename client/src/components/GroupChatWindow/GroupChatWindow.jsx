@@ -76,12 +76,12 @@ export default createFragmentContainer(GroupChatWindow,
           id
           name
           picture
-          subscribers {
-            id
-            name
-            username
-            online
-            picture
-          }
+          # subscribers {
+          #   id
+          #   name
+          #   username
+          #   online
+          #   picture
+          # }
           ...GroupMessageList_list
       }`);

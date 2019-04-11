@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('partials/head', {title: title}) %>
+    <script>
+        function remove(group) {
+            <% if (admin) { %>
+            if(confirm("Do you really want to delete group '" + group + "'?"))
+                location = "/groups/delete/" + group;
+            <% } %>
+        }
+
+    </script>
+</head>
+<body>
+<%- include('partials/header', {header: 'Groups'}) %>
+<table class="table table-hover">
+    <thead class="thead-inverse">
+    <tr>
+        <th>Name</th>
+        <th>Subscribers</th>
+        <th class="text-center"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <% groups.forEach(function(group, index) { %>
+    <%- include('partials/group', {
+    name: group.name,
+    subscribers: group.subscribers
+    } ) %>
+    <% }) %>
+    </tbody>
+</table>
+<p>
+    <button onclick="location = '/groups/add'">Add group</button>
+</p>
+<p>
+    <button onclick="location = '/logout'">Logout</button>
+</p>
+<p>
+    <button onclick="location = '/'">Home</button>
+</p>
+</body>
+</html>

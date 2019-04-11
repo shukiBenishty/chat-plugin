@@ -4,6 +4,7 @@ import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from "@material-ui/icons/Search";
 
 import ContactItem from './ContactItem'
+import GroupItem from './GroupItem'
 import Search from './Search'
 import { addContact } from '../../mutations'
 import {UserContext} from '../../UserContext'
@@ -16,7 +17,7 @@ import closeIcon from '../../assets/close-icon.png';
 class ContactList extends Component {
 
     render() {
-      var items = this.props.contacts &&
+      var contacts = this.props.contacts &&
        this.props.contacts.map(
         ({node}) => {
           return <ContactItem key={ node.id }
@@ -25,7 +26,16 @@ class ContactList extends Component {
                   />
         }
       );
-      return <div className="contact-window-contact-list"> { items } </div>
+      var groups = this.props.groups &&
+      this.props.groups.map(
+       ({node}) => {
+         return <GroupItem key={ node.id }
+                  group={ node }
+                  onClick={ () => {this.props.onClick( node )} }
+                />
+       }
+     );
+      return <div className="contact-window-contact-list"> { contacts }  {groups} </div>
     }
 }
 
@@ -78,12 +88,12 @@ class ContactHeader extends Component {
 
 class ContactsWindow extends Component {
     render() {
+      let contacts = (this.props.user && this.props.user.contacts &&  this.props.user.contacts.edges) || [];
+      let groups = (this.props.user && this.props.user.groups &&  this.props.user.groups.edges) || [];
       return ( 
             <div className='contact-window'>
                 < ContactHeader onClose={this.props.onClose}  {...this.props}> Contact List </ContactHeader> 
-                < ContactList onClick={this.props.onContactClick} contacts={ this.props.user &&
-                                                                             this.props.user.contacts && 
-                                                                             this.props.user.contacts.edges} />  
+                < ContactList onClick={this.props.onContactClick} contacts={contacts} groups={groups} />  
             </div >
         )
     }
@@ -92,17 +102,20 @@ class ContactsWindow extends Component {
 export default createFragmentContainer(ContactsWindow,  
   graphql`
       fragment ContactsWindow_user on User {
-        contacts(first: 2147483647 # max GraphQLInt
-        ) @connection(key: "Launcher_contacts") {
+        contacts( first: 2147483647 ) @connection(key: "Launcher_contacts") {
           edges {
             node {
               id
-              name
-              username
-              online
-              newMessages
               ...ContactItem_contact
-              }
             }
+          }
+        }
+        groups ( first: 2147483647  ) @connection(key: "Launcher_groups") {
+          edges {
+            node {
+              id
+              ...GroupItem_group
+            }
+          }
         }
       }`);

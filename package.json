@@ -16,7 +16,6 @@
     ]
   },
   "scripts": {
-    "dev": "babel src --out-dir lib --copy-files --source-maps inline --watch",
     "build": "babel src --out-dir lib --copy-files --source-maps inline",
     "start": "cd demo & npm i & npm start"
   },

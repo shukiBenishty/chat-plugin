@@ -19,9 +19,13 @@ const realtimeEventsSubscription = graphql`
         id
         readed
         destination {
-            ...on Contact {
-              id
-            }
+          ...on Contact {
+            id
+            username
+          }
+          ...on Group {
+            id
+          }
         }
         received
       }
@@ -44,9 +48,13 @@ const realtimeEventsSubscription = graphql`
             }
         }
         destination {
-            ...on Contact {
-              id
-            }
+          ...on Contact {
+            id
+            username
+          }
+          ...on Group {
+            id
+          }
         }
         dateSended
         createdAt
@@ -63,16 +71,25 @@ const query = graphql`
       name
       username
       admin
-      contacts(first: 2147483647 # max GraphQLInt
-        ) @connection(key: "Launcher_contacts") {
-          edges {
-            node {
-              id
-              ...ContactChatWindow_contact
-              newMessages
-              }
-            }
+      contacts(first: 2147483647  ) @connection(key: "Launcher_contacts") {
+        edges {
+          node {
+            id
+            username
+            ...ContactChatWindow_contact
+            newMessages
+          }
         }
+      }
+      groups (first: 2147483647  ) @connection(key: "Launcher_groups") {
+        edges {
+          node {
+            id
+            ...GroupChatWindow_group
+            newMessages
+          }
+        }
+      }
       ...ContactsWindow_user
     }
   }`
@@ -86,9 +103,15 @@ class App extends Component {
       updater: (store, data) => {
         if (data.generalInfo.newMessage) {
           const message = store.get( data.generalInfo.newMessage.id);
-          const contact = store.get( data.generalInfo.newMessage.author.id);
-  
-          const messages = ConnectionHandler.getConnection(contact, 'ContactMessageList_messages');
+          let messages = {};
+          if (data.generalInfo.newMessage.destination.username) {
+            const contact = store.get( data.generalInfo.newMessage.author.id); 
+            messages = ConnectionHandler.getConnection(contact, 'ContactMessageList_messages');
+          } else {
+            const group = store.get( data.generalInfo.newMessage.destination.id); 
+            messages = ConnectionHandler.getConnection(group, 'GroupMessageList_messages');
+          }
+          
           const edge = ConnectionHandler.createEdge(store, messages, message, 'Message', message.id);
 
           ConnectionHandler.insertEdgeAfter(messages, edge);

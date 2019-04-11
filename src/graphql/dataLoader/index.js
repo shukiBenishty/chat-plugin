@@ -24,7 +24,7 @@ export const userLoader = new DataLoader( async userIds => {
 });
 
 export const groupLoader = new DataLoader(async groupIds => {
-    let groups = await Group.find({ _id: { $in: groupIds } });
+    let groups = await Group.find({ _id: { $in: groupIds } }).populate('subscribers');
     if (groups.length === groupIds.length) {
         return Promise.resolve(groups)
     }
