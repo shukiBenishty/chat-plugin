@@ -5,6 +5,7 @@ import sendMessageFile from './sendMessageFile'
 import addContact from './addContact'
 import createGroup from './createGroup'
 import editGroup from './editGroup'
+import sendComment from './sendComment'
 
 export { 
     readMessage, 
@@ -13,5 +14,6 @@ export {
     sendMessageFile,
     addContact,
     createGroup,
-    editGroup
+    editGroup,
+    sendComment
  }

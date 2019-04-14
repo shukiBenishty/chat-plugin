@@ -5,6 +5,12 @@ enum CacheControlScope {
   PRIVATE
 }
 
+type Comments {
+  myVote: Vote
+  likes: Int!
+  unlikes: Int!
+}
+
 type Contact {
   id: ID!
   name: String!
@@ -53,6 +59,7 @@ type generalInfo {
   readed: Message
   newMessage: Message
   newContact: Contact
+  deleteGroup: Group
   newGroup: Group
 }
 
@@ -85,6 +92,7 @@ type Message implements INode {
   author: Contact!
   data: MessageData!
   dateSended: Date!
+  comments: Comments
   destination: MessageDest!
   createdAt: Date!
   readed: Boolean!
@@ -110,6 +118,7 @@ type Mutation {
   sendMessageText(message: TextInput!, destination: ID!): Message
   sendMessageEmoji(message: EmojiInput!, destination: ID!): Message
   sendMessageFile(message: FileInput!, destination: ID!): Message
+  sendComment(messageId: ID!, myVote: Vote): Message
   addContact(contactId: ID!): Contact
   editGroup(groupId: ID!, subscribers: [ID!], unsubscribers: [ID!]): Group
   createGroup(name: String!, picture: String!, subscribers: [ID!]): Group
@@ -158,5 +167,10 @@ type User implements INode {
   admin: Boolean!
   contacts(first: Int, after: ID): ContactsConnection
   groups(first: Int, after: ID): GroupsConnection
+}
+
+enum Vote {
+  LIKE
+  UNLIKE
 }
 

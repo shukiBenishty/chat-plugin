@@ -65,6 +65,7 @@ export default {
               if (payload.generalInfo.readed && (payload.generalInfo.destination !== session.userId)) return false;
               if (payload.generalInfo.newContact && (payload.generalInfo.destination !== session.userId)) return false;
               if (payload.generalInfo.newGroup && (payload.generalInfo.destination !== session.userId)) return false;
+              if (payload.generalInfo.deleteGroup && (payload.generalInfo.destination !== session.userId)) return false;
               if (payload.generalInfo.newMessage && !(payload.generalInfo.destination.find( u => u === session.userId))) return false;
               return true;
             } )(obj, {contactId}, {session, userLoader, groupLoader, messageLoader}, info);

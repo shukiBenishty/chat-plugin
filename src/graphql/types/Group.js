@@ -84,11 +84,12 @@ export default {
       }
     },
     newMessages: (paerent ,args, {session})=> {
-      return Message.countDocuments({
-        $and:[ 
-          {destination: paerent.id}, 
-          {readed: false}
-        ]
-      });
+      return 0;
+      // return Message.countDocuments({
+      //   $and:[ 
+      //     {destination: paerent.id}, 
+      //     {readed: false}
+      //   ]
+      // });
     }
   }

@@ -44,7 +44,6 @@ const sendMessage =  async (parent, args, {session, groupLoader, messageLoader})
   return message;
 }
 
-
 const addContact = async (parent, args, {session, userLoader}) => {
   let user = await User.findOne({ _id: session.userId, contacts: args.contactId });
 
@@ -75,7 +74,7 @@ const createGroup = async (parent, {name, picture, subscribers}, {session, userL
   groupLoader.prime(`${group.id}`, group);
 
   await User.updateMany( {_id: { $in: subscribers }}, { 
-    $push: { groups: group.id }
+    $addToSet: { groups: group.id }
   });
  
   subscribers.forEach(s => {
@@ -94,44 +93,48 @@ const editGroup = async (parent, args, {session, userLoader, groupLoader}) => {
   try {
     let user = await userLoader.load(session.userId);
     if (!user.admin) {
+      //exit if not admin
       return;
     }
     let group = await groupLoader.load(args.groupId);
     if (!group) {
+      //exit if group not exit
       return;
     }
     let updatedUsers = [];
     let users;
+
+    //Handel unsubscribers
     if (args.unsubscribers && args.unsubscribers.length) {
-      console.log("unsubscribers", args.unsubscribers);
       await Group.updateOne( {_id: group.id}, { 
-        $pull: { subscribers: { $in: args.unsubscribers } }
+        $pullAll: { subscribers: args.unsubscribers  }
       })
       await User.updateMany( {_id: { $in: args.unsubscribers }}, { 
-        $pull: { groups: group.id }
+        $pullAll: { groups: [group.id] }
       })
       users = await User.find({_id: { $in: args.unsubscribers }})
-      console.log("users", users);
+
+      args.unsubscribers.forEach(s => {
+        pubsub.publish(s, { generalInfo: { deleteGroup: group, destination: s }});
+      })
       updatedUsers = updatedUsers.concat(users);
-      console.log("updatedUsers", updatedUsers);
     }
+
+    //Handel subscribers
     if (args.subscribers && args.subscribers.length) {
-      console.log("subscribers", args.subscribers);
       await Group.updateOne( {_id: group.id}, { 
-        $push: { subscribers: {$each : args.subscribers} }
+        $addToSet: { subscribers: {$each : args.subscribers} }
       })
       await User.updateMany( {_id: { $in: args.subscribers }}, { 
-        $push: { groups: group.id }
+        $addToSet: { groups: group.id }
       })
       args.subscribers.forEach(s => {
         pubsub.publish(s, { generalInfo: { newGroup: group, destination: s }});
       })
   
       users = await User.find({_id: { $in: args.subscribers }})
-      console.log("users2", users);
 
       updatedUsers = updatedUsers.concat(users);
-      console.log("updatedUsers", updatedUsers);
     }
     updatedUsers.forEach(user => {
       userLoader.prime(`${user.id}`, user)
@@ -173,6 +176,34 @@ const online = async (parent, args, {session, userLoader}) => {
   return true;
 }
 
+const sendComment = async (parent, args, {session, userLoader, messageLoader}) => {
+  try {
+    let message = await messageLoader.load(args.messageId);
+    let indexLike = message.likes.indexOf(session.userId);
+    let indexUnlike = message.unlikes.indexOf(session.userId);
+    if (args.myVote) {
+      if (args.myVote === 'LIKE') {
+        if ( indexUnlike !== -1) message.unlikes.splice(indexUnlike, 1);
+        if ( indexLike === -1) message.likes.push(session.userId);
+      }
+      if (args.myVote === 'UNLIKE') {
+        if ( indexUnlike === -1) message.unlikes.push(session.userId);
+        if ( indexLike !== -1) message.likes.splice(indexLike, 1);
+      }
+    } else {
+      if (indexLike !== -1) message.likes.splice(indexLike, 1);
+      if (indexUnlike !== -1) message.unlikes.splice(indexUnlike, 1);
+    }
+
+    await message.save();
+
+    messageLoader.prime(`${message.id}`, message)
+    return message;
+  } catch (err) {
+    console.error(err);
+  }
+}
+
 export default {
     sendMessageText: sendMessage,
     sendMessageEmoji: sendMessage,
@@ -182,5 +213,6 @@ export default {
     editGroup: editGroup,
     readMassage: readMassage,
     typing:  typing,
-    online: online
+    online: online,
+    sendComment: sendComment
   }

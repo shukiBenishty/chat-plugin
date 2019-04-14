@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 2277dfe3cabdd162221f0f114c976d70
+ * @relayHash 09b561dbb41ea3cc49291f050d36ac94
  */
 
 /* eslint-disable */
@@ -81,7 +81,6 @@ fragment Message_message on Message {
     __typename
     ... on Text {
       __typename
-      text
     }
     ... on Emoji {
       __typename
@@ -106,6 +105,22 @@ fragment Message_message on Message {
   createdAt
   readed
   received
+  ...TextMessage_textMessage
+}
+
+fragment TextMessage_textMessage on Message {
+  id
+  data {
+    __typename
+    ... on Text {
+      text
+    }
+  }
+  comments {
+    myVote
+    likes
+    unlikes
+  }
 }
 
 fragment EditGroup_group on Group {
@@ -499,6 +514,38 @@ return {
                         "args": null,
                         "storageKey": null
                       },
+                      {
+                        "kind": "LinkedField",
+                        "alias": null,
+                        "name": "comments",
+                        "storageKey": null,
+                        "args": null,
+                        "concreteType": "Comments",
+                        "plural": false,
+                        "selections": [
+                          {
+                            "kind": "ScalarField",
+                            "alias": null,
+                            "name": "myVote",
+                            "args": null,
+                            "storageKey": null
+                          },
+                          {
+                            "kind": "ScalarField",
+                            "alias": null,
+                            "name": "likes",
+                            "args": null,
+                            "storageKey": null
+                          },
+                          {
+                            "kind": "ScalarField",
+                            "alias": null,
+                            "name": "unlikes",
+                            "args": null,
+                            "storageKey": null
+                          }
+                        ]
+                      },
                       (v6/*: any*/)
                     ]
                   }
@@ -556,7 +603,7 @@ return {
     "operationKind": "mutation",
     "name": "editGroup_Mutation",
     "id": null,
-    "text": "mutation editGroup_Mutation(\n  $groupId: ID!\n  $subscribers: [ID!]\n  $unsubscribers: [ID!]\n) {\n  editGroup(groupId: $groupId, subscribers: $subscribers, unsubscribers: $unsubscribers) {\n    id\n    name\n    picture\n    ...Header_group\n    ...GroupMessageList_list\n  }\n}\n\nfragment Header_group on Group {\n  name\n  picture\n  ...EditGroup_group\n}\n\nfragment GroupMessageList_list on Group {\n  messages(last: 20) {\n    edges {\n      cursor\n      node {\n        id\n        ...Message_message\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      startCursor\n      hasPreviousPage\n    }\n    totalCount\n  }\n}\n\nfragment Message_message on Message {\n  id\n  author {\n    id\n    picture\n  }\n  data {\n    __typename\n    ... on Text {\n      __typename\n      text\n    }\n    ... on Emoji {\n      __typename\n      emoji\n    }\n    ... on File {\n      __typename\n      url\n      fileName\n    }\n  }\n  dateSended\n  destination {\n    __typename\n    ... on Contact {\n      id\n    }\n    ... on Group {\n      id\n    }\n  }\n  createdAt\n  readed\n  received\n}\n\nfragment EditGroup_group on Group {\n  id\n  subscribers(first: 2147483647) {\n    edges {\n      node {\n        id\n        name\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n",
+    "text": "mutation editGroup_Mutation(\n  $groupId: ID!\n  $subscribers: [ID!]\n  $unsubscribers: [ID!]\n) {\n  editGroup(groupId: $groupId, subscribers: $subscribers, unsubscribers: $unsubscribers) {\n    id\n    name\n    picture\n    ...Header_group\n    ...GroupMessageList_list\n  }\n}\n\nfragment Header_group on Group {\n  name\n  picture\n  ...EditGroup_group\n}\n\nfragment GroupMessageList_list on Group {\n  messages(last: 20) {\n    edges {\n      cursor\n      node {\n        id\n        ...Message_message\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      startCursor\n      hasPreviousPage\n    }\n    totalCount\n  }\n}\n\nfragment Message_message on Message {\n  id\n  author {\n    id\n    picture\n  }\n  data {\n    __typename\n    ... on Text {\n      __typename\n    }\n    ... on Emoji {\n      __typename\n      emoji\n    }\n    ... on File {\n      __typename\n      url\n      fileName\n    }\n  }\n  dateSended\n  destination {\n    __typename\n    ... on Contact {\n      id\n    }\n    ... on Group {\n      id\n    }\n  }\n  createdAt\n  readed\n  received\n  ...TextMessage_textMessage\n}\n\nfragment TextMessage_textMessage on Message {\n  id\n  data {\n    __typename\n    ... on Text {\n      text\n    }\n  }\n  comments {\n    myVote\n    likes\n    unlikes\n  }\n}\n\nfragment EditGroup_group on Group {\n  id\n  subscribers(first: 2147483647) {\n    edges {\n      node {\n        id\n        name\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n",
     "metadata": {}
   }
 };

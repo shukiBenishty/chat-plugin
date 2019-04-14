@@ -7,6 +7,8 @@ const messageSchema = new Schema({
     dateSended: {type: Date, default: Date.now, required: true}, 
     received: {type: Boolean, default: false ,required: true},
     readed: {type: Boolean, default: false ,required: true},
+    likes:  [{type: String}],
+    unlikes:  [{type: String}],
     destination: {type: Schema.Types.ObjectId, required: true,  refPath: 'destinationModel', index: true},
     destinationModel: {
         type: String,

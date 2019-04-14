@@ -23,6 +23,9 @@ const realtimeEventsSubscription = graphql`
         picture
         ...Header_group
         ...GroupMessageList_list
+      },
+      deleteGroup {
+        id
       }
       online{
         id
@@ -47,6 +50,11 @@ const realtimeEventsSubscription = graphql`
         author{
             id
             newMessages
+        }
+        comments {
+          myVote
+          likes
+          unlikes
         }
         data{
             ...on Text{
@@ -147,6 +155,10 @@ class App extends Component {
           const edge = ConnectionHandler.createEdge(store, groups , group, 'Group', data.generalInfo.newGroup.id);
         
           ConnectionHandler.insertEdgeBefore(groups, edge);
+        }
+        if (data.generalInfo.deleteGroup) {
+          this.renewSubscription();
+          store.delete( data.generalInfo.deleteGroup.id );
         }
       }
     }

@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 77354dcd8cbbdd58bd05b48a42a96b4a
+ * @relayHash c3daa1c5e399a89c78d79383e6975a90
  */
 
 /* eslint-disable */
@@ -12,6 +12,7 @@ import type { ConcreteRequest } from 'relay-runtime';
 type ContactChatWindow_contact$ref = any;
 type GroupMessageList_list$ref = any;
 type Header_group$ref = any;
+export type Vote = "LIKE" | "UNLIKE" | "%future added value";
 export type Launcher_SubscriptionVariables = {||};
 export type Launcher_SubscriptionResponse = {|
   +generalInfo: ?{|
@@ -26,6 +27,9 @@ export type Launcher_SubscriptionResponse = {|
       +name: string,
       +picture: string,
       +$fragmentRefs: Header_group$ref & GroupMessageList_list$ref,
+    |},
+    +deleteGroup: ?{|
+      +id: string
     |},
     +online: ?{|
       +id: string,
@@ -45,6 +49,11 @@ export type Launcher_SubscriptionResponse = {|
       +author: {|
         +id: string,
         +newMessages: ?number,
+      |},
+      +comments: ?{|
+        +myVote: ?Vote,
+        +likes: number,
+        +unlikes: number,
       |},
       +data: {|
         +text?: string,
@@ -86,6 +95,9 @@ subscription Launcher_Subscription {
       ...Header_group
       ...GroupMessageList_list
     }
+    deleteGroup {
+      id
+    }
     online {
       id
       online
@@ -110,6 +122,11 @@ subscription Launcher_Subscription {
       author {
         id
         newMessages
+      }
+      comments {
+        myVote
+        likes
+        unlikes
       }
       data {
         __typename
@@ -187,7 +204,6 @@ fragment Message_message on Message {
     __typename
     ... on Text {
       __typename
-      text
     }
     ... on Emoji {
       __typename
@@ -212,6 +228,22 @@ fragment Message_message on Message {
   createdAt
   readed
   received
+  ...TextMessage_textMessage
+}
+
+fragment TextMessage_textMessage on Message {
+  id
+  data {
+    __typename
+    ... on Text {
+      text
+    }
+  }
+  comments {
+    myVote
+    likes
+    unlikes
+  }
 }
 
 fragment EditGroup_group on Group {
@@ -288,14 +320,27 @@ v4 = {
   "args": null,
   "storageKey": null
 },
-v5 = {
+v5 = [
+  (v0/*: any*/)
+],
+v6 = {
+  "kind": "LinkedField",
+  "alias": null,
+  "name": "deleteGroup",
+  "storageKey": null,
+  "args": null,
+  "concreteType": "Group",
+  "plural": false,
+  "selections": (v5/*: any*/)
+},
+v7 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "online",
   "args": null,
   "storageKey": null
 },
-v6 = {
+v8 = {
   "kind": "LinkedField",
   "alias": null,
   "name": "online",
@@ -305,25 +350,22 @@ v6 = {
   "plural": false,
   "selections": [
     (v0/*: any*/),
-    (v5/*: any*/)
+    (v7/*: any*/)
   ]
 },
-v7 = {
+v9 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "readed",
   "args": null,
   "storageKey": null
 },
-v8 = [
-  (v0/*: any*/)
-],
-v9 = {
+v10 = {
   "kind": "InlineFragment",
   "type": "Group",
-  "selections": (v8/*: any*/)
+  "selections": (v5/*: any*/)
 },
-v10 = {
+v11 = {
   "kind": "InlineFragment",
   "type": "Contact",
   "selections": [
@@ -331,7 +373,7 @@ v10 = {
     (v1/*: any*/)
   ]
 },
-v11 = {
+v12 = {
   "kind": "LinkedField",
   "alias": null,
   "name": "destination",
@@ -340,18 +382,18 @@ v11 = {
   "concreteType": null,
   "plural": false,
   "selections": [
-    (v9/*: any*/),
-    (v10/*: any*/)
+    (v10/*: any*/),
+    (v11/*: any*/)
   ]
 },
-v12 = {
+v13 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "received",
   "args": null,
   "storageKey": null
 },
-v13 = {
+v14 = {
   "kind": "LinkedField",
   "alias": null,
   "name": "author",
@@ -364,52 +406,70 @@ v13 = {
     (v2/*: any*/)
   ]
 },
-v14 = {
+v15 = {
+  "kind": "LinkedField",
+  "alias": null,
+  "name": "comments",
+  "storageKey": null,
+  "args": null,
+  "concreteType": "Comments",
+  "plural": false,
+  "selections": [
+    {
+      "kind": "ScalarField",
+      "alias": null,
+      "name": "myVote",
+      "args": null,
+      "storageKey": null
+    },
+    {
+      "kind": "ScalarField",
+      "alias": null,
+      "name": "likes",
+      "args": null,
+      "storageKey": null
+    },
+    {
+      "kind": "ScalarField",
+      "alias": null,
+      "name": "unlikes",
+      "args": null,
+      "storageKey": null
+    }
+  ]
+},
+v16 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "url",
   "args": null,
   "storageKey": null
 },
-v15 = {
+v17 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "fileName",
   "args": null,
   "storageKey": null
 },
-v16 = {
+v18 = {
   "kind": "InlineFragment",
   "type": "File",
   "selections": [
-    (v14/*: any*/),
-    (v15/*: any*/)
-  ]
-},
-v17 = {
-  "kind": "ScalarField",
-  "alias": null,
-  "name": "emoji",
-  "args": null,
-  "storageKey": null
-},
-v18 = {
-  "kind": "InlineFragment",
-  "type": "Emoji",
-  "selections": [
+    (v16/*: any*/),
     (v17/*: any*/)
   ]
 },
 v19 = {
   "kind": "ScalarField",
   "alias": null,
-  "name": "text",
+  "name": "emoji",
   "args": null,
   "storageKey": null
 },
 v20 = {
   "kind": "InlineFragment",
-  "type": "Text",
+  "type": "Emoji",
   "selections": [
     (v19/*: any*/)
   ]
@@ -417,18 +477,32 @@ v20 = {
 v21 = {
   "kind": "ScalarField",
   "alias": null,
-  "name": "dateSended",
+  "name": "text",
   "args": null,
   "storageKey": null
 },
 v22 = {
+  "kind": "InlineFragment",
+  "type": "Text",
+  "selections": [
+    (v21/*: any*/)
+  ]
+},
+v23 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "dateSended",
+  "args": null,
+  "storageKey": null
+},
+v24 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "createdAt",
   "args": null,
   "storageKey": null
 },
-v23 = [
+v25 = [
   {
     "kind": "Literal",
     "name": "last",
@@ -436,33 +510,33 @@ v23 = [
     "type": "Int"
   }
 ],
-v24 = {
+v26 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "cursor",
   "args": null,
   "storageKey": null
 },
-v25 = {
+v27 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "__typename",
   "args": null,
   "storageKey": null
 },
-v26 = {
+v28 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "endCursor",
   "args": null,
   "storageKey": null
 },
-v27 = {
+v29 = {
   "kind": "LinkedField",
   "alias": null,
   "name": "messages",
   "storageKey": "messages(last:20)",
-  "args": (v23/*: any*/),
+  "args": (v25/*: any*/),
   "concreteType": "MessagesConnection",
   "plural": false,
   "selections": [
@@ -475,7 +549,7 @@ v27 = {
       "concreteType": "MessageEdge",
       "plural": true,
       "selections": [
-        (v24/*: any*/),
+        (v26/*: any*/),
         {
           "kind": "LinkedField",
           "alias": null,
@@ -508,35 +582,35 @@ v27 = {
               "concreteType": null,
               "plural": false,
               "selections": [
-                (v25/*: any*/),
+                (v27/*: any*/),
                 {
                   "kind": "InlineFragment",
                   "type": "File",
                   "selections": [
-                    (v25/*: any*/),
-                    (v14/*: any*/),
-                    (v15/*: any*/)
+                    (v27/*: any*/),
+                    (v16/*: any*/),
+                    (v17/*: any*/)
                   ]
                 },
                 {
                   "kind": "InlineFragment",
                   "type": "Emoji",
                   "selections": [
-                    (v25/*: any*/),
-                    (v17/*: any*/)
+                    (v27/*: any*/),
+                    (v19/*: any*/)
                   ]
                 },
                 {
                   "kind": "InlineFragment",
                   "type": "Text",
                   "selections": [
-                    (v25/*: any*/),
-                    (v19/*: any*/)
+                    (v27/*: any*/),
+                    (v21/*: any*/)
                   ]
                 }
               ]
             },
-            (v21/*: any*/),
+            (v23/*: any*/),
             {
               "kind": "LinkedField",
               "alias": null,
@@ -546,19 +620,20 @@ v27 = {
               "concreteType": null,
               "plural": false,
               "selections": [
-                (v25/*: any*/),
-                (v9/*: any*/),
+                (v27/*: any*/),
+                (v10/*: any*/),
                 {
                   "kind": "InlineFragment",
                   "type": "Contact",
-                  "selections": (v8/*: any*/)
+                  "selections": (v5/*: any*/)
                 }
               ]
             },
-            (v22/*: any*/),
-            (v7/*: any*/),
-            (v12/*: any*/),
-            (v25/*: any*/)
+            (v24/*: any*/),
+            (v9/*: any*/),
+            (v13/*: any*/),
+            (v15/*: any*/),
+            (v27/*: any*/)
           ]
         }
       ]
@@ -572,7 +647,7 @@ v27 = {
       "concreteType": "PageInfo",
       "plural": false,
       "selections": [
-        (v26/*: any*/),
+        (v28/*: any*/),
         {
           "kind": "ScalarField",
           "alias": null,
@@ -598,7 +673,7 @@ v27 = {
     }
   ]
 },
-v28 = [
+v30 = [
   {
     "kind": "Literal",
     "name": "first",
@@ -606,7 +681,7 @@ v28 = [
     "type": "Int"
   }
 ],
-v29 = {
+v31 = {
   "kind": "LinkedField",
   "alias": null,
   "name": "destination",
@@ -615,9 +690,9 @@ v29 = {
   "concreteType": null,
   "plural": false,
   "selections": [
-    (v25/*: any*/),
-    (v9/*: any*/),
-    (v10/*: any*/)
+    (v27/*: any*/),
+    (v10/*: any*/),
+    (v11/*: any*/)
   ]
 };
 return {
@@ -682,6 +757,7 @@ return {
             ]
           },
           (v6/*: any*/),
+          (v8/*: any*/),
           {
             "kind": "LinkedField",
             "alias": null,
@@ -692,9 +768,9 @@ return {
             "plural": false,
             "selections": [
               (v0/*: any*/),
-              (v7/*: any*/),
-              (v11/*: any*/),
-              (v12/*: any*/)
+              (v9/*: any*/),
+              (v12/*: any*/),
+              (v13/*: any*/)
             ]
           },
           {
@@ -707,7 +783,8 @@ return {
             "plural": false,
             "selections": [
               (v0/*: any*/),
-              (v13/*: any*/),
+              (v14/*: any*/),
+              (v15/*: any*/),
               {
                 "kind": "LinkedField",
                 "alias": null,
@@ -717,16 +794,16 @@ return {
                 "concreteType": null,
                 "plural": false,
                 "selections": [
-                  (v16/*: any*/),
                   (v18/*: any*/),
-                  (v20/*: any*/)
+                  (v20/*: any*/),
+                  (v22/*: any*/)
                 ]
               },
-              (v11/*: any*/),
-              (v21/*: any*/),
-              (v22/*: any*/),
-              (v7/*: any*/),
-              (v12/*: any*/)
+              (v12/*: any*/),
+              (v23/*: any*/),
+              (v24/*: any*/),
+              (v9/*: any*/),
+              (v13/*: any*/)
             ]
           }
         ]
@@ -759,15 +836,15 @@ return {
               (v0/*: any*/),
               (v1/*: any*/),
               (v3/*: any*/),
-              (v5/*: any*/),
+              (v7/*: any*/),
               (v4/*: any*/),
               (v2/*: any*/),
-              (v27/*: any*/),
+              (v29/*: any*/),
               {
                 "kind": "LinkedHandle",
                 "alias": null,
                 "name": "messages",
-                "args": (v23/*: any*/),
+                "args": (v25/*: any*/),
                 "handle": "connection",
                 "key": "ContactMessageList_messages",
                 "filters": null
@@ -791,7 +868,7 @@ return {
                 "alias": null,
                 "name": "subscribers",
                 "storageKey": "subscribers(first:2147483647)",
-                "args": (v28/*: any*/),
+                "args": (v30/*: any*/),
                 "concreteType": "ContactsConnection",
                 "plural": false,
                 "selections": [
@@ -815,10 +892,10 @@ return {
                         "selections": [
                           (v0/*: any*/),
                           (v3/*: any*/),
-                          (v25/*: any*/)
+                          (v27/*: any*/)
                         ]
                       },
-                      (v24/*: any*/)
+                      (v26/*: any*/)
                     ]
                   },
                   {
@@ -830,7 +907,7 @@ return {
                     "concreteType": "PageInfo",
                     "plural": false,
                     "selections": [
-                      (v26/*: any*/),
+                      (v28/*: any*/),
                       {
                         "kind": "ScalarField",
                         "alias": null,
@@ -846,17 +923,17 @@ return {
                 "kind": "LinkedHandle",
                 "alias": null,
                 "name": "subscribers",
-                "args": (v28/*: any*/),
+                "args": (v30/*: any*/),
                 "handle": "connection",
                 "key": "EditGroup_subscribers",
                 "filters": null
               },
-              (v27/*: any*/),
+              (v29/*: any*/),
               {
                 "kind": "LinkedHandle",
                 "alias": null,
                 "name": "messages",
-                "args": (v23/*: any*/),
+                "args": (v25/*: any*/),
                 "handle": "connection",
                 "key": "GroupMessageList_messages",
                 "filters": null
@@ -864,6 +941,7 @@ return {
             ]
           },
           (v6/*: any*/),
+          (v8/*: any*/),
           {
             "kind": "LinkedField",
             "alias": null,
@@ -874,9 +952,9 @@ return {
             "plural": false,
             "selections": [
               (v0/*: any*/),
-              (v7/*: any*/),
-              (v29/*: any*/),
-              (v12/*: any*/)
+              (v9/*: any*/),
+              (v31/*: any*/),
+              (v13/*: any*/)
             ]
           },
           {
@@ -889,7 +967,8 @@ return {
             "plural": false,
             "selections": [
               (v0/*: any*/),
-              (v13/*: any*/),
+              (v14/*: any*/),
+              (v15/*: any*/),
               {
                 "kind": "LinkedField",
                 "alias": null,
@@ -899,17 +978,17 @@ return {
                 "concreteType": null,
                 "plural": false,
                 "selections": [
-                  (v25/*: any*/),
-                  (v16/*: any*/),
+                  (v27/*: any*/),
                   (v18/*: any*/),
-                  (v20/*: any*/)
+                  (v20/*: any*/),
+                  (v22/*: any*/)
                 ]
               },
-              (v29/*: any*/),
-              (v21/*: any*/),
-              (v22/*: any*/),
-              (v7/*: any*/),
-              (v12/*: any*/)
+              (v31/*: any*/),
+              (v23/*: any*/),
+              (v24/*: any*/),
+              (v9/*: any*/),
+              (v13/*: any*/)
             ]
           }
         ]
@@ -920,11 +999,11 @@ return {
     "operationKind": "subscription",
     "name": "Launcher_Subscription",
     "id": null,
-    "text": "subscription Launcher_Subscription {\n  generalInfo {\n    newContact {\n      id\n      username\n      ...ContactChatWindow_contact\n      newMessages\n    }\n    newGroup {\n      id\n      name\n      picture\n      ...Header_group\n      ...GroupMessageList_list\n    }\n    online {\n      id\n      online\n    }\n    readed {\n      id\n      readed\n      destination {\n        __typename\n        ... on Contact {\n          id\n          username\n        }\n        ... on Group {\n          id\n        }\n      }\n      received\n    }\n    newMessage {\n      id\n      author {\n        id\n        newMessages\n      }\n      data {\n        __typename\n        ... on Text {\n          text\n        }\n        ... on Emoji {\n          emoji\n        }\n        ... on File {\n          url\n          fileName\n        }\n      }\n      destination {\n        __typename\n        ... on Contact {\n          id\n          username\n        }\n        ... on Group {\n          id\n        }\n      }\n      dateSended\n      createdAt\n      readed\n      received\n    }\n  }\n}\n\nfragment ContactChatWindow_contact on Contact {\n  id\n  name\n  username\n  online\n  picture\n  newMessages\n  ...ContactMessageList_list\n}\n\nfragment Header_group on Group {\n  name\n  picture\n  ...EditGroup_group\n}\n\nfragment GroupMessageList_list on Group {\n  messages(last: 20) {\n    edges {\n      cursor\n      node {\n        id\n        ...Message_message\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      startCursor\n      hasPreviousPage\n    }\n    totalCount\n  }\n}\n\nfragment Message_message on Message {\n  id\n  author {\n    id\n    picture\n  }\n  data {\n    __typename\n    ... on Text {\n      __typename\n      text\n    }\n    ... on Emoji {\n      __typename\n      emoji\n    }\n    ... on File {\n      __typename\n      url\n      fileName\n    }\n  }\n  dateSended\n  destination {\n    __typename\n    ... on Contact {\n      id\n    }\n    ... on Group {\n      id\n    }\n  }\n  createdAt\n  readed\n  received\n}\n\nfragment EditGroup_group on Group {\n  id\n  subscribers(first: 2147483647) {\n    edges {\n      node {\n        id\n        name\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment ContactMessageList_list on Contact {\n  messages(last: 20) {\n    edges {\n      cursor\n      node {\n        id\n        ...Message_message\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      startCursor\n      hasPreviousPage\n    }\n    totalCount\n  }\n}\n",
+    "text": "subscription Launcher_Subscription {\n  generalInfo {\n    newContact {\n      id\n      username\n      ...ContactChatWindow_contact\n      newMessages\n    }\n    newGroup {\n      id\n      name\n      picture\n      ...Header_group\n      ...GroupMessageList_list\n    }\n    deleteGroup {\n      id\n    }\n    online {\n      id\n      online\n    }\n    readed {\n      id\n      readed\n      destination {\n        __typename\n        ... on Contact {\n          id\n          username\n        }\n        ... on Group {\n          id\n        }\n      }\n      received\n    }\n    newMessage {\n      id\n      author {\n        id\n        newMessages\n      }\n      comments {\n        myVote\n        likes\n        unlikes\n      }\n      data {\n        __typename\n        ... on Text {\n          text\n        }\n        ... on Emoji {\n          emoji\n        }\n        ... on File {\n          url\n          fileName\n        }\n      }\n      destination {\n        __typename\n        ... on Contact {\n          id\n          username\n        }\n        ... on Group {\n          id\n        }\n      }\n      dateSended\n      createdAt\n      readed\n      received\n    }\n  }\n}\n\nfragment ContactChatWindow_contact on Contact {\n  id\n  name\n  username\n  online\n  picture\n  newMessages\n  ...ContactMessageList_list\n}\n\nfragment Header_group on Group {\n  name\n  picture\n  ...EditGroup_group\n}\n\nfragment GroupMessageList_list on Group {\n  messages(last: 20) {\n    edges {\n      cursor\n      node {\n        id\n        ...Message_message\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      startCursor\n      hasPreviousPage\n    }\n    totalCount\n  }\n}\n\nfragment Message_message on Message {\n  id\n  author {\n    id\n    picture\n  }\n  data {\n    __typename\n    ... on Text {\n      __typename\n    }\n    ... on Emoji {\n      __typename\n      emoji\n    }\n    ... on File {\n      __typename\n      url\n      fileName\n    }\n  }\n  dateSended\n  destination {\n    __typename\n    ... on Contact {\n      id\n    }\n    ... on Group {\n      id\n    }\n  }\n  createdAt\n  readed\n  received\n  ...TextMessage_textMessage\n}\n\nfragment TextMessage_textMessage on Message {\n  id\n  data {\n    __typename\n    ... on Text {\n      text\n    }\n  }\n  comments {\n    myVote\n    likes\n    unlikes\n  }\n}\n\nfragment EditGroup_group on Group {\n  id\n  subscribers(first: 2147483647) {\n    edges {\n      node {\n        id\n        name\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment ContactMessageList_list on Contact {\n  messages(last: 20) {\n    edges {\n      cursor\n      node {\n        id\n        ...Message_message\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      startCursor\n      hasPreviousPage\n    }\n    totalCount\n  }\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '00bf6c5a09eae999083127ca0f2f6e33';
+(node/*: any*/).hash = 'd6fa1293fbad618f8cea01820928ebde';
 module.exports = node;

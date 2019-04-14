@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 79c61ebaef68b7bbbf1bde5bd4405b43
+ * @relayHash a5819e488d254ccc466b73b429f0a211
  */
 
 /* eslint-disable */
@@ -78,7 +78,6 @@ fragment Message_message on Message {
     __typename
     ... on Text {
       __typename
-      text
     }
     ... on Emoji {
       __typename
@@ -103,6 +102,22 @@ fragment Message_message on Message {
   createdAt
   readed
   received
+  ...TextMessage_textMessage
+}
+
+fragment TextMessage_textMessage on Message {
+  id
+  data {
+    __typename
+    ... on Text {
+      text
+    }
+  }
+  comments {
+    myVote
+    likes
+    unlikes
+  }
 }
 */
 
@@ -450,6 +465,38 @@ return {
                         "args": null,
                         "storageKey": null
                       },
+                      {
+                        "kind": "LinkedField",
+                        "alias": null,
+                        "name": "comments",
+                        "storageKey": null,
+                        "args": null,
+                        "concreteType": "Comments",
+                        "plural": false,
+                        "selections": [
+                          {
+                            "kind": "ScalarField",
+                            "alias": null,
+                            "name": "myVote",
+                            "args": null,
+                            "storageKey": null
+                          },
+                          {
+                            "kind": "ScalarField",
+                            "alias": null,
+                            "name": "likes",
+                            "args": null,
+                            "storageKey": null
+                          },
+                          {
+                            "kind": "ScalarField",
+                            "alias": null,
+                            "name": "unlikes",
+                            "args": null,
+                            "storageKey": null
+                          }
+                        ]
+                      },
                       (v4/*: any*/)
                     ]
                   }
@@ -477,7 +524,7 @@ return {
     "operationKind": "query",
     "name": "ContactMessageList_Query",
     "id": null,
-    "text": "query ContactMessageList_Query(\n  $last: Int\n  $before: ID\n  $contactId: ID!\n) {\n  list: contact(contactId: $contactId) {\n    messages(last: $last, before: $before) {\n      edges {\n        cursor\n        node {\n          id\n          ...Message_message\n          __typename\n        }\n      }\n      pageInfo {\n        endCursor\n        startCursor\n        hasPreviousPage\n      }\n      totalCount\n    }\n    id\n  }\n}\n\nfragment Message_message on Message {\n  id\n  author {\n    id\n    picture\n  }\n  data {\n    __typename\n    ... on Text {\n      __typename\n      text\n    }\n    ... on Emoji {\n      __typename\n      emoji\n    }\n    ... on File {\n      __typename\n      url\n      fileName\n    }\n  }\n  dateSended\n  destination {\n    __typename\n    ... on Contact {\n      id\n    }\n    ... on Group {\n      id\n    }\n  }\n  createdAt\n  readed\n  received\n}\n",
+    "text": "query ContactMessageList_Query(\n  $last: Int\n  $before: ID\n  $contactId: ID!\n) {\n  list: contact(contactId: $contactId) {\n    messages(last: $last, before: $before) {\n      edges {\n        cursor\n        node {\n          id\n          ...Message_message\n          __typename\n        }\n      }\n      pageInfo {\n        endCursor\n        startCursor\n        hasPreviousPage\n      }\n      totalCount\n    }\n    id\n  }\n}\n\nfragment Message_message on Message {\n  id\n  author {\n    id\n    picture\n  }\n  data {\n    __typename\n    ... on Text {\n      __typename\n    }\n    ... on Emoji {\n      __typename\n      emoji\n    }\n    ... on File {\n      __typename\n      url\n      fileName\n    }\n  }\n  dateSended\n  destination {\n    __typename\n    ... on Contact {\n      id\n    }\n    ... on Group {\n      id\n    }\n  }\n  createdAt\n  readed\n  received\n  ...TextMessage_textMessage\n}\n\nfragment TextMessage_textMessage on Message {\n  id\n  data {\n    __typename\n    ... on Text {\n      text\n    }\n  }\n  comments {\n    myVote\n    likes\n    unlikes\n  }\n}\n",
     "metadata": {
       "connection": [
         {

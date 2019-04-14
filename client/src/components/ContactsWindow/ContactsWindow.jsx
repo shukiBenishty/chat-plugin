@@ -79,7 +79,7 @@ class ContactHeader extends Component {
           <div  style={{display: "flex"}}  >
             <Search style={{ flexGrow: 6}} 
                     onSelect={this.searchItemSelected.bind(this)} />
-            <CreateGroup/>
+            {this.context.admin && <CreateGroup/>}
           </div>}
       </div>
     );  

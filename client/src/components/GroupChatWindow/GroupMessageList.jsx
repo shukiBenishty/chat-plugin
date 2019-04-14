@@ -45,7 +45,7 @@ class GroupMessageList extends Component {
     return (
       <div className="sc-message-list" onScroll={this.onScroll.bind(this)} ref={el => this.scrollList = el}>
         {edges.map(({node}) => {
-          return <Message  key={node.id} message={node} />
+          return <Message  key={node.id} message={node} group={true} />
         })}
       </div>)
   }
