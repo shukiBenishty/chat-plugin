@@ -1,5 +1,4 @@
 import MongooseModels from "../../mongooseModels";
-import { userLoader, groupLoader, messageLoader } from "../dataLoader";
 
 const Message = MongooseModels('Message');
 const Group = MongooseModels('Group');
@@ -10,7 +9,7 @@ export default {
         return "Group";
       return null;
     },
-    messages: async ({id} , {last, before}, {session}) => {
+    messages: async ({id} , {last, before}, {session, messageLoader}) => {
 
       let messages = [];
       let endCursor = '';
@@ -41,8 +40,7 @@ export default {
           hasPreviousPage = restOfMessages > 0 ? true : false
           
         }
-        console.log(edges);
-        
+
         return {
           edges: edges,
           totalCount: totalCount,
@@ -57,10 +55,30 @@ export default {
         console.error(error);      
       }
     },
-    subscribers: async(paerent ,args, {session}) => {
+    subscribers: async(paerent ,args, {session, userLoader, groupLoader}) => {
       try {
-        let group = await groupLoader.load(paerent.id.toString() )
-        return userLoader.loadMany( group.subscribers.map( s => s._id.toString() ))
+        let group = await groupLoader.load(paerent.id.toString());
+        let users = await userLoader.loadMany( group.subscribers.map( s => s._id.toString() ))
+  
+        let startCursor = '';
+        let endCursor = '';
+        let edges = users.map(subscriber => {
+          startCursor = startCursor || `${subscriber.id}`;
+          endCursor = `${subscriber.id}`;
+          return {
+            cursor: `${subscriber.id}`,
+            node: subscriber
+          }
+        });
+        return {
+          edges: edges,
+          totalCount: edges.length,
+          pageInfo: {
+            startCursor: startCursor,
+            endCursor: endCursor,
+            hasNextPage: false
+          }
+        }
       } catch (error) {
         return new Error(error)
       }

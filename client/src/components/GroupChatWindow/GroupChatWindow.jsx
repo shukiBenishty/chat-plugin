@@ -50,14 +50,12 @@ class GroupChatWindow extends Component {
       return (
         <div className={classList.join(' ')}>
           <Header
-            teamName={this.props.group.name}
-            imageUrl={this.props.group.picture}
+            group={this.props.group}
             onClose={this.props.onClose}
           />
           <GroupMessageList
             list={this.props.group}
             groupId={this.props.group.id}
-            imageUrl={this.props.group.picture}
           />
           <UserInput
             onSubmit={this.onUserInputSubmit.bind(this)}
@@ -76,12 +74,6 @@ export default createFragmentContainer(GroupChatWindow,
           id
           name
           picture
-          # subscribers {
-          #   id
-          #   name
-          #   username
-          #   online
-          #   picture
-          # }
+          ...Header_group
           ...GroupMessageList_list
       }`);

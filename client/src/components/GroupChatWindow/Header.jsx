@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import closeIcon from '../../assets/close-icon.png';
+import { graphql, createFragmentContainer } from 'react-relay';
 
+import EditGroup from './EditGroup'
+import closeIcon from '../../assets/close-icon.png';
 import avatar from '../../assets/men_avatar.jpg'
 
 class Header extends Component {
@@ -8,8 +10,9 @@ class Header extends Component {
   render() {
     return (
       <div className="sc-header">
-        <img className="sc-header--img" src={ this.props.imageUrl || avatar } alt="" />
-        <div className="sc-header--team-name"> {this.props.teamName} </div>
+        <img className="sc-header--img" src={ this.props.group.picture || avatar } alt="" />
+        <div className="sc-header--team-name"> {this.props.group.name} </div>
+        <EditGroup {...this.props}/>
         <div className="sc-header--close-button" onClick={this.props.onClose}>
           <img src={closeIcon} alt="" />
         </div>
@@ -18,4 +21,14 @@ class Header extends Component {
   }
 }
 
-export default Header;
+
+
+export default createFragmentContainer(
+  Header,  
+  graphql`
+      fragment Header_group on Group {
+          name
+          picture
+          ...EditGroup_group
+      }`);
+

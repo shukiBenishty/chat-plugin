@@ -5,15 +5,19 @@ import { ApolloServer } from "apollo-server-express";
 import logger from 'morgan';
 import cookieParser from 'cookie-parser';
 import cors from  "cors" ;
+import DataLoader from 'dataloader';
 
 import { typeDefs } from './graphql/schema.js';
 import resolvers from './graphql/resolvers.js';
 import subscribers from "./graphql/subscribers";
 import { pubsub } from './graphql/Subscription';
-import { userLoader } from "./graphql/dataLoader";
+import { userLoader, groupLoader, messageLoader } from "./graphql/dataLoader";
 import initClient from './initClent';
 import {dbInit} from './mongooseModels';
 import session, {sessionInit} from './sessions';
+import MongooseModels from "./mongooseModels";
+
+const User = MongooseModels('User');
 
 const debug = Debug("chat-plugin");
 
@@ -60,12 +64,18 @@ export const server = new ApolloServer({
       if (wsSession.userId) {
         
         subscribers.setItem(wsSession.userId);
-        let user = await userLoader.load(wsSession.userId);
+        let _userLoader =  new DataLoader(userLoader);
+        let user = await _userLoader.load(wsSession.userId);
         user.online = true;
         await user.save();
         pubsub.publish(`${wsSession.userId}`, { generalInfo: { online: user } });
-        userLoader.prime(`${wsSession.userId}`, user);
-        return { session: wsSession };
+        _userLoader.prime(`${wsSession.userId}`, user);
+        return { 
+          session: wsSession,
+          userLoader: _userLoader,
+          groupLoader: new DataLoader(groupLoader),
+          messageLoader: new DataLoader(messageLoader) 
+        };
       }
       // throwing error rejects the connection
       throw new Error('Missing auth token!');
@@ -81,11 +91,10 @@ export const server = new ApolloServer({
       });
       if (wsSession.userId) {
         subscribers.deleteItem(wsSession.userId);
-        let user = await userLoader.load(wsSession.userId);
+        let user = await User.findById(wsSession.userId);
         user.online = false;
         await user.save();
         pubsub.publish(`${wsSession.userId}`, { generalInfo: { online: user } });
-        userLoader.prime(`${wsSession.userId}`, user);
       }
     }
   },
@@ -99,7 +108,13 @@ export const server = new ApolloServer({
     // get the user token from the headers
     const session = req.session || '';
     
-    return { session };
+    const {} = DataLoader
+    return { 
+      session,
+      userLoader: new DataLoader(userLoader),
+      groupLoader: new DataLoader(groupLoader),
+      messageLoader: new DataLoader(messageLoader) 
+     };
     }
   },
   playground: {

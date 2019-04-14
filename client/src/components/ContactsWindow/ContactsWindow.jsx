@@ -8,9 +8,9 @@ import GroupItem from './GroupItem'
 import Search from './Search'
 import { addContact } from '../../mutations'
 import {UserContext} from '../../UserContext'
+import CreateGroup from './CreateGroup'
 
 import closeIcon from '../../assets/close-icon.png';
-
 
 
 
@@ -75,10 +75,12 @@ class ContactHeader extends Component {
             <img src={closeIcon} alt="" />
           </div>
         </div>
-        {this.state.search && <Search style={{
-                                        paddingRight: "10px",
-                                        paddingLeft: "10px"
-                                      }} onSelect={this.searchItemSelected.bind(this)} />}
+        {this.state.search && 
+          <div  style={{display: "flex"}}  >
+            <Search style={{ flexGrow: 6}} 
+                    onSelect={this.searchItemSelected.bind(this)} />
+            <CreateGroup/>
+          </div>}
       </div>
     );  
   }

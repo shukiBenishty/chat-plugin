@@ -1,7 +1,6 @@
 import Debug from "debug";
 import MongooseModels from "../../mongooseModels";
 import subscribers from "../subscribers";
-import {messageLoader } from "../dataLoader";
 
 const debug = Debug("chat-plugin:Query:Contact");
 
@@ -14,7 +13,7 @@ export default {
         return "Contact";
       return null;
     },
-    messages: async({id}, {last, before}, {session}, info) => {
+    messages: async({id}, {last, before}, {session, messageLoader}, info) => {
       
       let messages = [];
       let endCursor = '';
@@ -65,7 +64,7 @@ export default {
         console.error(error);      
       }
     },
-    online: (paerent ,args, {session})=> {
+    online: (paerent ,args, _)=> {
       return (subscribers.getItem(paerent.id)) ? true : false
     },
     newMessages: (paerent ,args, {session})=> {

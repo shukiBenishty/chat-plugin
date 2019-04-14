@@ -1,11 +1,10 @@
-import { userLoader, groupLoader } from "../dataLoader";
 import MongooseModels from "../../mongooseModels";
 
 
 const User = MongooseModels('User');
 
 export default {
-  contacts: async(paerent ,args, {session}) => {
+  contacts: async(paerent ,args, {session, userLoader}) => {
     try {
       let user = await userLoader.load(paerent.id.toString());
       let users = await userLoader.loadMany( user.contacts.map( c => c._id.toString() ))
@@ -14,7 +13,7 @@ export default {
       let endCursor = '';
       let edges = users.map(contact => {
         startCursor = startCursor || `${contact.id}`;
-        endCursor = `${endCursor.id}`;
+        endCursor = `${contact.id}`;
         return {
           cursor: `${contact.id}`,
           node: contact
@@ -33,7 +32,7 @@ export default {
       return new Error(error)
     }
   },
-  groups: async(paerent ,args, {session}) => {
+  groups: async(paerent ,args, {session, userLoader, groupLoader}) => {
     try {
       let user = await userLoader.load(paerent.id.toString());
       let groups = await groupLoader.loadMany( user.groups.map( g => g._id.toString() ))

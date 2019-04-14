@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 22437dd507b6ebea7d4c818abf13ddfc
+ * @relayHash a451fea73302ff34941256c83949ec68
  */
 
 /* eslint-disable */
@@ -104,6 +104,7 @@ fragment GroupChatWindow_group on Group {
   id
   name
   picture
+  ...Header_group
   ...GroupMessageList_list
 }
 
@@ -221,6 +222,12 @@ fragment GroupItem_group on Group {
   }
 }
 
+fragment Header_group on Group {
+  name
+  picture
+  ...EditGroup_group
+}
+
 fragment GroupMessageList_list on Group {
   messages(last: 20) {
     edges {
@@ -275,6 +282,24 @@ fragment Message_message on Message {
   createdAt
   readed
   received
+}
+
+fragment EditGroup_group on Group {
+  id
+  subscribers(first: 2147483647) {
+    edges {
+      node {
+        id
+        name
+        __typename
+      }
+      cursor
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+  }
 }
 
 fragment ContactMessageList_list on Contact {
@@ -825,6 +850,53 @@ return {
                       (v0/*: any*/),
                       (v1/*: any*/),
                       (v10/*: any*/),
+                      {
+                        "kind": "LinkedField",
+                        "alias": null,
+                        "name": "subscribers",
+                        "storageKey": "subscribers(first:2147483647)",
+                        "args": (v9/*: any*/),
+                        "concreteType": "ContactsConnection",
+                        "plural": false,
+                        "selections": [
+                          {
+                            "kind": "LinkedField",
+                            "alias": null,
+                            "name": "edges",
+                            "storageKey": null,
+                            "args": null,
+                            "concreteType": "ContactEdge",
+                            "plural": true,
+                            "selections": [
+                              {
+                                "kind": "LinkedField",
+                                "alias": null,
+                                "name": "node",
+                                "storageKey": null,
+                                "args": null,
+                                "concreteType": "Contact",
+                                "plural": false,
+                                "selections": [
+                                  (v0/*: any*/),
+                                  (v1/*: any*/),
+                                  (v5/*: any*/)
+                                ]
+                              },
+                              (v6/*: any*/)
+                            ]
+                          },
+                          (v8/*: any*/)
+                        ]
+                      },
+                      {
+                        "kind": "LinkedHandle",
+                        "alias": null,
+                        "name": "subscribers",
+                        "args": (v9/*: any*/),
+                        "handle": "connection",
+                        "key": "EditGroup_subscribers",
+                        "filters": null
+                      },
                       (v13/*: any*/),
                       {
                         "kind": "LinkedHandle",
@@ -862,7 +934,7 @@ return {
     "operationKind": "query",
     "name": "Launcher_Query",
     "id": null,
-    "text": "query Launcher_Query {\n  me {\n    id\n    name\n    username\n    admin\n    contacts(first: 2147483647) {\n      edges {\n        node {\n          id\n          username\n          ...ContactChatWindow_contact\n          newMessages\n          __typename\n        }\n        cursor\n      }\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n    groups(first: 2147483647) {\n      edges {\n        node {\n          id\n          ...GroupChatWindow_group\n          newMessages\n          __typename\n        }\n        cursor\n      }\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n    ...ContactsWindow_user\n  }\n}\n\nfragment ContactChatWindow_contact on Contact {\n  id\n  name\n  username\n  online\n  picture\n  newMessages\n  ...ContactMessageList_list\n}\n\nfragment GroupChatWindow_group on Group {\n  id\n  name\n  picture\n  ...GroupMessageList_list\n}\n\nfragment ContactsWindow_user on User {\n  contacts(first: 2147483647) {\n    edges {\n      node {\n        id\n        ...ContactItem_contact\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n  groups(first: 2147483647) {\n    edges {\n      node {\n        id\n        ...GroupItem_group\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment ContactItem_contact on Contact {\n  id\n  name\n  newMessages\n  online\n  picture\n  messages(last: 20) {\n    edges {\n      node {\n        id\n        author {\n          id\n        }\n        data {\n          __typename\n          ... on Text {\n            __typename\n            text\n          }\n          ... on Emoji {\n            __typename\n            emoji\n          }\n          ... on File {\n            __typename\n            url\n            fileName\n          }\n        }\n        readed\n        received\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment GroupItem_group on Group {\n  id\n  name\n  newMessages\n  picture\n  messages(last: 20) {\n    edges {\n      node {\n        id\n        author {\n          id\n        }\n        data {\n          __typename\n          ... on Text {\n            __typename\n            text\n          }\n          ... on Emoji {\n            __typename\n            emoji\n          }\n          ... on File {\n            __typename\n            url\n            fileName\n          }\n        }\n        readed\n        received\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment GroupMessageList_list on Group {\n  messages(last: 20) {\n    edges {\n      cursor\n      node {\n        id\n        ...Message_message\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      startCursor\n      hasPreviousPage\n    }\n    totalCount\n  }\n}\n\nfragment Message_message on Message {\n  id\n  author {\n    id\n    picture\n  }\n  data {\n    __typename\n    ... on Text {\n      __typename\n      text\n    }\n    ... on Emoji {\n      __typename\n      emoji\n    }\n    ... on File {\n      __typename\n      url\n      fileName\n    }\n  }\n  dateSended\n  destination {\n    __typename\n    ... on Contact {\n      id\n    }\n    ... on Group {\n      id\n    }\n  }\n  createdAt\n  readed\n  received\n}\n\nfragment ContactMessageList_list on Contact {\n  messages(last: 20) {\n    edges {\n      cursor\n      node {\n        id\n        ...Message_message\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      startCursor\n      hasPreviousPage\n    }\n    totalCount\n  }\n}\n",
+    "text": "query Launcher_Query {\n  me {\n    id\n    name\n    username\n    admin\n    contacts(first: 2147483647) {\n      edges {\n        node {\n          id\n          username\n          ...ContactChatWindow_contact\n          newMessages\n          __typename\n        }\n        cursor\n      }\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n    groups(first: 2147483647) {\n      edges {\n        node {\n          id\n          ...GroupChatWindow_group\n          newMessages\n          __typename\n        }\n        cursor\n      }\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n    ...ContactsWindow_user\n  }\n}\n\nfragment ContactChatWindow_contact on Contact {\n  id\n  name\n  username\n  online\n  picture\n  newMessages\n  ...ContactMessageList_list\n}\n\nfragment GroupChatWindow_group on Group {\n  id\n  name\n  picture\n  ...Header_group\n  ...GroupMessageList_list\n}\n\nfragment ContactsWindow_user on User {\n  contacts(first: 2147483647) {\n    edges {\n      node {\n        id\n        ...ContactItem_contact\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n  groups(first: 2147483647) {\n    edges {\n      node {\n        id\n        ...GroupItem_group\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment ContactItem_contact on Contact {\n  id\n  name\n  newMessages\n  online\n  picture\n  messages(last: 20) {\n    edges {\n      node {\n        id\n        author {\n          id\n        }\n        data {\n          __typename\n          ... on Text {\n            __typename\n            text\n          }\n          ... on Emoji {\n            __typename\n            emoji\n          }\n          ... on File {\n            __typename\n            url\n            fileName\n          }\n        }\n        readed\n        received\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment GroupItem_group on Group {\n  id\n  name\n  newMessages\n  picture\n  messages(last: 20) {\n    edges {\n      node {\n        id\n        author {\n          id\n        }\n        data {\n          __typename\n          ... on Text {\n            __typename\n            text\n          }\n          ... on Emoji {\n            __typename\n            emoji\n          }\n          ... on File {\n            __typename\n            url\n            fileName\n          }\n        }\n        readed\n        received\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment Header_group on Group {\n  name\n  picture\n  ...EditGroup_group\n}\n\nfragment GroupMessageList_list on Group {\n  messages(last: 20) {\n    edges {\n      cursor\n      node {\n        id\n        ...Message_message\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      startCursor\n      hasPreviousPage\n    }\n    totalCount\n  }\n}\n\nfragment Message_message on Message {\n  id\n  author {\n    id\n    picture\n  }\n  data {\n    __typename\n    ... on Text {\n      __typename\n      text\n    }\n    ... on Emoji {\n      __typename\n      emoji\n    }\n    ... on File {\n      __typename\n      url\n      fileName\n    }\n  }\n  dateSended\n  destination {\n    __typename\n    ... on Contact {\n      id\n    }\n    ... on Group {\n      id\n    }\n  }\n  createdAt\n  readed\n  received\n}\n\nfragment EditGroup_group on Group {\n  id\n  subscribers(first: 2147483647) {\n    edges {\n      node {\n        id\n        name\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment ContactMessageList_list on Contact {\n  messages(last: 20) {\n    edges {\n      cursor\n      node {\n        id\n        ...Message_message\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      startCursor\n      hasPreviousPage\n    }\n    totalCount\n  }\n}\n",
     "metadata": {
       "connection": [
         {

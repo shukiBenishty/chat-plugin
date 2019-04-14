@@ -16,6 +16,7 @@ function renderInput(inputProps) {
 
   return (
     <TextField
+      autoFocus={true}
       InputProps={{
         inputRef: ref,
         classes: {
@@ -113,10 +114,9 @@ const styles = theme => ({
     margin: `${theme.spacing.unit / 2}px ${theme.spacing.unit / 4}px`,
   },
   inputRoot: {
-    flexWrap: 'wrap',
+    flexWrap: 'wrap'
   },
   inputInput: {
-    width: 'auto',
     flexGrow: 1,
   },
   divider: {
@@ -144,7 +144,7 @@ function search(props) {
         }) => (
           <div className={classes.container}>
             {renderInput({
-              fullWidth: true,
+              fullWidth: false,
               classes,
               InputProps: getInputProps({
                 placeholder: 'Search New Contact',
@@ -185,8 +185,6 @@ query Search_Query {
     name
     username
     picture
-    ...ContactChatWindow_contact
-    newMessages
   }
 }`
 

@@ -65,7 +65,7 @@ export let typeDefs = gql`
 
     name: String!
     picture: String!
-    subscribers: [Contact]
+    subscribers(first: Int, after: ID ): ContactsConnection
     messages(last: Int, before: ID ): MessagesConnection
     newMessages: Int
     # createdAt: Date!
@@ -130,13 +130,15 @@ export let typeDefs = gql`
     typingForMe: Contact
     readed: Message
     newMessage: Message
+    newContact: Contact
+    newGroup: Group
   }
   
   type Query {
     me: User
     contact(contactId: ID!): Contact
     group(groupId: ID!): Group
-    contacts: [Contact]
+    contacts(all: Boolean): [Contact]
     message(messageId: ID!): Message
     
   }
@@ -146,7 +148,8 @@ export let typeDefs = gql`
     sendMessageEmoji(message: EmojiInput!, destination: ID!): Message
     sendMessageFile(message: FileInput!, destination: ID!): Message
     addContact(contactId: ID!): Contact
-    addGroup(groupId: ID!): Group
+    editGroup(groupId: ID!, subscribers: [ID!], unsubscribers: [ID!]): Group
+    createGroup(name: String!, picture: String!, subscribers: [ID!]): Group
     readMassage(messageId: ID!): Message
     typing(destination: ID!): Boolean
     online: Boolean

@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 35d5afa2015f073990c6007dcb852ba0
+ * @relayHash c872442ba7c93b04cdc7d07382e08c8b
  */
 
 /* eslint-disable */
@@ -32,7 +32,7 @@ export type sendMessageFile_MutationResponse = {|
     +dateSended: any,
     +destination: {|
       +id?: string,
-      +name?: string,
+      +username?: string,
     |},
     +createdAt: any,
     +readed: boolean,
@@ -74,7 +74,7 @@ mutation sendMessageFile_Mutation(
       __typename
       ... on Contact {
         id
-        name
+        username
       }
       ... on Group {
         id
@@ -202,7 +202,7 @@ v10 = {
     {
       "kind": "ScalarField",
       "alias": null,
-      "name": "name",
+      "name": "username",
       "args": null,
       "storageKey": null
     }
@@ -348,11 +348,11 @@ return {
     "operationKind": "mutation",
     "name": "sendMessageFile_Mutation",
     "id": null,
-    "text": "mutation sendMessageFile_Mutation(\n  $message: FileInput!\n  $destination: ID!\n) {\n  sendMessageFile(message: $message, destination: $destination) {\n    id\n    author {\n      id\n    }\n    data {\n      __typename\n      ... on Text {\n        text\n      }\n      ... on Emoji {\n        emoji\n      }\n      ... on File {\n        url\n        fileName\n      }\n    }\n    dateSended\n    destination {\n      __typename\n      ... on Contact {\n        id\n        name\n      }\n      ... on Group {\n        id\n      }\n    }\n    createdAt\n    readed\n    received\n  }\n}\n",
+    "text": "mutation sendMessageFile_Mutation(\n  $message: FileInput!\n  $destination: ID!\n) {\n  sendMessageFile(message: $message, destination: $destination) {\n    id\n    author {\n      id\n    }\n    data {\n      __typename\n      ... on Text {\n        text\n      }\n      ... on Emoji {\n        emoji\n      }\n      ... on File {\n        url\n        fileName\n      }\n    }\n    dateSended\n    destination {\n      __typename\n      ... on Contact {\n        id\n        username\n      }\n      ... on Group {\n        id\n      }\n    }\n    createdAt\n    readed\n    received\n  }\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '3fcd41858ed2da0548e04e5efd93aff9';
+(node/*: any*/).hash = 'edcceec8ba5f340ece34981e6361e118';
 module.exports = node;

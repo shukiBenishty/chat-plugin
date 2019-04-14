@@ -37,7 +37,6 @@ const mutation = graphql`
 }
 `;
 
-let tempID = 0;
 
 function commit(environment, message, destination) {
   return commitMutation(environment, {

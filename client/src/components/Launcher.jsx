@@ -11,6 +11,19 @@ import Launcher from './Launcher.js';
 const realtimeEventsSubscription = graphql`
   subscription Launcher_Subscription {
     generalInfo {
+      newContact {
+        id
+        username
+        ...ContactChatWindow_contact
+        newMessages
+      },
+      newGroup {
+        id
+        name
+        picture
+        ...Header_group
+        ...GroupMessageList_list
+      }
       online{
         id
         online
@@ -102,6 +115,7 @@ class App extends Component {
       variables: {},
       updater: (store, data) => {
         if (data.generalInfo.newMessage) {
+          
           const message = store.get( data.generalInfo.newMessage.id);
           let messages = {};
           if (data.generalInfo.newMessage.destination.username) {
@@ -116,18 +130,42 @@ class App extends Component {
 
           ConnectionHandler.insertEdgeAfter(messages, edge);
         }
+        if (data.generalInfo.newContact) {
+          this.renewSubscription();
+          const contact = store.get( data.generalInfo.newContact.id );
+          const me  = store.getRoot().getLinkedRecord('me');
+          const contacts = ConnectionHandler.getConnection(me, 'Launcher_contacts');
+          const edge = ConnectionHandler.createEdge(store, contacts , contact, 'Contact', data.generalInfo.newContact.id);
+        
+          ConnectionHandler.insertEdgeBefore(contacts, edge);
+        }
+        if (data.generalInfo.newGroup) {
+          this.renewSubscription();
+          const group = store.get( data.generalInfo.newGroup.id );
+          const me  = store.getRoot().getLinkedRecord('me');
+          const groups = ConnectionHandler.getConnection(me, 'Launcher_groups');
+          const edge = ConnectionHandler.createEdge(store, groups , group, 'Group', data.generalInfo.newGroup.id);
+        
+          ConnectionHandler.insertEdgeBefore(groups, edge);
+        }
       }
     }
 
     componentDidMount() {
-      this.subscriptionConfig.variables = { contactId: this.props.me && this.props.me.id };
+      this.subscriptionConfig.variables = { me: this.props.me && this.props.me.id };
       this.subscription = requestSubscription(
         environment,
         this.subscriptionConfig
       )
   
     }
-  
+    renewSubscription() {
+      this.subscription.dispose();
+      this.subscription = requestSubscription(
+        environment,
+        this.subscriptionConfig
+      )
+    }
   
     componentWillUnmount() {
       this.subscription.dispose();

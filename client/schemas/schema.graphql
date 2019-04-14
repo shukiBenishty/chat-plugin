@@ -52,13 +52,15 @@ type generalInfo {
   typingForMe: Contact
   readed: Message
   newMessage: Message
+  newContact: Contact
+  newGroup: Group
 }
 
 type Group implements INode {
   id: ID!
   name: String!
   picture: String!
-  subscribers: [Contact]
+  subscribers(first: Int, after: ID): ContactsConnection
   messages(last: Int, before: ID): MessagesConnection
   newMessages: Int
 }
@@ -109,7 +111,8 @@ type Mutation {
   sendMessageEmoji(message: EmojiInput!, destination: ID!): Message
   sendMessageFile(message: FileInput!, destination: ID!): Message
   addContact(contactId: ID!): Contact
-  addGroup(groupId: ID!): Group
+  editGroup(groupId: ID!, subscribers: [ID!], unsubscribers: [ID!]): Group
+  createGroup(name: String!, picture: String!, subscribers: [ID!]): Group
   readMassage(messageId: ID!): Message
   typing(destination: ID!): Boolean
   online: Boolean
@@ -126,7 +129,7 @@ type Query {
   me: User
   contact(contactId: ID!): Contact
   group(groupId: ID!): Group
-  contacts: [Contact]
+  contacts(all: Boolean): [Contact]
   message(messageId: ID!): Message
 }
 

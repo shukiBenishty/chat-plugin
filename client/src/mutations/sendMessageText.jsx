@@ -24,7 +24,7 @@ const mutation = graphql`
             destination {
         ...on Contact{
             id 
-            name
+            username
         }
         ... on Group {
             id
@@ -42,10 +42,16 @@ function commit(environment, message, destination) {
     mutation,
     variables: { message, destination },
     updater: ( store , data) => {
-        const contact = store.get( destination);
+        let dest = store.get( destination);
         const _message = store.get( data.sendMessageText.id);
-
-        const messages = ConnectionHandler.getConnection(contact, 'ContactMessageList_messages');
+        
+        let messages = {}
+        if ( data.sendMessageText.destination.username) {
+            messages = ConnectionHandler.getConnection(dest, 'ContactMessageList_messages');
+        } else {
+            messages = ConnectionHandler.getConnection(dest, 'GroupMessageList_messages');
+        }
+        
         const edge = ConnectionHandler.createEdge(store, messages, _message, 'Message', _message.id);
 
         // No cursor provided, append the edge at the end.

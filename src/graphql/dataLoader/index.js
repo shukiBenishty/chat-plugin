@@ -1,4 +1,4 @@
-import DataLoader from 'dataloader';
+
 
 import MongooseModels from "../../mongooseModels";
 
@@ -7,51 +7,51 @@ const Message = MongooseModels('Message');
 const Group = MongooseModels('Group');
 
 
-export const userLoader = new DataLoader( async userIds => {
+export const userLoader =  async userIds => {
     let users = await User.find({ _id: { $in: userIds } });
     if (users.length === userIds.length) {
         return Promise.resolve(users)
     }
-    let resolte = [];
+    let results = [];
     userIds.forEach( (userId, index ) => {
         let i = users.findIndex( c => c.id === userId )
         if ( i === -1 ) {
-            resolte[index] = {};       
+            results[index] = {};       
         }
-        resolte[index] = users[i];
+        results[index] = users[i];
     })
-    return Promise.resolve(resolte)
-});
+    return Promise.resolve(results)
+};
 
-export const groupLoader = new DataLoader(async groupIds => {
+export const groupLoader = async groupIds => {
     let groups = await Group.find({ _id: { $in: groupIds } }).populate('subscribers');
     if (groups.length === groupIds.length) {
         return Promise.resolve(groups)
     }
-    let resolte = [];
+    let results = [];
 
     groupIds.forEach( (groupId, index ) => {
         let i = groups.findIndex( c => c.id === groupId )
         if ( i === -1 ) {
-            resolte[index] = {};       
+            results[index] = {};       
         }
-        resolte[index] = groups[i];
+        results[index] = groups[i];
     })
-    return Promise.resolve(resolte )
-});
+    return Promise.resolve(results )
+};
 
-export const messageLoader = new DataLoader(async (messageIds) => {
+export const messageLoader = async (messageIds) => {
     let messages = await Message.find({ _id: { $in: messageIds } }).populate("author").populate("destination");
     if (messages.length === messageIds.length) {
         return Promise.resolve(messages)
     }
-    let resolte = [];
+    let results = [];
     messageIds.forEach( (messageId, index ) => {
         let i = messages.findIndex( c => c.id === messageId )
         if ( i === -1 ) {
-            resolte[index] = {};       
+            results[index] = {};       
         }
-        resolte[index] = messages[i];
+        results[index] = messages[i];
     })
-    return Promise.resolve(resolte )
-  });
+    return Promise.resolve(results )
+  };
