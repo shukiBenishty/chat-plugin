@@ -21,14 +21,14 @@ class Message extends Component {
     }
   }
 
-  _renderMessageOfType(type) {
+  _renderMessageOfType(type, group, sendByMe) {
     switch(type) {
       case 'Text':
-        return <TextMessage {...this.props.message} />
+        return <TextMessage textMessage={ this.props.message }  group={group} sendByMe={sendByMe}  />
       case 'Emoji':
-        return <EmojiMessage {...this.props.message} />
+        return <EmojiMessage {...this.props.message}/>
       case 'File':
-        return <FileMessage {...this.props.message} />
+        return <FileMessage {...this.props.message}/>
       default:
         console.error(`Attempting to load message with unsupported file type '${type}'`)
     }
@@ -44,7 +44,7 @@ class Message extends Component {
       <div className="sc-message">
         <div className={contentClassList.join(" ")}>
           <div className="sc-message--avatar" style={{ backgroundImage: `url(${this.props.message.author.picture || chatIconUrl})` }}></div>
-          {this._renderMessageOfType(this.props.message.data.__typename)}
+          {this._renderMessageOfType(this.props.message.data.__typename, this.props.group, sendByMe)}
         </div>
       </div>)
   }
@@ -61,7 +61,6 @@ export default createFragmentContainer(Message,
         data{
           ...on Text{
             __typename
-            text
           }
           ...on Emoji {
             __typename
@@ -82,4 +81,5 @@ export default createFragmentContainer(Message,
         createdAt
         readed
         received
+        ...TextMessage_textMessage
       }`);

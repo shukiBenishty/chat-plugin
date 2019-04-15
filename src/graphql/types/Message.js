@@ -6,20 +6,17 @@ const Group = MongooseModels('Group')
 
 
 export default { 
-    // author: async(paerent ,args, {session, userLoader, groupLoader, messageLoader}) => {
-    //   try {
-    //     let message = await Message.findById(paerent.id).populate("author"); 
-    //     return message.author;
-    //   } catch (error) {
-    //     return new Error(error)
-    //   }
-    // },
-    // destination: async(paerent ,args, {session, userLoader, groupLoader, messageLoader}) => {
-    //     try {
-    //         let message = await Message.findById(paerent.id).populate("destination"); 
-    //         return message.destination;
-    //       } catch (error) {
-    //         return new Error(error)
-    //       }
-    // }
+
+    comments: async(paerent ,args, {session, userLoader, groupLoader, messageLoader}) => {
+      try {
+        let myVote =  paerent.likes.indexOf(session.userId) !== -1 ? 'LIKE' : ( paerent.unlikes.indexOf(session.userId) !== -1) ? 'UNLIKE' : null
+        return {
+          myVote: myVote,
+          likes: paerent.likes.length,
+          unlikes : paerent.unlikes.length
+        };
+      } catch (error) {
+        return new Error(error)
+      }
+    }
   }

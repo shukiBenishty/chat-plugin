@@ -48,12 +48,24 @@ export let typeDefs = gql`
   
   union MessageDest = Contact | Group
 
+  enum Vote {
+    LIKE
+    UNLIKE
+  }
+
+  type Comments {
+    myVote: Vote
+    likes: Int!
+    unlikes: Int!
+  }
+
   type Message implements INode {
     id: ID!
 
     author: Contact!
     data: MessageData!
     dateSended: Date!
+    comments: Comments
     destination: MessageDest!
     createdAt: Date!
     readed: Boolean!
@@ -131,6 +143,7 @@ export let typeDefs = gql`
     readed: Message
     newMessage: Message
     newContact: Contact
+    deleteGroup: Group
     newGroup: Group
   }
   
@@ -147,6 +160,7 @@ export let typeDefs = gql`
     sendMessageText(message: TextInput!, destination: ID!): Message
     sendMessageEmoji(message: EmojiInput!, destination: ID!): Message
     sendMessageFile(message: FileInput!, destination: ID!): Message
+    sendComment(messageId: ID!, myVote: Vote): Message
     addContact(contactId: ID!): Contact
     editGroup(groupId: ID!, subscribers: [ID!], unsubscribers: [ID!]): Group
     createGroup(name: String!, picture: String!, subscribers: [ID!]): Group
