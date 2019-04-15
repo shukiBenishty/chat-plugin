@@ -1,7 +1,7 @@
 {
   "name": "chat-plugin",
-  "version": "0.0.11",
-  "description": "Web chat plugin base on react (at develop)",
+  "version": "0.0.15",
+  "description": "Web chat plugin base on react (in develop)",
   "author": "shuki-benishty",
   "main": "lib/index.js",
   "module": "src/index.js",

@@ -7,16 +7,16 @@
     "init": "git init & heroku git:remote -a chat-plugin",
     "debug": "set DEBUG=chat-plugin* & nodemon --inspect ./app --exec babel-node",
     "start": "npx babel-node ./app.js",
-    "deploy": "git commit -am 'deploy' & git push -f heroku master"
+    "deploy": "git add . & git commit -am 'deploy' & git push -f heroku master"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@babel/core": "^7.4.0",
-    "@babel/node": "^7.2.2", 
+    "@babel/node": "^7.2.2",
     "@babel/plugin-proposal-object-rest-spread": "^7.4.0",
     "@babel/preset-env": "^7.4.2",
-    "chat-plugin": "latest",
+    "chat-plugin": "*",
     "connect-mongo": "^2.0.1",
     "cookie-parser": "^1.4.4",
     "debug": "^3.1.0",
