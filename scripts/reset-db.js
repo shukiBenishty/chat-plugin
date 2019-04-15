@@ -17,7 +17,7 @@ const Group = MongooseModels('Group');
         await Message.deleteMany({});
         await Group.deleteMany({});
 
-        let db = JSON.parse(fs.readFileSync(path.resolve(__dirname, './db.js'))); 
+        let db = JSON.parse(fs.readFileSync(path.resolve(__dirname, './db.json'))); 
 
         await User.insertMany(db.users);
         await Group.insertMany(db.groups);

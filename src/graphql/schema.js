@@ -141,6 +141,7 @@ export let typeDefs = gql`
     typing: Contact
     typingForMe: Contact
     readed: Message
+    editComment: Message
     newMessage: Message
     newContact: Contact
     deleteGroup: Group

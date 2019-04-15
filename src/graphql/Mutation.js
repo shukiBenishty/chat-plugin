@@ -52,6 +52,7 @@ const addContact = async (parent, args, {session, userLoader}) => {
     user.contacts.push(args.contactId);
     user = await user.save();
     userLoader.prime(`${user.id}`, user);
+
     let contact =  await userLoader.load(args.contactId);
     contact.contacts.push(session.userId);
     contact = await contact.save();
@@ -176,7 +177,7 @@ const online = async (parent, args, {session, userLoader}) => {
   return true;
 }
 
-const sendComment = async (parent, args, {session, userLoader, messageLoader}) => {
+const sendComment = async (parent, args, {session, userLoader, messageLoader, groupLoader}) => {
   try {
     let message = await messageLoader.load(args.messageId);
     let indexLike = message.likes.indexOf(session.userId);
@@ -198,6 +199,11 @@ const sendComment = async (parent, args, {session, userLoader, messageLoader}) =
     await message.save();
 
     messageLoader.prime(`${message.id}`, message)
+
+    let group = await groupLoader.load(`${message.destination.id}`)
+    let publish = { generalInfo: { editComment: message, destination: group.subscribers }};
+    pubsub.publish(`${group.id}`, publish);
+
     return message;
   } catch (err) {
     console.error(err);

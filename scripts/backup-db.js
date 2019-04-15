@@ -22,7 +22,7 @@ const Message = MongooseModels('Message');
             groups
         }
 
-        fs.writeFile(path.resolve(__dirname, './db.js'), JSON.stringify(db, null, 2),
+        fs.writeFile(path.resolve(__dirname, './db.json'), JSON.stringify(db, null, 2),
             (err) => {
                 if(err) {
                     console.error(err);

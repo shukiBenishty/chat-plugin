@@ -37,7 +37,7 @@ export default {
         }
     },
     generalInfo: {
-      subscribe: async (obj, {contactId}, {session, userLoader, groupLoader, messageLoader}, info) => { 
+      subscribe: async (obj, {contactId}, {session} , info) => { 
 
           let user = await User.findById(session.userId).populate("contacts").populate('groups')
           let queues = [];
@@ -45,12 +45,10 @@ export default {
             queues.push(contactId);
           } else {
             queues = user.contacts.map((c) => {
-              userLoader.prime(`${c.id}`, c);
               return `${c.id}`
             });
             
             user.groups.map((g) => {
-              groupLoader.prime(`${g.id}`, g);
               queues.push(`${g.id}`);
             });
             
@@ -66,9 +64,10 @@ export default {
               if (payload.generalInfo.newContact && (payload.generalInfo.destination !== session.userId)) return false;
               if (payload.generalInfo.newGroup && (payload.generalInfo.destination !== session.userId)) return false;
               if (payload.generalInfo.deleteGroup && (payload.generalInfo.destination !== session.userId)) return false;
+              if (payload.generalInfo.editComment && !(payload.generalInfo.destination.find( u => `${u.id}` === session.userId))) return false;
               if (payload.generalInfo.newMessage && !(payload.generalInfo.destination.find( u => u === session.userId))) return false;
               return true;
-            } )(obj, {contactId}, {session, userLoader, groupLoader, messageLoader}, info);
+            } )(obj, {contactId}, {session}, info);
       }
     }
 }

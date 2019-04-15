@@ -65,16 +65,12 @@ export const server = new ApolloServer({
         
         subscribers.setItem(wsSession.userId);
         let _userLoader =  new DataLoader(userLoader);
-        let user = await _userLoader.load(wsSession.userId);
+        let user = await User.findById(wsSession.userId);
         user.online = true;
         await user.save();
         pubsub.publish(`${wsSession.userId}`, { generalInfo: { online: user } });
-        _userLoader.prime(`${wsSession.userId}`, user);
         return { 
-          session: wsSession,
-          userLoader: _userLoader,
-          groupLoader: new DataLoader(groupLoader),
-          messageLoader: new DataLoader(messageLoader) 
+          session: wsSession
         };
       }
       // throwing error rejects the connection
@@ -108,12 +104,11 @@ export const server = new ApolloServer({
     // get the user token from the headers
     const session = req.session || '';
     
-    const {} = DataLoader
     return { 
       session,
-      userLoader: new DataLoader(userLoader),
-      groupLoader: new DataLoader(groupLoader),
-      messageLoader: new DataLoader(messageLoader) 
+      userLoader: new DataLoader(userLoader, {cache: false}),
+      groupLoader: new DataLoader(groupLoader, {cache: false}),
+      messageLoader: new DataLoader(messageLoader, {cache: false})
      };
     }
   },

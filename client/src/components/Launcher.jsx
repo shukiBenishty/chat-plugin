@@ -17,6 +17,14 @@ const realtimeEventsSubscription = graphql`
         ...ContactChatWindow_contact
         newMessages
       },
+      editComment {
+        id
+        comments {
+          myVote
+          likes
+          unlikes
+        }
+      },
       newGroup {
         id
         name
@@ -158,6 +166,9 @@ class App extends Component {
         }
         if (data.generalInfo.deleteGroup) {
           this.renewSubscription();
+          const me  = store.getRoot().getLinkedRecord('me');
+          const groups = ConnectionHandler.getConnection(me, 'Launcher_groups');
+          ConnectionHandler.deleteNode(groups, data.generalInfo.deleteGroup.id)
           store.delete( data.generalInfo.deleteGroup.id );
         }
       }
