@@ -59,7 +59,8 @@ export default {
       try {
         let group = await groupLoader.load(paerent.id.toString());
         let users = await userLoader.loadMany( group.subscribers.map( s => s._id.toString() ))
-  
+        
+        console.log(users);
         let startCursor = '';
         let endCursor = '';
         let edges = users.map(subscriber => {
@@ -70,6 +71,8 @@ export default {
             node: subscriber
           }
         });
+        console.log(edges);
+        
         return {
           edges: edges,
           totalCount: edges.length,

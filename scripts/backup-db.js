@@ -10,7 +10,7 @@ const Message = MongooseModels('Message');
 (async () => {
     try {
 
-        await dbInit('mongodb://localhost/chat-plugin');
+        await dbInit('mongodb://localhost/DB_shop');
         
         let users = await User.find({});
         let groups = await Group.find({});
@@ -22,7 +22,7 @@ const Message = MongooseModels('Message');
             groups
         }
 
-        fs.writeFile(path.resolve(__dirname, './db.js'), JSON.stringify(db, null, 2),
+        fs.writeFile(path.resolve(__dirname, './db-old2.json'), JSON.stringify(db, null, 2),
             (err) => {
                 if(err) {
                     console.error(err);

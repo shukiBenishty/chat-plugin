@@ -120,7 +120,7 @@ const MessageCount = (props) => {
   if (props.isOpen === true) return null;
   let count = 0;
   props.contacts.forEach(({node}) => {
-    count += node.newMessages;
+    if(node.newMessages) count += node.newMessages;
   });
   if (count === 0) return null;
   return (
