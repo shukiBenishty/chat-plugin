@@ -30,7 +30,7 @@ var config = {
             },
             {
                 test: /\.(mp3|png|svg|jpg)$/,
-                loader: 'file-loader'
+                loader: 'url-loader'
             }
         ]
     },

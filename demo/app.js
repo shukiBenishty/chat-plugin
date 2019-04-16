@@ -1,14 +1,25 @@
 import path from 'path';
 import http from 'http';
 import express from "express";
-import cookieParser from 'cookie-parser';
+// import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
+
+
+
+const cookieSession = require('cookie-session');
+const passport = require('passport');
+const authRoutes = require('./routes/auth-routes');
+const profileRoutes = require('./routes/profile-routes');
+const passportSetup = require('./config/passport-setup');
+const mongoose = require('mongoose');
+const keys = require('./config/keys');
+
 
 const graphql = require(process.env.PORT ? 'chat-plugin': '../lib' ).default ;
 const server = require(process.env.PORT ? 'chat-plugin': '../lib' ).server ;
 
 
-import session from './sessions.js';
+// import session from './sessions.js';
 import index from './routes/index';
 import users from './routes/users';
 import groups from './routes/groups';
@@ -23,10 +34,16 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-let secret = 'chat-plugin secret'; 
-app.use(cookieParser(secret));
+// set up session cookies
+app.use(cookieSession({
+  maxAge: 24 * 60 * 60 * 1000,
+  keys: [keys.session.cookieKey]
+}));
 
-app.use(session);
+// initialize passport
+app.use(passport.initialize());
+app.use(passport.session());
+// app.use(session);
 
 app.use('/', index);
 app.use(express.static(path.join(__dirname, 'public')));
