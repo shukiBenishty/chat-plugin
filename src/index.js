@@ -102,8 +102,8 @@ export const server = new ApolloServer({
       return connection.context;
     } else {
     // get the user token from the headers
-    const session = req.session || '';
-    
+    let session = req.session || '';
+    session.userId = session && session.passport && session.passport.user
     return { 
       session,
       userLoader: new DataLoader(userLoader, {cache: false}),

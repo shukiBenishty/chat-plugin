@@ -2,21 +2,218 @@
   "users": [
     {
       "contacts": [
+        "5c85029c93e5a245dc74d6f2"
+      ],
+      "groups": [],
+      "picture": "",
+      "admin": false,
+      "online": false,
+      "_id": "5c85029c93e5a245dc74d6f1",
+      "type": "meneger",
+      "name": "dani",
+      "family": "Bret",
+      "email": "Sincere@april.biz",
+      "city": "Gwenborough",
+      "password": "12346",
+      "active": true,
+      "__v": 1,
+      "username": "dani",
+      "createdAt": "2019-04-16T09:09:54.045Z",
+      "updatedAt": "2019-04-16T09:16:52.661Z"
+    },
+    {
+      "contacts": [
+        "5c85029c93e5a245dc74d6f1"
+      ],
+      "groups": [],
+      "picture": "",
+      "admin": false,
+      "online": false,
+      "_id": "5c85029c93e5a245dc74d6f2",
+      "type": "worker",
+      "name": "dada",
+      "family": "Antonette",
+      "email": "Shanna@mlissa.tv",
+      "city": "Wisokyburgh",
+      "password": "4343",
+      "active": true,
+      "__v": 1,
+      "username": "dada",
+      "createdAt": "2019-04-16T09:10:11.858Z",
+      "updatedAt": "2019-04-16T09:10:11.858Z"
+    },
+    {
+      "contacts": [],
+      "groups": [],
+      "picture": "",
+      "admin": false,
+      "online": false,
+      "_id": "5c85029c93e5a245dc74d6f3",
+      "type": "user",
+      "name": "lolo",
+      "family": "Samantha",
+      "email": "Nathan@yesenia.net",
+      "city": "McKenziehaven",
+      "password": "12346",
+      "active": true,
+      "__v": 0,
+      "username": "lolo"
+    },
+    {
+      "contacts": [],
+      "groups": [],
+      "picture": "",
+      "admin": false,
+      "online": false,
+      "_id": "5c85029c93e5a245dc74d6f7",
+      "type": "user",
+      "name": "Kurtis Weissnat",
+      "family": "Elwyn.Skiles",
+      "email": "Telly.Hoeger@billy.biz",
+      "city": "Howemouth",
+      "password": "12346",
+      "active": true,
+      "__v": 0,
+      "username": "Kurtis Weissnat"
+    },
+    {
+      "contacts": [],
+      "groups": [],
+      "picture": "",
+      "admin": false,
+      "online": false,
+      "_id": "5c85029c93e5a245dc74d6f8",
+      "type": "user",
+      "name": "Nicholaska",
+      "family": "Maxime_Nienow",
+      "email": "Sherwood@rosamond.me",
+      "city": "Aliyaview",
+      "password": "12346",
+      "active": true,
+      "__v": 0,
+      "username": "Nicholas "
+    },
+    {
+      "contacts": [],
+      "groups": [],
+      "picture": "",
+      "admin": false,
+      "online": false,
+      "_id": "5c85029c93e5a245dc74d6f9",
+      "type": "user",
+      "name": "Glenna Reichert",
+      "family": "Delphine",
+      "email": "Chaim_McDermott@dana.io",
+      "city": "Bartholomebury",
+      "password": "12346",
+      "active": true,
+      "__v": 0,
+      "username": "Glenna Reichert"
+    },
+    {
+      "contacts": [],
+      "groups": [],
+      "picture": "",
+      "admin": false,
+      "online": false,
+      "_id": "5c85029c93e5a245dc74d6f6",
+      "type": "user",
+      "name": "Mrs. Dennis Schulist",
+      "family": "Leopoldo_Corkery",
+      "email": "Karley_Dach@jasper.info",
+      "city": "South Christy",
+      "password": "12346",
+      "active": true,
+      "__v": 0,
+      "username": "Mrs. Dennis Schulist"
+    },
+    {
+      "contacts": [],
+      "groups": [],
+      "picture": "",
+      "admin": false,
+      "online": false,
+      "_id": "5c85029c93e5a245dc74d6fa",
+      "type": "user",
+      "name": "Clementina DuBuque",
+      "family": "Moriah.Stanton",
+      "email": "Rey.Padberg@karina.biz",
+      "city": "Lebsackbury",
+      "password": "12346",
+      "active": true,
+      "__v": 0,
+      "username": "Clementina DuBuque"
+    },
+    {
+      "contacts": [],
+      "groups": [],
+      "picture": "",
+      "admin": false,
+      "online": false,
+      "_id": "5c8521c46462a14710a1d598",
+      "type": "user",
+      "name": "Leanne Graham",
+      "family": "Bret",
+      "email": "Sincere@april.biz",
+      "city": "Gwenborough",
+      "password": "12346",
+      "active": true,
+      "__v": 0,
+      "username": "Leanne Graham"
+    },
+    {
+      "contacts": [],
+      "groups": [],
+      "picture": "",
+      "admin": false,
+      "online": false,
+      "_id": "5c8521c46462a14710a1d59a",
+      "type": "user",
+      "name": "Clementine Bauch",
+      "family": "Samantha",
+      "email": "Nathan@yesenia.net",
+      "city": "McKenziehaven",
+      "password": "12346",
+      "active": true,
+      "__v": 0,
+      "username": "Clementine Bauch"
+    },
+    {
+      "contacts": [],
+      "groups": [],
+      "picture": "",
+      "admin": false,
+      "online": false,
+      "_id": "5c8521c46462a14710a1d59b",
+      "type": "user",
+      "name": "Patricia Lebsack",
+      "family": "Karianne",
+      "email": "Julianne.OConner@kory.org",
+      "city": "South Elvis",
+      "password": "12346",
+      "active": true,
+      "__v": 0,
+      "username": "Patricia Lebsack"
+    },
+    {
+      "contacts": [
         "5c8d613152b15e32107c6c20"
       ],
       "groups": [
-        "5cb09b958b3a8938d403a138"
+        "5cb09b958b3a8938d403a138",
+        "5cb5a2a845b116349cd035b6"
       ],
       "picture": "https://images.cdn1.stockunlimited.net/preview1300/fashionable-woman-avatar_1534607.jpg",
       "admin": true,
-      "online": false,
+      "online": true,
       "_id": "5c8d60c752b15e32107c6c1e",
-      "__v": 1,
+      "type": "meneger",
+      "__v": 0,
       "createdAt": "2019-03-16T20:47:03.131Z",
       "name": "Avishag Benishty",
       "password": "q1w2e3r4",
-      "updatedAt": "2019-04-13T23:55:28.549Z",
-      "username": "avishag"
+      "updatedAt": "2019-04-16T09:41:11.023Z",
+      "username": "Avishag Benishty"
     },
     {
       "contacts": [
@@ -28,12 +225,13 @@
       "admin": true,
       "online": false,
       "_id": "5cacb29b12471e00235867a8",
+      "type": "meneger",
       "name": "Israel Tzanani",
-      "username": "israel",
+      "username": "Israel Tzanani",
       "password": "1234",
       "updatedAt": "2019-04-14T01:09:41.391Z",
       "createdAt": "2019-04-09T14:56:27.140Z",
-      "__v": 3
+      "__v": 0
     },
     {
       "contacts": [
@@ -43,18 +241,20 @@
         "5c8d610652b15e32107c6c1f"
       ],
       "groups": [
-        "5cb09b958b3a8938d403a138"
+        "5cb09b958b3a8938d403a138",
+        "5cb5a2a845b116349cd035b6"
       ],
       "picture": "",
       "admin": true,
-      "online": false,
+      "online": true,
       "_id": "5c8d613152b15e32107c6c20",
-      "__v": 18,
+      "type": "meneger",
+      "__v": 0,
       "createdAt": "2019-03-16T20:48:49.573Z",
       "name": "Shuki Benishty",
       "password": "q1w2e3r4",
-      "updatedAt": "2019-04-15T07:35:09.362Z",
-      "username": "shuki"
+      "updatedAt": "2019-04-16T09:39:37.670Z",
+      "username": "Shuki Benishty"
     },
     {
       "contacts": [
@@ -62,17 +262,20 @@
         "5cacb29b12471e00235867a8",
         "5cb230bf710c5744e4cc4cdb"
       ],
-      "groups": [],
+      "groups": [
+        "5cb5a2a845b116349cd035b6"
+      ],
       "picture": "https://upload.wikimedia.org/wikipedia/commons/7/73/198663-hello_kitty.gif",
       "admin": false,
       "online": false,
       "_id": "5c8d610652b15e32107c6c1f",
-      "__v": 3,
+      "type": "user",
+      "__v": 0,
       "createdAt": "2019-03-16T20:48:06.257Z",
       "name": "Anael Benishty",
       "password": "q1w2e3r4",
-      "updatedAt": "2019-04-14T01:18:04.746Z",
-      "username": "anael"
+      "updatedAt": "2019-04-16T09:40:18.448Z",
+      "username": "Anael Benishty"
     },
     {
       "contacts": [
@@ -83,15 +286,148 @@
       "admin": false,
       "online": false,
       "_id": "5cb230bf710c5744e4cc4cdb",
+      "type": "user",
       "name": "Tahel Benishty",
-      "username": "tahel",
+      "username": "Tahel Benishty",
       "password": "q1w2e3r4",
       "updatedAt": "2019-04-14T01:11:26.713Z",
       "createdAt": "2019-04-13T18:55:59.420Z",
-      "__v": 1
+      "__v": 0
     }
   ],
-  "messages": [],
+  "messages": [
+    {
+      "received": true,
+      "readed": true,
+      "likes": [],
+      "unlikes": [],
+      "isDeleted": false,
+      "_id": "5cb5975913a0a738dcebefbb",
+      "author": "5c8d613152b15e32107c6c20",
+      "data": {
+        "emoji": "😝"
+      },
+      "destination": "5c8d60c752b15e32107c6c1e",
+      "destinationModel": "User",
+      "dateSended": "2019-04-16T08:50:33.461Z",
+      "updatedAt": "2019-04-16T08:50:37.442Z",
+      "createdAt": "2019-04-16T08:50:33.463Z",
+      "__v": 0
+    },
+    {
+      "received": false,
+      "readed": false,
+      "likes": [],
+      "unlikes": [],
+      "isDeleted": false,
+      "_id": "5cb59fae45b116349cd035b1",
+      "author": "5c8d613152b15e32107c6c20",
+      "data": {
+        "text": "hi"
+      },
+      "destination": "5cb230bf710c5744e4cc4cdb",
+      "destinationModel": "User",
+      "dateSended": "2019-04-16T09:26:06.507Z",
+      "updatedAt": "2019-04-16T09:26:06.508Z",
+      "createdAt": "2019-04-16T09:26:06.508Z",
+      "__v": 0
+    },
+    {
+      "received": true,
+      "readed": true,
+      "likes": [],
+      "unlikes": [],
+      "isDeleted": false,
+      "_id": "5cb5a0cd45b116349cd035b2",
+      "author": "5c8d613152b15e32107c6c20",
+      "data": {
+        "emoji": "😙"
+      },
+      "destination": "5c8d610652b15e32107c6c1f",
+      "destinationModel": "User",
+      "dateSended": "2019-04-16T09:30:53.745Z",
+      "updatedAt": "2019-04-16T09:30:53.799Z",
+      "createdAt": "2019-04-16T09:30:53.745Z",
+      "__v": 0
+    },
+    {
+      "received": false,
+      "readed": false,
+      "likes": [
+        "5c8d60c752b15e32107c6c1e"
+      ],
+      "unlikes": [
+        "5c8d613152b15e32107c6c20"
+      ],
+      "isDeleted": false,
+      "_id": "5cb5a2b745b116349cd035b7",
+      "author": "5c8d610652b15e32107c6c1f",
+      "data": {
+        "text": "hi"
+      },
+      "destination": "5cb5a2a845b116349cd035b6",
+      "destinationModel": "Group",
+      "dateSended": "2019-04-16T09:39:03.179Z",
+      "updatedAt": "2019-04-16T09:41:29.501Z",
+      "createdAt": "2019-04-16T09:39:03.179Z",
+      "__v": 9
+    },
+    {
+      "received": false,
+      "readed": false,
+      "likes": [],
+      "unlikes": [],
+      "isDeleted": false,
+      "_id": "5cb5a35845b116349cd035b8",
+      "author": "5c8d60c752b15e32107c6c1e",
+      "data": {
+        "url": "blob:http://localhost:5000/edaec073-e409-4705-a92e-73722e88b79c",
+        "fileName": "oie_PHMnuomLBCb6.png"
+      },
+      "destination": "5cb5a2a845b116349cd035b6",
+      "destinationModel": "Group",
+      "dateSended": "2019-04-16T09:41:44.528Z",
+      "updatedAt": "2019-04-16T09:41:44.528Z",
+      "createdAt": "2019-04-16T09:41:44.528Z",
+      "__v": 0
+    },
+    {
+      "received": false,
+      "readed": false,
+      "likes": [],
+      "unlikes": [],
+      "isDeleted": false,
+      "_id": "5cb5a36845b116349cd035b9",
+      "author": "5c8d60c752b15e32107c6c1e",
+      "data": {
+        "emoji": "😌"
+      },
+      "destination": "5cb5a2a845b116349cd035b6",
+      "destinationModel": "Group",
+      "dateSended": "2019-04-16T09:42:00.733Z",
+      "updatedAt": "2019-04-16T09:42:00.733Z",
+      "createdAt": "2019-04-16T09:42:00.733Z",
+      "__v": 0
+    },
+    {
+      "received": true,
+      "readed": true,
+      "likes": [],
+      "unlikes": [],
+      "isDeleted": false,
+      "_id": "5cb5a3c545b116349cd035ba",
+      "author": "5c8d613152b15e32107c6c20",
+      "data": {
+        "text": "shuki"
+      },
+      "destination": "5c8d60c752b15e32107c6c1e",
+      "destinationModel": "User",
+      "dateSended": "2019-04-16T09:43:33.076Z",
+      "updatedAt": "2019-04-16T09:43:43.755Z",
+      "createdAt": "2019-04-16T09:43:33.077Z",
+      "__v": 0
+    }
+  ],
   "groups": [
     {
       "picture": "https://previews.123rf.com/images/nicousnake/nicousnake1402/nicousnake140200019/26009248-i-love-my-family-banners-vector-illustration.jpg",
@@ -100,10 +436,22 @@
         "5c8d60c752b15e32107c6c1e"
       ],
       "_id": "5cb09b958b3a8938d403a138",
-      "messages": [],
       "name": "Benishty Family",
       "updatedAt": "2019-04-12T14:07:17.115Z",
       "createdAt": "2019-04-12T14:07:17.115Z",
+      "__v": 0
+    },
+    {
+      "picture": "https://store-images.s-microsoft.com/image/apps.47565.9007199266243744.cfeec85e-4e64-426d-8d46-f6fa0c8fbba6.d51b0c1c-1cf7-4db5-b90c-0b2414410c86?mode=scale&q=90&h=1080&w=1920",
+      "subscribers": [
+        "5c8d610652b15e32107c6c1f",
+        "5c8d60c752b15e32107c6c1e",
+        "5c8d613152b15e32107c6c20"
+      ],
+      "_id": "5cb5a2a845b116349cd035b6",
+      "name": "test",
+      "updatedAt": "2019-04-16T09:38:48.304Z",
+      "createdAt": "2019-04-16T09:38:48.304Z",
       "__v": 0
     }
   ]

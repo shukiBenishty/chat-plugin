@@ -1,6 +1,6 @@
 {
   "name": "chat-plugin",
-  "version": "0.0.18",
+  "version": "0.0.20",
   "description": "Web chat plugin base on react (in develop)",
   "author": "shuki-benishty",
   "main": "lib/index.js",
